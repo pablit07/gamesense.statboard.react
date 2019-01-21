@@ -1,0 +1,16 @@
+.header {
+    background-color: black;
+    padding: 10px;
+}
+
+.gsLogo {
+    width: 21%;
+    margin-left: 10px;
+    vertical-align: middle;
+    border-style: none;
+}
+
+/* height: 62px;
+    width: 360px;
+    margin-left: 10px;
+    margin-top: 10px; */
