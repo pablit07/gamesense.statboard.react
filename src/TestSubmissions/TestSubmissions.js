@@ -58,24 +58,8 @@ class TestSubmissions extends Component {
       })
       console.log('Sent message to GameSense API:', 'gs-message-' + timestamp)
     }
-
   }
 
-  //   const url = "https://jsonplaceholder.typicode.com/posts";
-  //   fetch(url, {
-  //     method: "GET"
-  //   }).then(response => response.json()).then(posts => {
-  //     this.setState({posts:posts})
-  //   })
-  // }
-
-  // // deleteRow(id){
-  // //  const index = this.state.posts.findIndex(post => {
-  // //    return post.id === id
-  // //  })
-  // //  this.state.posts.splice(index,1);
-  // //  this.setState({posts: this.state.posts});
-  // // }
   render() {
     const columns = [
       {
@@ -165,8 +149,7 @@ class TestSubmissions extends Component {
                 </div>
               );
             }}
-
-            </ReactTable>
+          </ReactTable>
         </div>
       </div>
     );
