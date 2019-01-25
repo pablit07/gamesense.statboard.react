@@ -17,12 +17,23 @@ class DrillUsage extends Component {
   }
 
   dataSource() {
-    const url = "https://jsonplaceholder.typicode.com/posts";
-    fetch(url, {
-      method: "GET"
-    }).then(response => response.json()).then(posts => {
-      this.setState({posts:posts})
-    })
+
+      const timestamp = Date.now()
+      const data = {
+        timestamp: timestamp,
+        routingKey: 'calc.drill.usageSummary',
+        payload: {}
+      }
+      this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data)
+      this.props.socket.subscribe('gs-message-' + timestamp).watch( (response) => {
+        this.props.socket.unsubscribe('gs-message-' + timestamp)
+        console.log('GameSense API responded:\n', response)
+        const res = typeof response.content === 'string' ? JSON.parse(response.content) : null
+        // CreateTableFromJSON(res)
+        console.log('Here is the payload:\n', res)
+        // this.setState({submissions:res})
+      })
+      console.log('Sent message to GameSense API:', 'gs-message-' + timestamp)
   }
 
   // deleteRow(id){
