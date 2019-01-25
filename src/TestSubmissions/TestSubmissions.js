@@ -13,33 +13,8 @@ class TestSubmissions extends Component {
       submissions: []
     }
   }
-  componentDidMount(){
 
-    var socket = null
-    try {
-        const opts = {
-          hostname: 'svc.gamesensesports.com',
-          secure: false,
-          rejectUnauthorized: false,
-          path: '/',
-          port: 8100
-        }
-
-        socket = window.socketCluster.connect(opts)
-
-        socket.on('connect', function () {
-          console.log('Connected to worker via socket ID', socket.id)
-          sendMessage()
-        })
-
-        socket.on('error', function (err) {
-          throw err('Socket error: ' + err)
-        })
-    } catch (err) {
-      console.warn(err)
-    }
-
-    var sendMessage = () => {
+  dataSource() {
 
       const timestamp = Date.now()
       const data = {
@@ -47,9 +22,9 @@ class TestSubmissions extends Component {
         routingKey: 'calc.test.usageSummary',
         payload: {}
       }
-      socket.publish('SC_MESSAGE-' + socket.id, data)
-      socket.subscribe('gs-message-' + timestamp).watch( (response) => {
-        socket.unsubscribe('gs-message-' + timestamp)
+      this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data)
+      this.props.socket.subscribe('gs-message-' + timestamp).watch( (response) => {
+        this.props.socket.unsubscribe('gs-message-' + timestamp)
         console.log('GameSense API responded:\n', response)
         const res = typeof response.content === 'string' ? JSON.parse(response.content) : null
         // CreateTableFromJSON(res)
@@ -57,7 +32,10 @@ class TestSubmissions extends Component {
         this.setState({submissions:res})
       })
       console.log('Sent message to GameSense API:', 'gs-message-' + timestamp)
-    }
+  }
+
+  componentDidMount(){
+    this.dataSource();
   }
 
   render() {

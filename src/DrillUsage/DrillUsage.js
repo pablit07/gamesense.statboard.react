@@ -5,7 +5,7 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import ExportToExcel from './ExportToExcel';
 
-class TestSubmissions extends Component {
+class DrillUsage extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -13,6 +13,10 @@ class TestSubmissions extends Component {
     }
   }
   componentDidMount(){
+    this.dataSource();
+  }
+
+  dataSource() {
     const url = "https://jsonplaceholder.typicode.com/posts";
     fetch(url, {
       method: "GET"
@@ -119,4 +123,4 @@ class TestSubmissions extends Component {
   }
 }
 
-export default TestSubmissions;
+export default DrillUsage;
