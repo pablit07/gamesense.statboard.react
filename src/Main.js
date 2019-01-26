@@ -1,8 +1,8 @@
-import React from 'react'
-import { Switch, Route } from 'react-router-dom'
-import Home from './Home/Home'
-import TestSubmissions from './TestSubmissions/TestSubmissions'
-import DrillUsage from './DrillUsage/DrillUsage'
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import Home from './Home/Home';
+import TestSubmissions from './TestSubmissions/TestSubmissions';
+import DrillUsage from './DrillUsage/DrillUsage';
 import { create } from 'socketcluster-client';
 
 // The Main component renders one of the three provided
@@ -13,7 +13,7 @@ import { create } from 'socketcluster-client';
 
 const Main = () => {
 
-	var socket = null
+	var socket = null;
     try {
         const opts = {
           hostname: 'svc.gamesensesports.com',
@@ -21,18 +21,18 @@ const Main = () => {
           rejectUnauthorized: false,
           path: '/',
           port: 8100
-        }
-        socket = create(opts)
+        };
+        socket = create(opts);
 
         socket.on('connect', function () {
-          console.log('Connected to worker via socket ID', socket.id)
+          console.log('Connected to worker via socket ID', socket.id);
         })
 
         socket.on('error', function (err) {
-          throw err('Socket error: ' + err)
+          throw Error('Socket error: ' + err);
         })
     } catch (err) {
-      console.warn(err)
+      console.error(err);
     }
 
 	return (

@@ -7,36 +7,40 @@ import ExportToExcel from './ExportToExcel';
 
 
 class TestSubmissions extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      submissions: []
+    constructor(props) {
+        super(props)
+        this.state = {
+            submissions: []
+        }
     }
-  }
 
-  dataSource() {
+    dataSource() {
+        if (this.props.socket.state !== "open") return;
 
-      const timestamp = Date.now()
-      const data = {
-        timestamp: timestamp,
-        routingKey: 'calc.test.usageSummary',
-        payload: {}
-      }
-      this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data)
-      this.props.socket.subscribe('gs-message-' + timestamp).watch( (response) => {
-        this.props.socket.unsubscribe('gs-message-' + timestamp)
-        console.log('GameSense API responded:\n', response)
-        const res = typeof response.content === 'string' ? JSON.parse(response.content) : null
-        // CreateTableFromJSON(res)
-        console.log('Here is the payload:\n', res)
-        this.setState({submissions:res})
-      })
-      console.log('Sent message to GameSense API:', 'gs-message-' + timestamp)
-  }
+        const timestamp = Date.now()
+        const data = {
+            timestamp: timestamp,
+            routingKey: 'calc.test.usageSummary',
+            payload: {}
+        };
+        this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
+        this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
+            this.props.socket.unsubscribe('gs-message-' + timestamp);
+            console.log('GameSense API responded:\n', response);
+            const res = typeof response.content === 'string' ? JSON.parse(response.content) : null;
+                // CreateTableFromJSON(res)
+            console.log('Here is the payload:\n', res);
+            this.setState({
+                submissions: res
+            });
+        });
+        console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
+    }
 
-  componentDidMount(){
-    this.dataSource();
-  }
+    componentDidMount() {
+        this.props.socket.on('connect', this.dataSource.bind(this));
+        this.dataSource();
+    }
 
   render() {
     const columns = [
