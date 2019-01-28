@@ -5,62 +5,104 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import ExportToExcel from './ExportToExcel';
 
-class TestSubmissions extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      posts: []
+class DrillUsage extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            usage: []
+        }
     }
-  }
-  componentDidMount(){
-    const url = "https://jsonplaceholder.typicode.com/posts";
-    fetch(url, {
-      method: "GET"
-    }).then(response => response.json()).then(posts => {
-      this.setState({posts:posts})
-    })
-  }
+    componentDidMount() {
+        this.props.socket.on('connect', this.dataSource.bind(this));
+        this.dataSource();
+    }
 
-  // deleteRow(id){
-  //  const index = this.state.posts.findIndex(post => {
-  //    return post.id === id
-  //  })
-  //  this.state.posts.splice(index,1);
-  //  this.setState({posts: this.state.posts});
-  // }
+    dataSource() {
+        if (this.props.socket.state !== "open") return;
+
+        const timestamp = Date.now()
+        const data = {
+            timestamp: timestamp,
+            routingKey: 'calc.drill.usageSummary',
+            payload: {}
+        }
+
+        this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
+        this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
+            this.props.socket.unsubscribe('gs-message-' + timestamp);
+            this.isSubscribed = false;
+            console.log('GameSense API responded:\n', response);
+            const res = typeof response.content === 'string' ? JSON.parse(response.content) : null;
+                // CreateTableFromJSON(res)
+            console.log('Here is the payload:\n', res);
+            this.setState({
+                usage: res
+            });
+        });
+        console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
+    }
+
   render() {
     const columns = [
       {
-        Header: "User ID",
-        accessor: "userId",
+        Header: "Team",
+        accessor: "team_name",
         style: {
-          textAlign:'right'
+          textAlign:'left'
         },
-        width:100,
+        width:200,
         maxWidth: 100,
         minWidth: 100
       },
       {
-        Header: "ID",
-        accessor: "id",
+        Header: "First Name",
+        accessor: "player_first_name",
         style: {
-          textAlign:'right'
+          textAlign:'left'
         },
-        width:100,
+        width:200,
         maxWidth: 100,
         minWidth: 100
       },
       {
-        Header: "Title",
-        accessor: "title",
-        sortable: false,
-        filterable: false,
+        Header: "Last Name",
+        accessor: "player_last_name",
+        style: {
+          textAlign:'left'
+        },
+        width:200,
+        maxWidth: 100,
+        minWidth: 100
       },
       {
-        Header: "Content",
-        accessor: "body",
-        sortable: false,
-        filterable: false,
+        Header: "Drill",
+        accessor: "drill",
+        style: {
+          textAlign:'left'
+        },
+        width:300,
+        maxWidth: 100,
+        minWidth: 100
+      },
+      {
+        Header: "Score",
+        accessor: "first_glance_total_score",
+        style: {
+          textAlign:'right'
+        },
+        width:70,
+        maxWidth: 100,
+        minWidth: 100
+      },
+      {
+        Header: "Date",
+        accessor: "completion_timestamp_formatted",
+        style: {
+          textAlign:'right'
+        },
+        width:300,
+        maxWidth: 100,
+        minWidth: 100
       },
       // {
       //   Header: "Actions",
@@ -79,7 +121,7 @@ class TestSubmissions extends Component {
       //   maxWidth: 100,
       //   minWidth: 100
       // }
-    ]
+    ];
     return (
      <div className="background">
       <h6 className="pageTitle">GameSense StatBoard</h6>
@@ -96,7 +138,7 @@ class TestSubmissions extends Component {
           <ReactTable
             className="-highlight"
             columns={columns}
-            data={this.state.posts}
+            data={this.state.usage}
             filterable
             defaultPageSize={10}
             noDataText={"...Please Wait"}
@@ -119,4 +161,4 @@ class TestSubmissions extends Component {
   }
 }
 
-export default TestSubmissions;
+export default DrillUsage;
