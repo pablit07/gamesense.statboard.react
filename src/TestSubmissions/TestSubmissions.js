@@ -38,6 +38,7 @@ class TestSubmissions extends Component {
     }
 
     exportSource(submissionId) {
+      if (this.props.socket.state !== "open") return;
 
         const timestamp = Date.now()
         const data = {
