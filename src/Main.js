@@ -28,6 +28,10 @@ const Main = () => {
           console.log('Connected to worker via socket ID', socket.id);
         })
 
+        socket.on('close', function () {
+          console.log('Socket is closing...');
+        })
+
         socket.on('error', function (err) {
           throw Error('Socket error: ' + err);
         })
