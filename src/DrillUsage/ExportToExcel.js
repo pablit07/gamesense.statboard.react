@@ -11,27 +11,29 @@ class ExportToExcel extends Component {
                     id="test-table-xls-button"
                     className="export"
                     table="table-to-xls"
-                    filename="filteredData"
+                    filename="gameSense Test Submissions"
                     sheet="tablexls"
                     buttonText="Export"/>
                 <table hidden="true" id="table-to-xls">
                     <thread>
                         <tr>
-                            <th>User ID</th>
-                            <th>ID</th>
-                            <th>Title </th>
-                            <th>Content</th>
+                            <th>Player ID</th>
+                            <th>Team</th>
+                            <th># </th>
+                            <th>Upload</th>
+                            <th>Test Date</th>
                         </tr>
                     </thread>
                     <tbody>
                     {
                       this.props.posts.map(post => {
                           return(
-                              <tr key={post.id}>
-                                <td>{post.userId}</td>
-                                <td>{post.id}</td>
-                                <td>{post.title}</td>
-                                <td>{post.body}</td>
+                              <tr key={post.player_id}>
+                                <td>{post.player_id}</td>
+                                <td>{post.team}</td>
+                                <td>{post.number_of_responses}</td>
+                                <td>{post.source_etl}</td>
+                                <td>{post.test_date}</td>
                               </tr>
                           )
                       })
