@@ -6,6 +6,7 @@ import 'react-table/react-table.css';
 import ExportToExcel from './ExportToExcel';
 import checkboxHOC from "react-table/lib/hoc/selectTable";
 
+
 const CheckboxTable = checkboxHOC(ReactTable);
 
 
@@ -13,7 +14,8 @@ class TestSubmissions extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            submissions: []
+            submissions: [],
+            selection: []
         }
     }
 
@@ -68,7 +70,7 @@ class TestSubmissions extends Component {
         console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
     }
 
-    toggleSelection = (key, shift, row) => {
+    toggleSelection = (key) => {
       /*
         Implementation of how to manage the selection state is up to the developer.
         This implementation uses an array stored in the component state.
@@ -126,14 +128,10 @@ class TestSubmissions extends Component {
       this.setState({ selectAll, selection });
     };
 
-    isSelected = key => {
-      /*
-        Instead of passing our external selection state we provide an 'isSelected'
-        callback and detect the selection state ourselves. This allows any implementation
-        for selection (either an array, object keys, or even a Javascript Set object).
-      */
+    isSelected(key) {
       return this.state.selection.includes(key);
-    };
+      // console.log(this.state.selection.includes(key))
+  }
 
     logSelection = () => {
       console.log("selection:", this.state.selection);
@@ -145,27 +143,6 @@ class TestSubmissions extends Component {
     }
 
   render() {
-
-    const { toggleSelection, toggleAll, isSelected, logSelection } = this;
-    const { selectAll } = this.state;
-
-    const checkboxProps = {
-      selectAll,
-      isSelected,
-      toggleSelection,
-      toggleAll,
-      selectType: "checkbox",
-      // getTrProps: (r) => {
-      //   const selected = this.isSelected(r.id_submission);
-      //   return {
-      //     style: {
-      //       backgroundColor: selected ? "lightgreen" : "inherit"
-      //       // color: selected ? 'white' : 'inherit',
-      //     }
-      //   };
-      // }
-    };
-
 
     const columns = [
       {
@@ -243,6 +220,27 @@ class TestSubmissions extends Component {
         className: 'id_submission'
       }
     ]
+
+    const { toggleSelection, toggleAll, isSelected, logSelection } = this;
+    const { selectAll } = this.state;
+
+    const checkboxProps = {
+      selectAll,
+      isSelected,
+      toggleSelection,
+      toggleAll,
+      selectType: "checkbox",
+      getTrProps: (r) => {
+        const selected = this.isSelected(r.id_submission);
+        return {
+          style: {
+            backgroundColor: selected ? "lightgreen" : "inherit"
+            // color: selected ? 'white' : 'inherit',
+          }
+        };
+      }
+    };
+
     return (
      <div className="background">
       <h6 className="pageTitle">GameSense StatBoard</h6>
@@ -268,11 +266,11 @@ class TestSubmissions extends Component {
             >
 
             {(state, filteredData, instance) => {
-              this.reactTable = state.pageRows.map(post => {return post._original});
+              this.checkboxTable = state.pageRows.map(post => {return post});
               return(
                 <div>
                   {filteredData()}
-                  <ExportToExcel posts={this.reactTable} />
+                  <ExportToExcel posts={this.checkboxTable} />
                 </div>
               );
             }}

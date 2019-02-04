@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import '../../node_modules/font-awesome/css/font-awesome.min.css'
+
 
 class ExportToExcel extends Component {
+
 
     render() {
 
         return (
             <div style={{marginRight: '25px'}}>
+
                 <ReactHTMLTableToExcel
                     id="test-table-xls-button"
                     className="export"
