@@ -135,6 +135,7 @@ class TestSubmissions extends Component {
 
     logSelection = () => {
       console.log("selection:", this.state.selection);
+      // .forEach()
     };
 
     componentDidMount() {
@@ -191,38 +192,28 @@ class TestSubmissions extends Component {
         },
         width:200,
       },
-      // {
-      //   Header: "Actions",
-      //   Cell: props => {
-      //     return (
-      //       <button style={{backgroundColor:'green', color: '#fefefe'}}
-      //         onClick={() => {
-      //           this.exportSource(props.original.id_submission);
-      //         }}
-      //       >Download</button>
-      //     );
-      //   },
-      //   sortable: false,
-      //   filterable: false,
-      //   width:80,
-      //   maxWidth: 100,
-      //   minWidth: 100
-      // },
       {
-        accessor: "id_submission",
-        style: {
-          display: 'none'
+        Header: "Actions",
+        Cell: props => {
+          return (
+            <button style={{backgroundColor:'green', color: '#fefefe'}}
+              onClick={() => {
+                this.exportSource(props.original.id_submission);
+              }}
+            >Download</button>
+          );
         },
-        headerStyle: {
-          display: 'none'
-        },
-        width: 0,
-        className: 'id_submission'
-      }
+        sortable: false,
+        filterable: false,
+        width:80,
+        maxWidth: 100,
+        minWidth: 100
+      },
     ]
 
-    const { toggleSelection, toggleAll, isSelected, logSelection } = this;
+    const { toggleSelection, toggleAll, logSelection } = this;
     const { selectAll } = this.state;
+    const isSelected = this.isSelected.bind(this)
 
     const checkboxProps = {
       selectAll,
@@ -255,12 +246,13 @@ class TestSubmissions extends Component {
           </div>
           <button onClick={logSelection}>Log Selection</button>
           <CheckboxTable
+            keyField='id_submission'
             ref={r => (this.checkboxTable = r)}
-            className="-highlight"
+            className="-striped -highlight"
             columns={columns}
             data={this.state.submissions}
             filterable
-            defaultPageSize={10}
+            defaultPageSize={5}
             noDataText={"...Please Wait"}
             {...checkboxProps}
             >

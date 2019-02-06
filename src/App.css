@@ -1,16 +1,34 @@
-.export {
+/* .export {
   color: beige;
   background-color: green;
   margin-top: 15px;
   margin-left: 50%;
   margin-bottom: 20px;
+} */
+
+#test-table-xls-button {
+  border-radius: 25px;
+  color: beige;
+  height: 2.5em;
+  width: 9.5em;
+  background-color: green;
+  margin-top: 15px;
+  margin-left: 45%;
+  margin-bottom: 20px;
+  border: green;
+}
+
+.-btn {
+  color: white !important;
+  background-color: #215836 !important;
 }
 
 .ReactTable .rt-thead.-header {
   background-color: #4E9360;
   color: white;
   font-stretch: expanded;
-  font-weight: 600;
+  /* font-weight: 600; */
+  height: 2em;
 }
 
 .ReactTable {
@@ -27,16 +45,19 @@
 .reportButton {
   background-color: #007BFF;
   color: white;
-  font-weight: 600;
+  /* font-weight: 600; */
+  font-family: "europa";
   margin-bottom: 1.0rem;
   margin-right: 3.3rem;
+  border-radius: 6px;
+  border: #007BFF;
 }
 
 h3 {
-  font-size: 1.53125rem;
+  font-size: 1.8rem;
   margin-bottom: 1.5rem;
   margin-left: 2.3rem;
-  font-family: inherit;
+  font-family: "europa";
   font-weight: 500;
   line-height: 1.2;
   color: slategrey;
