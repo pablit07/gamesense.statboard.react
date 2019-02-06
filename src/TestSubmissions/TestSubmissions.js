@@ -15,7 +15,7 @@ class TestSubmissions extends Component {
         super(props)
         this.state = {
             submissions: [],
-            selection: []
+            selection: [],
         }
     }
 
@@ -26,7 +26,7 @@ class TestSubmissions extends Component {
         const data = {
             timestamp: timestamp,
             routingKey: 'calc.test.usageSummary',
-            payload: {}
+            payload: {filters:{minDate:"1-1-2019"}}
         };
         this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
         this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
