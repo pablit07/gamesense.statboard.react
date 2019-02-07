@@ -43,7 +43,8 @@
 }
 
 .reportButton {
-  background-color: #007BFF;
+  background-color: darkgrey;
+  ;
   color: white;
   /* font-weight: 600; */
   font-family: "europa";
@@ -57,7 +58,7 @@ h3 {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   margin-left: 2.3rem;
-  font-family: "europa";
+  /* font-family: "europa"; */
   font-weight: 500;
   line-height: 1.2;
   color: slategrey;
@@ -89,4 +90,14 @@ h3 {
   font-size: 18px;
   line-height: 18px;
   letter-spacing: .5px;
+}
+
+.logSelectionButton {
+  background-color: cornflowerblue;
+  color: white;
+  margin-bottom: 17px;
+  margin-left: 17px;
+  padding: 10px;
+  border-radius: 25px;
+  border: cornflowerblue;
 }

@@ -222,10 +222,11 @@ class DrillUsage extends Component {
             <button className="reportButton">
               <Link
                 style={{color: 'white'}}
-                to='/testsubmissions'>Test Submissions</Link>
+                to='/testsubmissions'>Test Submissions </Link>
+                <i class="fa fa-arrow-right" aria-hidden="true"></i>
             </button>
           </div>
-          <button onClick={logSelection}>Log Selection</button>
+          <button className="logSelectionButton" onClick={logSelection}>Log Selection</button>
           <ReactTable
             keyField='id_submission'
             ref={r => (this.checkboxTable = r)}

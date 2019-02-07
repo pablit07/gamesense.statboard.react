@@ -70,7 +70,7 @@ class TestSubmissions extends Component {
         console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
     }
 
-    toggleSelection = (key) => {
+    toggleSelection = (key, shift, row) => {
       /*
         Implementation of how to manage the selection state is up to the developer.
         This implementation uses an array stored in the component state.
@@ -221,15 +221,15 @@ class TestSubmissions extends Component {
       toggleSelection,
       toggleAll,
       selectType: "checkbox",
-      // getTdProps: (r, s) => {
-      //   const selected = this.isSelected(r.id_submission);
-      //   return {
-      //     style: {
-      //       backgroundColor: selected ? "lightgreen" : "inherit"
-      //       // color: selected ? 'white' : 'inherit',
-      //     }
-      //   };
-      // }
+      getTdProps: (r, s) => {
+        const selected = this.isSelected(r.id_submission);
+        return {
+          style: {
+            backgroundColor: selected ? "lightgreen" : "inherit"
+            // color: selected ? 'white' : 'inherit',
+          }
+        };
+      }
     };
 
     return (
@@ -241,10 +241,11 @@ class TestSubmissions extends Component {
             <button className="reportButton">
               <Link
                 style={{color: 'white'}}
-                to='/drillusage'>Drill Usage Reports</Link>
+                to='/drillusage'>Drill Usage Reports  </Link>
+                <i class="fa fa-arrow-right" aria-hidden="true"></i>
             </button>
           </div>
-          <button onClick={logSelection}>Log Selection</button>
+          <button className="logSelectionButton" onClick={logSelection}>Log Selection</button>
           <CheckboxTable
             keyField='id_submission'
             ref={r => (this.checkboxTable = r)}

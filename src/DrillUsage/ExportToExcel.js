@@ -6,16 +6,32 @@ class ExportToExcel extends Component {
 
     render() {
 
+        let today = new Date();
+        let dd = today.getDate();
+        let mm = today.getMonth() + 1;
+        let yyyy = today.getFullYear();
+
+        if (dd < 10) {
+        dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+        mm = '0' + mm;
+        }
+
+        today = mm + '/' + dd + '/' + yyyy;
+
         return (
             <div style={{marginRight: '25px'}}>
                 <ReactHTMLTableToExcel
                     id="test-table-xls-button"
                     className="fa fa-table"
                     table="table-to-xls"
-                    filename="gameSenseDrillUsageReport"
+                    filename={"gameSenseDrillUsageReport " + today }
                     sheet="tablexls"
                     buttonText=" Export to XLS"/>
                 <table hidden="true" id="table-to-xls">
+                {/* WORK ON FOR TOMORROW colSpan={2} */}
                     <thread>
                         <tr>
                             <th>Team</th>
