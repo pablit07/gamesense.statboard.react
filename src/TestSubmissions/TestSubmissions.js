@@ -221,15 +221,15 @@ class TestSubmissions extends Component {
       toggleSelection,
       toggleAll,
       selectType: "checkbox",
-      getTrProps: (r) => {
-        const selected = this.isSelected(r.id_submission);
-        return {
-          style: {
-            backgroundColor: selected ? "lightgreen" : "inherit"
-            // color: selected ? 'white' : 'inherit',
-          }
-        };
-      }
+      // getTdProps: (r, s) => {
+      //   const selected = this.isSelected(r.id_submission);
+      //   return {
+      //     style: {
+      //       backgroundColor: selected ? "lightgreen" : "inherit"
+      //       // color: selected ? 'white' : 'inherit',
+      //     }
+      //   };
+      // }
     };
 
     return (
@@ -252,17 +252,20 @@ class TestSubmissions extends Component {
             columns={columns}
             data={this.state.submissions}
             filterable
-            defaultPageSize={5}
+            defaultPageSize={10}
             noDataText={"...Please Wait"}
             {...checkboxProps}
             >
 
             {(state, filteredData, instance) => {
-              this.checkboxTable = state.pageRows.map(post => {return post});
+              this.reactTable = state.pageRows.map(post => {return post});
               return(
                 <div>
                   {filteredData()}
-                  <ExportToExcel posts={this.checkboxTable} />
+                  <ExportToExcel
+                    posts={this.reactTable}
+
+                  />
                 </div>
               );
             }}
