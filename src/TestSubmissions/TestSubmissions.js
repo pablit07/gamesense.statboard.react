@@ -26,7 +26,7 @@ class TestSubmissions extends Component {
         const data = {
             timestamp: timestamp,
             routingKey: 'calc.test.usageSummary',
-            payload: {filters:{minDate:"1-1-2019"}}
+            payload: {}
         };
         this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
         this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
@@ -221,15 +221,15 @@ class TestSubmissions extends Component {
       toggleSelection,
       toggleAll,
       selectType: "checkbox",
-      getTdProps: (r, s) => {
-        const selected = this.isSelected(r.id_submission);
-        return {
-          style: {
-            backgroundColor: selected ? "lightgreen" : "inherit"
-            // color: selected ? 'white' : 'inherit',
-          }
-        };
-      }
+      // getTdProps: (r, s) => {
+      //   const selected = this.isSelected(r.id_submission);
+      //   return {
+      //     style: {
+      //       backgroundColor: selected ? "lightgreen" : "inherit"
+      //       // color: selected ? 'white' : 'inherit',
+      //     }
+      //   };
+      // }
     };
 
     return (

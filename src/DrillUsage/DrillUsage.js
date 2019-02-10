@@ -4,14 +4,80 @@ import '../App.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import ExportToExcel from './ExportToExcel';
+import checkboxHOC from "react-table/lib/hoc/selectTable";
+
+
+const CheckboxTable = checkboxHOC(ReactTable);
 
 class DrillUsage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            usage: []
+            submissions: [],
+            selection: [],
         }
     }
+
+    dataSource() {
+      if (this.props.socket.state !== "open") return;
+
+      const timestamp = Date.now()
+      const data = {
+          timestamp: timestamp,
+          routingKey: 'calc.drill.usageSummary',
+          payload: {filters:{minDate:"1-1-2019"}}
+      }
+
+      this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
+      this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
+          this.props.socket.unsubscribe('gs-message-' + timestamp);
+          // this.isSubscribed = false;
+          console.log('GameSense API responded:\n', response);
+          const res = typeof response.content === 'string' ? JSON.parse(response.content) : null;
+          let downloadFrame = document.getElementById("downloadFrame");
+            if (!downloadFrame) {
+                downloadFrame = document.createElement('iframe');
+                downloadFrame.id = "downloadFrame";
+                downloadFrame.style = "display: none;";
+                document.getElementsByTagName('body')[0].appendChild(downloadFrame);
+            }
+            downloadFrame.src = res.s3_presigned1wk;
+
+          console.log('Here is the payload:\n', res);
+          this.setState({
+              submissions: res
+          });
+      });
+      console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
+  }
+
+  exportSource(submissionId) {
+    if (this.props.socket.state !== "open") return;
+
+      const timestamp = Date.now()
+      const data = {
+          timestamp: timestamp,
+          routingKey: 'calc.drill.usageSummary',
+          payload: {"id_submission":submissionId}
+      };
+      this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
+      this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
+          this.props.socket.unsubscribe('gs-message-' + timestamp);
+          console.log('GameSense API responded:\n', response);
+          const res = typeof response.content === 'string' ? JSON.parse(response.content) : null;
+          let downloadFrame = document.getElementById("downloadFrame");
+          if (!downloadFrame) {
+              downloadFrame = document.createElement('iframe');
+              downloadFrame.id = "downloadFrame";
+              downloadFrame.style = "display: none;";
+              document.getElementsByTagName('body')[0].appendChild(downloadFrame);
+          }
+          downloadFrame.src = res.s3_presigned1wk;
+
+          console.log('Here is the payload:\n', res);
+      });
+      console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
+  }
 
     toggleSelection = (key) => {
       /*
@@ -20,7 +86,7 @@ class DrillUsage extends Component {
         Other implementations could use object keys, a Javascript Set, or Redux... etc.
       */
       // start off with the existing state
-      let selection = [...this.state.usage];
+      let selection = [...this.state.selection];
       const keyIndex = selection.indexOf(key);
       // check to see if the key exists
       if (keyIndex >= 0) {
@@ -57,7 +123,7 @@ class DrillUsage extends Component {
         the selection state.
       */
       const selectAll = this.state.selectAll ? false : true;
-      const usage = [];
+      const selection = [];
       if (selectAll) {
         // we need to get at the internals of ReactTable
         const wrappedInstance = this.checkboxTable.getWrappedInstance();
@@ -65,19 +131,19 @@ class DrillUsage extends Component {
         const currentRecords = wrappedInstance.getResolvedState().sortedData;
         // we just push all the IDs onto the selection array
         currentRecords.forEach(item => {
-          usage.push(item.id_submission);
+          selection.push(item.id_submission);
         });
       }
-      this.setState({ selectAll, usage });
+      this.setState({ selectAll, selection });
     };
 
     isSelected(key) {
-      return this.state.usage.includes(key);
+      return this.state.selection.includes(key);
       // console.log(this.state.selection.includes(key))
   }
 
     logSelection = () => {
-      console.log("selection:", this.state.usage);
+      console.log("selection:", this.state.selection);
       // .forEach()
     };
 
@@ -86,30 +152,7 @@ class DrillUsage extends Component {
         this.dataSource();
     }
 
-    dataSource() {
-        if (this.props.socket.state !== "open") return;
 
-        const timestamp = Date.now()
-        const data = {
-            timestamp: timestamp,
-            routingKey: 'calc.drill.usageSummary',
-            payload: {filters:{minDate:"1-1-2019"}}
-        }
-
-        this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
-        this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
-            this.props.socket.unsubscribe('gs-message-' + timestamp);
-            this.isSubscribed = false;
-            console.log('GameSense API responded:\n', response);
-            const res = typeof response.content === 'string' ? JSON.parse(response.content) : null;
-                // CreateTableFromJSON(res)
-            console.log('Here is the payload:\n', res);
-            this.setState({
-                usage: res
-            });
-        });
-        console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
-    }
 
   render() {
     const columns = [
@@ -177,19 +220,19 @@ class DrillUsage extends Component {
       //   Header: "Actions",
       //   Cell: props => {
       //     return (
-      //       <button style={{backgroundColor:'red', color: '#fefefe'}}
+      //       <button style={{backgroundColor:'green', color: '#fefefe'}}
       //         onClick={() => {
-      //           this.deleteRow(props.original.id)
+      //           this.exportSource(props.original.id_submission);
       //         }}
-      //       >Delete</button>
+      //       >Download</button>
       //     );
       //   },
       //   sortable: false,
       //   filterable: false,
-      //   width:100,
+      //   width:80,
       //   maxWidth: 100,
       //   minWidth: 100
-      // }
+      // },
     ];
 
     const { toggleSelection, toggleAll, logSelection } = this;
@@ -227,12 +270,12 @@ class DrillUsage extends Component {
             </button>
           </div>
           <button className="logSelectionButton" onClick={logSelection}>Log Selection</button>
-          <ReactTable
+          <CheckboxTable
             keyField='id_submission'
             ref={r => (this.checkboxTable = r)}
             className="-striped -highlight"
             columns={columns}
-            data={this.state.usage}
+            data={this.state.submissions}
             filterable
             defaultPageSize={10}
             noDataText={"...Please Wait"}
@@ -249,7 +292,7 @@ class DrillUsage extends Component {
               );
             }}
 
-            </ReactTable>
+            </CheckboxTable>
         </div>
       </div>
     );

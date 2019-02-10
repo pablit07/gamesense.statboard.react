@@ -21,6 +21,10 @@ class ExportToExcel extends Component {
 
         today = mm + '/' + dd + '/' + yyyy;
 
+
+
+
+
         return (
             <div style={{marginRight: '25px'}}>
                 <ReactHTMLTableToExcel
@@ -29,9 +33,9 @@ class ExportToExcel extends Component {
                     table="table-to-xls"
                     filename={"gameSenseDrillUsageReport " + today }
                     sheet="tablexls"
+                    shortDate
                     buttonText=" Export to XLS"/>
-                <table hidden="true" id="table-to-xls">
-                {/* WORK ON FOR TOMORROW colSpan={2} */}
+                <table hidden="true"  id="table-to-xls">
                     <thread>
                         <tr>
                             <th>Team</th>
@@ -40,12 +44,14 @@ class ExportToExcel extends Component {
                             <th>Drill</th>
                             <th>Score</th>
                             <th>Date</th>
+
                         </tr>
                     </thread>
                     <tbody>
                     {
                       this.props.posts.map(post => {
                           return(
+
                               <tr key={post.id_submission}>
                                 <td>{post.team_name}</td>
                                 <td>{post.player_first_name}</td>
@@ -65,3 +71,4 @@ class ExportToExcel extends Component {
 }
 
 export default ExportToExcel
+
