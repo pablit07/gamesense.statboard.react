@@ -26,28 +26,18 @@ class DrillUsage extends Component {
           timestamp: timestamp,
           routingKey: 'calc.drill.usageSummary',
           payload: {filters:{minDate:"1-1-2019"}}
-      }
-
+      };
       this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
       this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
           this.props.socket.unsubscribe('gs-message-' + timestamp);
-          // this.isSubscribed = false;
           console.log('GameSense API responded:\n', response);
           const res = typeof response.content === 'string' ? JSON.parse(response.content) : null;
-          let downloadFrame = document.getElementById("downloadFrame");
-            if (!downloadFrame) {
-                downloadFrame = document.createElement('iframe');
-                downloadFrame.id = "downloadFrame";
-                downloadFrame.style = "display: none;";
-                document.getElementsByTagName('body')[0].appendChild(downloadFrame);
-            }
-            downloadFrame.src = res.s3_presigned1wk;
-
+              // CreateTableFromJSON(res)
           console.log('Here is the payload:\n', res);
           this.setState({
               submissions: res
           });
-      });
+      })
       console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
   }
 
@@ -143,12 +133,13 @@ class DrillUsage extends Component {
   }
 
     logSelection = () => {
-      console.log("selection:", this.state.selection);
+      console.log("selection:", this.state.submissions);
       // .forEach()
+      // , this.dataSource.bind(this)
     };
 
     componentDidMount() {
-        this.props.socket.on('connect', this.dataSource.bind(this));
+        this.props.socket.on('connect');
         this.dataSource();
     }
 
@@ -208,7 +199,7 @@ class DrillUsage extends Component {
       },
       {
         Header: "Date",
-        accessor: "completion_timestamp_formatted",
+        accessor: "completion_timestamp_formatted_short",
         style: {
           textAlign:'right'
         },

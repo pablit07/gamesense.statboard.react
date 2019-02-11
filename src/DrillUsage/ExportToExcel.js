@@ -33,7 +33,6 @@ class ExportToExcel extends Component {
                     table="table-to-xls"
                     filename={"gameSenseDrillUsageReport " + today }
                     sheet="tablexls"
-                    shortDate
                     buttonText=" Export to XLS"/>
                 <table hidden="true"  id="table-to-xls">
                     <thread>
@@ -58,7 +57,7 @@ class ExportToExcel extends Component {
                                 <td>{post.player_last_name}</td>
                                 <td>{post.drill}</td>
                                 <td>{post.first_glance_total_score}</td>
-                                <td>{post.completion_timestamp_formatted}</td>
+                                <td>{post.completion_timestamp_formatted_short}</td>
                               </tr>
                           )
                       })
