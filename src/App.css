@@ -6,8 +6,13 @@
   margin-bottom: 20px;
 } */
 
-#actionButtons > div {
+#actionButtons>div {
   display: inline;
+}
+
+#actionButtons {
+  margin-right: 2%;
+  margin-left: 2%;
 }
 
 #test-table-xls-button {
@@ -107,7 +112,6 @@ h3 {
   background-color: cornflowerblue;
   color: white;
   margin-bottom: 9px;
-  margin-left: 17px;
   padding: 10px;
   border-radius: 6px;
   border: cornflowerblue;

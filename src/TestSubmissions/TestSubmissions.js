@@ -238,14 +238,9 @@ class TestSubmissions extends Component {
         <div className="reactTable">
         <div className="reportTitle">
             <h3>Test Submissions</h3>
-            <button className="reportButton">
-              <Link
-                style={{color: 'white'}}
-                to='/drillusage'>Drill Usage Reports  </Link>
-                <i class="fa fa-arrow-right" aria-hidden="true"></i>
-            </button>
+
           </div>
-          <button className="logSelectionButton" onClick={logSelection}>Log Selection</button>
+
           <CheckboxTable
             keyField='id_submission'
             ref={r => (this.checkboxTable = r)}
@@ -261,9 +256,20 @@ class TestSubmissions extends Component {
             {(state, filteredData, instance) => {
               this.reactTable = state.pageRows.map(post => {return post});
               return(
-                <div>
-                  {filteredData()}
+                <div id="actionButtons">
+
+                  <button className="logSelectionButton" onClick={logSelection}>Log Selection</button>
+
                   <ExportToExcel posts={this.reactTable}/>
+
+                  <button className="reportButton">
+                    <Link
+                      style={{color: 'white'}}
+                      to='/drillusage'>Drill Usage Reports </Link>
+                      <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  </button>
+                  {/* React-Table */}
+                  {filteredData()}
                 </div>
               );
             }}

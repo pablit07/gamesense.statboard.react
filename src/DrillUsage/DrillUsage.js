@@ -282,6 +282,7 @@ class DrillUsage extends Component {
                     to='/testsubmissions'>Test Submissions </Link>
                     <i class="fa fa-arrow-right" aria-hidden="true"></i>
                   </button>
+                  {/* React-Table */}
                   {filteredData()}
                 </div>
               );
