@@ -6,15 +6,18 @@
   margin-bottom: 20px;
 } */
 
+#actionButtons > div {
+  display: inline;
+}
+
 #test-table-xls-button {
-  border-radius: 25px;
+  border-radius: 6px;
   color: beige;
-  height: 2.5em;
-  width: 9.5em;
+  padding: 9px;
   background-color: green;
-  margin-top: 15px;
-  margin-left: 45%;
-  margin-bottom: 20px;
+  margin-top: 0px;
+  margin-left: 1%;
+  margin-bottom: 0px;
   border: green;
 }
 
@@ -23,8 +26,18 @@
   background-color: #215836 !important;
 }
 
+.ReactTable .rt-tr-group {
+  font-size: 14px;
+  font-family: arial;
+  padding: 0;
+}
+
+.ReactTable .rt-tbody .rt-td {
+  padding: 2px;
+}
+
 .ReactTable .rt-thead.-header {
-  background-color: #4E9360;
+  background-color: #4e9360;
   color: white;
   font-stretch: expanded;
   /* font-weight: 600; */
@@ -44,14 +57,12 @@
 
 .reportButton {
   background-color: darkgrey;
-  ;
   color: white;
-  /* font-weight: 600; */
   font-family: "europa";
-  margin-bottom: 1.0rem;
-  margin-right: 3.3rem;
+  padding: 10px;
+  margin-left: 1%;
   border-radius: 6px;
-  border: #007BFF;
+  border: #007bff;
 }
 
 h3 {
@@ -81,23 +92,23 @@ h3 {
   background-color: #e9ecef;
   margin-top: 0;
   margin-left: 2.5rem;
-  margin-bottom: 2.0rem;
+  margin-bottom: 2rem;
   color: #343a40;
   padding-left: 10px;
-  border-left: 4px solid #4E9360;
+  border-left: 4px solid #4e9360;
   text-transform: uppercase;
   font-weight: 700;
   font-size: 18px;
   line-height: 18px;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
 }
 
 .logSelectionButton {
   background-color: cornflowerblue;
   color: white;
-  margin-bottom: 17px;
+  margin-bottom: 9px;
   margin-left: 17px;
   padding: 10px;
-  border-radius: 25px;
+  border-radius: 6px;
   border: cornflowerblue;
 }

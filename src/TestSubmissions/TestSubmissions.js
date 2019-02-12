@@ -192,23 +192,23 @@ class TestSubmissions extends Component {
         },
         width:200,
       },
-      {
-        Header: "Actions",
-        Cell: props => {
-          return (
-            <button style={{backgroundColor:'green', color: '#fefefe'}}
-              onClick={() => {
-                this.exportSource(props.original.id_submission);
-              }}
-            >Download</button>
-          );
-        },
-        sortable: false,
-        filterable: false,
-        width:80,
-        maxWidth: 100,
-        minWidth: 100
-      },
+      // {
+      //   Header: "Actions",
+      //   Cell: props => {
+      //     return (
+      //       <button style={{backgroundColor:'green', color: '#fefefe'}}
+      //         onClick={() => {
+      //           this.exportSource(props.original.id_submission);
+      //         }}
+      //       >Download</button>
+      //     );
+      //   },
+      //   sortable: false,
+      //   filterable: false,
+      //   width:80,
+      //   maxWidth: 100,
+      //   minWidth: 100
+      // },
     ]
 
     const { toggleSelection, toggleAll, logSelection } = this;
@@ -253,7 +253,7 @@ class TestSubmissions extends Component {
             columns={columns}
             data={this.state.submissions}
             filterable
-            defaultPageSize={10}
+            defaultPageSize={25}
             noDataText={"...Please Wait"}
             {...checkboxProps}
             >
@@ -263,10 +263,7 @@ class TestSubmissions extends Component {
               return(
                 <div>
                   {filteredData()}
-                  <ExportToExcel
-                    posts={this.reactTable}
-
-                  />
+                  <ExportToExcel posts={this.reactTable}/>
                 </div>
               );
             }}

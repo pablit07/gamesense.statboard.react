@@ -25,7 +25,7 @@ class DrillUsage extends Component {
       const data = {
           timestamp: timestamp,
           routingKey: 'calc.drill.usageSummary',
-          payload: {filters:{minDate:"1-1-2019"}}
+          payload: {filters:{minDate:"2-5-2019"}}
       };
       this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
       this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
@@ -69,7 +69,7 @@ class DrillUsage extends Component {
       console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
   }
 
-    toggleSelection = (key) => {
+    toggleSelection = (key, shift, row) => {
       /*
         Implementation of how to manage the selection state is up to the developer.
         This implementation uses an array stored in the component state.
@@ -133,13 +133,13 @@ class DrillUsage extends Component {
   }
 
     logSelection = () => {
-      console.log("selection:", this.state.submissions);
+      console.log("selection:", this.state.selection);
       // .forEach()
-      // , this.dataSource.bind(this)
+
     };
 
     componentDidMount() {
-        this.props.socket.on('connect');
+        this.props.socket.on('connect', this.dataSource.bind(this));
         this.dataSource();
     }
 
@@ -163,7 +163,7 @@ class DrillUsage extends Component {
         style: {
           textAlign:'left'
         },
-        width:200,
+        width:150,
         maxWidth: 100,
         minWidth: 100
       },
@@ -173,7 +173,7 @@ class DrillUsage extends Component {
         style: {
           textAlign:'left'
         },
-        width:200,
+        width:150,
         maxWidth: 100,
         minWidth: 100
       },
@@ -203,7 +203,7 @@ class DrillUsage extends Component {
         style: {
           textAlign:'right'
         },
-        width:300,
+        width:200,
         maxWidth: 100,
         minWidth: 100
       },
@@ -253,14 +253,8 @@ class DrillUsage extends Component {
         <div className="reactTable">
           <div className="reportTitle">
             <h3>Drill Usage Report</h3>
-            <button className="reportButton">
-              <Link
-                style={{color: 'white'}}
-                to='/testsubmissions'>Test Submissions </Link>
-                <i class="fa fa-arrow-right" aria-hidden="true"></i>
-            </button>
+
           </div>
-          <button className="logSelectionButton" onClick={logSelection}>Log Selection</button>
           <CheckboxTable
             keyField='id_submission'
             ref={r => (this.checkboxTable = r)}
@@ -268,17 +262,27 @@ class DrillUsage extends Component {
             columns={columns}
             data={this.state.submissions}
             filterable
-            defaultPageSize={10}
+            defaultPageSize={25}
             noDataText={"...Please Wait"}
             {...checkboxProps}
             >
 
+
             {(state, filteredData, instance) => {
               this.reactTable = state.pageRows.map(post => {return post});
               return(
-                <div>
-                  {filteredData()}
+                <div id="actionButtons">
+                  <button className="logSelectionButton" onClick={logSelection}>Log Selection</button>
+
                   <ExportToExcel posts={this.reactTable} />
+
+                  <button className="reportButton">
+                  <Link
+                    style={{color: 'white'}}
+                    to='/testsubmissions'>Test Submissions </Link>
+                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  </button>
+                  {filteredData()}
                 </div>
               );
             }}
