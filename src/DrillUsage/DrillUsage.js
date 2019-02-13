@@ -284,6 +284,7 @@ class DrillUsage extends Component {
                   </button>
                   {/* React-Table */}
                   {filteredData()}
+                 {console.log(this.reactTable)}
                 </div>
               );
             }}

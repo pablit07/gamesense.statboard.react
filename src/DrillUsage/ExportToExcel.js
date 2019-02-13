@@ -37,11 +37,12 @@ class ExportToExcel extends Component {
 
                     <thread>
                         <tr>
-                            <th>Player ID</th>
                             <th>Team</th>
-                            <th># </th>
-                            <th>Upload</th>
-                            <th>Test Date</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Drill</th>
+                            <th>Score</th>
+                            <th>Date</th>
                         </tr>
                     </thread>
                     <tbody>
@@ -49,11 +50,12 @@ class ExportToExcel extends Component {
                       this.props.posts.map(post => {
                           return(
                               <tr key={post.id_submissions}>
-                                <td>{post.player_id}</td>
-                                <td>{post.team}</td>
-                                <td>{post.number_of_responses}</td>
-                                <td>{post.source_etl}</td>
-                                <td>{post.test_date}</td>
+                                <td>{post.team_name}</td>
+                                <td>{post.player_first_name}</td>
+                                <td>{post.player_last_name}</td>
+                                <td>{post.drill}</td>
+                                <td>{post.first_glance_total_score}</td>
+                                <td>{post.completion_timestamp_formatted_short}</td>
                               </tr>
                           )
                       })
