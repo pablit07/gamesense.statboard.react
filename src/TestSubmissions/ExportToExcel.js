@@ -24,8 +24,7 @@ class ExportToExcel extends Component {
         today = mm + '/' + dd + '/' + yyyy;
 
         return (
-            <div style={{marginRight: '25px'}}>
-
+            <div>
                 <ReactHTMLTableToExcel
                     id="test-table-xls-button"
                     className="fa fa-table"
