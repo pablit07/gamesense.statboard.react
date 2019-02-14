@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import ExportToExcel from './ExportToExcel';
+import 'font-awesome/css/font-awesome.min.css';
 import checkboxHOC from "react-table/lib/hoc/selectTable";
+import {downloadExcelSheet} from '../Utils'
 
 
 const CheckboxTable = checkboxHOC(ReactTable);
@@ -16,57 +17,55 @@ class DrillUsage extends Component {
             submissions: [],
             selection: [],
         }
+        this.payload = {filters:{minDate:"1-15-2019"}}
     }
+
 
     dataSource() {
       if (this.props.socket.state !== "open") return;
+      let payload = this.payload
 
       const timestamp = Date.now()
       const data = {
           timestamp: timestamp,
           routingKey: 'calc.drill.usageSummary',
-          payload: {filters:{minDate:"2-5-2019"}}
+          payload
       };
       this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
       this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
           this.props.socket.unsubscribe('gs-message-' + timestamp);
           console.log('GameSense API responded:\n', response);
-          const res = typeof response.content === 'string' ? JSON.parse(response.content) : null;
-              // CreateTableFromJSON(res)
-          console.log('Here is the payload:\n', res);
+          const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
+          console.log('Here is the payload:\n', responseData);
           this.setState({
-              submissions: res
+              submissions: responseData
           });
       })
       console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
   }
 
-  exportSource(submissionId) {
+
+  exportSource() {
     if (this.props.socket.state !== "open") return;
+    let payload = this.payload
 
       const timestamp = Date.now()
       const data = {
           timestamp: timestamp,
-          routingKey: 'calc.drill.usageSummary',
-          payload: {"id_submission":submissionId}
+          routingKey: 'export.drill.usageSummary',
+          payload
       };
       this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
       this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
           this.props.socket.unsubscribe('gs-message-' + timestamp);
           console.log('GameSense API responded:\n', response);
-          const res = typeof response.content === 'string' ? JSON.parse(response.content) : null;
-          let downloadFrame = document.getElementById("downloadFrame");
-          if (!downloadFrame) {
-              downloadFrame = document.createElement('iframe');
-              downloadFrame.id = "downloadFrame";
-              downloadFrame.style = "display: none;";
-              document.getElementsByTagName('body')[0].appendChild(downloadFrame);
-          }
-          downloadFrame.src = res.s3_presigned1wk;
 
-          console.log('Here is the payload:\n', res);
+          downloadExcelSheet(response)
+
+          console.log('Here is the payload:\n', response);
       });
       console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
+      alert("Download will finish shortly")
   }
 
     toggleSelection = (key, shift, row) => {
@@ -129,13 +128,10 @@ class DrillUsage extends Component {
 
     isSelected(key) {
       return this.state.selection.includes(key);
-      // console.log(this.state.selection.includes(key))
-  }
+    }
 
     logSelection = () => {
       console.log("selection:", this.state.selection);
-      // .forEach()
-
     };
 
     componentDidMount() {
@@ -207,34 +203,19 @@ class DrillUsage extends Component {
         maxWidth: 100,
         minWidth: 100
       },
-      // {
-      //   Header: "Actions",
-      //   Cell: props => {
-      //     return (
-      //       <button style={{backgroundColor:'green', color: '#fefefe'}}
-      //         onClick={() => {
-      //           this.exportSource(props.original.id_submission);
-      //         }}
-      //       >Download</button>
-      //     );
-      //   },
-      //   sortable: false,
-      //   filterable: false,
-      //   width:80,
-      //   maxWidth: 100,
-      //   minWidth: 100
-      // },
     ];
 
     const { toggleSelection, toggleAll, logSelection } = this;
     const { selectAll } = this.state;
     const isSelected = this.isSelected.bind(this)
+    const exportSource = this.exportSource.bind(this)
 
     const checkboxProps = {
       selectAll,
       isSelected,
       toggleSelection,
       toggleAll,
+      exportSource,
       selectType: "checkbox",
       // getTdProps: (r, s) => {
       //   const selected = this.isSelected(r.id_submission);
@@ -269,22 +250,26 @@ class DrillUsage extends Component {
 
 
             {(state, filteredData, instance) => {
-              this.reactTable = state.pageRows.map(post => {return post});
               return(
                 <div id="actionButtons">
+
+                  {/* Log Selection Button */}
                   <button className="logSelectionButton" onClick={logSelection}>Log Selection</button>
 
-                  <ExportToExcel posts={this.reactTable} />
+                  {/* Excel Button */}
+                  <button onClick={exportSource} id="test-table-xls-button" className="fa fa-table" type="button"> Export to XLS</button>
 
+                  {/* Link Button */}
                   <button className="reportButton">
                   <Link
                     style={{color: 'white'}}
                     to='/testsubmissions'>Test Submissions </Link>
                     <i class="fa fa-arrow-right" aria-hidden="true"></i>
                   </button>
+
                   {/* React-Table */}
                   {filteredData()}
-                 {console.log(this.reactTable)}
+
                 </div>
               );
             }}

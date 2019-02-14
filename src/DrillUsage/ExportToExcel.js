@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import 'font-awesome/css/font-awesome.min.css';
+
 
 
 class ExportToExcel extends Component {
@@ -30,7 +30,7 @@ class ExportToExcel extends Component {
                     id="test-table-xls-button"
                     className="fa fa-table"
                     table="table-to-xls"
-                    filename={"gameSense Test Submissions " + today}
+                    filename={"gameSense Drill Usage " + today}
                     sheet="tablexls"
                     buttonText=" Export to XLS"/>
                 <table border= {1} hidden="true" id="table-to-xls">
