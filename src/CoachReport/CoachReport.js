@@ -143,6 +143,10 @@ class CoachReport extends Component {
         this.dataSource();
     }
 
+    componentWillUpdate(){
+      localStorage.setItem('test', '123');
+    }
+
 
 
   render() {

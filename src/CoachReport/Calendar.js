@@ -5,11 +5,14 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export default class Calendar extends React.Component {
   constructor(props) {
+    const dateTwoWeeksAgo = new Date();
+        dateTwoWeeksAgo.setDate(dateTwoWeeksAgo.getDate() - 14);
     super(props);
     this.state = {
-      // startDate: new Date(),
-      // endDate: new Date()
+      startDate: dateTwoWeeksAgo,
+      endDate: new Date()
     };
+
   }
 
   handleChange = ({ startDate, endDate }) => {
