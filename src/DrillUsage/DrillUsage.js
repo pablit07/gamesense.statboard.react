@@ -17,7 +17,9 @@ class DrillUsage extends Component {
             submissions: [],
             selection: [],
         }
-        this.payload = {filters:{minDate:"1-15-2019"}}
+        const dateTwoWeeksAgo = new Date();
+        dateTwoWeeksAgo.setDate(dateTwoWeeksAgo.getDate() - 14);
+        this.payload = {filters:{minDate:dateTwoWeeksAgo}}
     }
 
 
@@ -187,9 +189,19 @@ class DrillUsage extends Component {
         Header: "Score",
         accessor: "first_glance_total_score",
         style: {
-          textAlign:'right'
+          textAlign:'center'
         },
         width:70,
+        maxWidth: 100,
+        minWidth: 100
+      },
+      {
+        Header: "App",
+        accessor: "app",
+        style: {
+          textAlign:'center'
+        },
+        width:50,
         maxWidth: 100,
         minWidth: 100
       },
