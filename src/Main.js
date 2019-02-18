@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from './Home/Home';
 import TestSubmissions from './TestSubmissions/TestSubmissions';
 import DrillUsage from './DrillUsage/DrillUsage';
+import CoachReport from './CoachReport/CoachReport';
 import { create } from 'socketcluster-client';
 
 // The Main component renders one of the three provided
@@ -45,6 +46,7 @@ const Main = () => {
 	      <Route exact path='/' component={Home}/>
 	      <Route exact path='/testsubmissions' render={() => (<TestSubmissions socket={socket} />)} />
 	      <Route path='/drillusage' render={() => (<DrillUsage socket={socket} />)} />
+        <Route path='/coachreport' render={() => (<CoachReport socket={socket} />)} />
 	    </Switch>
 	  </main>
 	);

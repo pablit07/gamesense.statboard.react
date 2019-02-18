@@ -11,7 +11,9 @@ const Home = () => (
         <li>
           <Link to='/drillusage'>Drill Usage</Link>
         </li>
-
+        <li>
+          <Link to='/coachreport'>Coach Report</Link>
+        </li>
       </ul>
   </div>
 )

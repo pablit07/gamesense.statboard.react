@@ -10,6 +10,16 @@
   flex-wrap: wrap;
 }
 
+.dateColumns {
+  margin-left: 8px;
+}
+
+.selectDate {
+  margin: 8px;
+  margin-top: -2px;
+  margin-bottom: -20px;
+}
+
 #test-table-xls-button {
   border-radius: 6px;
   color: beige;
@@ -28,6 +38,7 @@
 
 .ReactTable .rt-table {
   border: 2px solid #4e9360;
+  margin-top: 9px;
 }
 
 .ReactTable .rt-tr-group {
