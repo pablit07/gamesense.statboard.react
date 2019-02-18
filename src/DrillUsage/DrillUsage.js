@@ -17,9 +17,10 @@ class DrillUsage extends Component {
             submissions: [],
             selection: [],
         }
-        const dateTwoWeeksAgo = new Date();
-        dateTwoWeeksAgo.setDate(dateTwoWeeksAgo.getDate() - 15);
-        this.payload = {filters:{minDate:dateTwoWeeksAgo}}
+        const dateOneMonthAgo = new Date();
+        dateOneMonthAgo.setDate(dateOneMonthAgo.getDate() - 31);
+        this.payload = {filters:{minDate:dateOneMonthAgo}}
+        console.log("Showing Drill Usage data since", dateOneMonthAgo)
     }
 
 
@@ -206,12 +207,22 @@ class DrillUsage extends Component {
         minWidth: 100
       },
       {
+        Header: "Device",
+        accessor: "device",
+        style: {
+          textAlign:'left'
+        },
+        width:150,
+        maxWidth: 100,
+        minWidth: 100
+      },
+      {
         Header: "Date",
-        accessor: "completion_timestamp_formatted_short",
+        accessor: "completion_timestamp_formatted",
         style: {
           textAlign:'right'
         },
-        width:200,
+        width:225,
         maxWidth: 100,
         minWidth: 100
       },
