@@ -18,7 +18,7 @@ class DrillUsage extends Component {
             selection: [],
         }
         const dateTwoWeeksAgo = new Date();
-        dateTwoWeeksAgo.setDate(dateTwoWeeksAgo.getDate() - 14);
+        dateTwoWeeksAgo.setDate(dateTwoWeeksAgo.getDate() - 15);
         this.payload = {filters:{minDate:dateTwoWeeksAgo}}
     }
 
