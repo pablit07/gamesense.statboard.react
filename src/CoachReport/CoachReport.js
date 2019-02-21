@@ -280,12 +280,14 @@ class CoachReport extends Component {
             {(state, filteredData, instance) => {
               return(
                 <div id="actionButtons">
+                  <button onClick={logSelection} className="btn btn-blue">Log Selection</button>
+                  <button onClick={exportSource} className="btn btn-green fa fa-table">Export to XLS</button>
 
                   {/* Log Selection Button */}
-                  <button className="logSelectionButton" onClick={logSelection}>Log Selection</button>
+                  {/* <button className="logSelectionButton" onClick={logSelection}>Log Selection</button> */}
 
                   {/* Excel Button */}
-                  <button onClick={exportSource} id="test-table-xls-button" className="fa fa-table" type="button"> Export to XLS</button>
+                  {/* <button onClick={exportSource} id="test-table-xls-button" className="fa fa-table" type="button"> Export to XLS</button> */}
 
                   {/* Calendar */}
                   <Calendar selected={this.state.date} onSelect={this.handleSelect} onChange={this.handleChange} />

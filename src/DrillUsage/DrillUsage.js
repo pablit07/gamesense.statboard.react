@@ -276,19 +276,21 @@ class DrillUsage extends Component {
               return(
                 <div id="actionButtons">
 
-                  {/* Log Selection Button */}
-                  <button className="logSelectionButton" onClick={logSelection}>Log Selection</button>
+                  <button onClick={logSelection} className="btn btn-blue">Log Selection</button>
+                  <button onClick={exportSource} className="btn btn-green fa fa-table">Export to XLS</button>
 
-                  {/* Excel Button */}
-                  <button onClick={exportSource} id="test-table-xls-button" className="fa fa-table" type="button"> Export to XLS</button>
+                    {/* Log Selection Button */}
+                    {/* <button className="logSelectionButton" onClick={logSelection}>Log Selection</button> */}
 
-                  {/* Link Button */}
-                  <button className="reportButton">
-                  <Link
-                    style={{color: 'white'}}
-                    to='/testsubmissions'>Test Submissions </Link>
-                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                  </button>
+                    {/* Excel Button */}
+                    {/* <button onClick={exportSource} id="test-table-xls-button" className="fa fa-table" type="button"> Export to XLS</button> */}
+
+                    {/* Link Button */}
+                    <button className="btn">
+                    <Link
+                      to='/testsubmissions'>Test Submissions </Link>
+                      <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </button>
 
                   {/* React-Table */}
                   {filteredData()}

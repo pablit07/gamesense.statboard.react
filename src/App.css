@@ -129,3 +129,77 @@ h3 {
   border-radius: 6px;
   border: cornflowerblue;
 }
+
+/* Buttons */
+button {
+  text-decoration: none;
+  margin: 0 10px;
+  font-family: Quicksand, sans-serif;
+}
+
+button.btn {
+  display: inline-block;
+  color: #666;
+  background-color: #eee;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 12px;
+  padding: 10px 30px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom-width: 3px;
+}
+
+button.btn:hover {
+  background-color: #e3e3e3;
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+button.btn:active {
+  background-color: #ccc;
+  border-color: rgba(0, 0, 0, 0.9);
+}
+
+/* blue button */
+
+button.btn.btn-blue {
+  margin-left: 2%;
+  background-color: #699db6;
+  border-color: rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+button.btn.btn-blue:hover {
+  background-color: #4f87a2;
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+button.btn.btn-blue:active {
+  background-color: #3c677b;
+  border-color: rgba(0, 0, 0, 0.9);
+}
+
+/* green button */
+
+button.btn.btn-green {
+  background-color: #4e9358;
+  border-color: rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  color: #fff;
+  margin-left: 0;
+  margin-right: 0;
+  padding-bottom: 13px;
+}
+
+button.btn.btn-green:hover {
+  background-color: #008000;
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+button.btn.btn-green:active {
+  background-color: #043a08;
+  border-color: rgba(0, 0, 0, 0.9);
+}

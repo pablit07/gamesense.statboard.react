@@ -43,6 +43,8 @@ export default class Calendar extends React.Component {
             startDate={this.state.startDate}
             endDate={this.state.endDate}
             onChange={this.handleChangeStart}
+            minDate={this.dateTwoWeeksAgo}
+            placeholderText="Select a day"
           />
           <DatePicker
             selected={this.state.endDate}

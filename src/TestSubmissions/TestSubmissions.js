@@ -258,13 +258,13 @@ class TestSubmissions extends Component {
               return(
                 <div id="actionButtons">
 
-                  <button className="logSelectionButton" onClick={logSelection}>Log Selection</button>
+                  <button onClick={logSelection} className="btn btn-blue">Log Selection</button>
+                  {/* <button className="logSelectionButton" onClick={logSelection}>Log Selection</button> */}
 
                   <ExportToExcel posts={this.reactTable}/>
 
-                  <button className="reportButton">
+                  <button className="btn">
                     <Link
-                      style={{color: 'white'}}
                       to='/drillusage'>Drill Usage Reports </Link>
                       <i class="fa fa-arrow-right" aria-hidden="true"></i>
                   </button>
