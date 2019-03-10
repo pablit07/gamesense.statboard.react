@@ -11,7 +11,7 @@ var socket = null;
         };
         const credentials = {
           username: 'coachkohlhoff',
-          token: '91eafccde30a265c85c2d21010411c5402ae17f8',
+          token:  window.document.location.search.replace('?token=', ''),
           app: 'BB'
         };
         socket = create(opts);

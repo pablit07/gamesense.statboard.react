@@ -1,6 +1,6 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
+  "name": "gamesense.statboard.react",
+  "version": "1.1.1",
   "private": true,
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.7.1",
