@@ -34,7 +34,7 @@ class CoachReport extends Component {
       const timestamp = Date.now()
       const data = {
           timestamp: timestamp,
-          routingKey: 'calc.drill.usageSummary',
+          routingKey: 'calc.drill.coachReport',
           payload
       };
       this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
@@ -58,7 +58,7 @@ class CoachReport extends Component {
       const timestamp = Date.now()
       const data = {
           timestamp: timestamp,
-          routingKey: 'export.drill.usageSummary',
+          routingKey: 'export.drill.coachReport',
           payload
       };
       this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
