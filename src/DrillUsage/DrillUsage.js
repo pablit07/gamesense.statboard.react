@@ -17,7 +17,7 @@ class DrillUsage extends Component {
             submissions: [],
             selection: [],
         }
-        const dateOneMonthAgo = new Date();
+        const dateOneMonthAgo = new Date(new Date().toDateString());
         dateOneMonthAgo.setDate(dateOneMonthAgo.getDate() - 31);
         this.payload = {filters:{minDate:dateOneMonthAgo}}
         console.log("Showing Drill Usage data since", dateOneMonthAgo)
@@ -25,8 +25,14 @@ class DrillUsage extends Component {
 
 
     dataSource() {
-      if (this.props.socket.state !== "open") return;
+      if (this.props.socket.state !== "open" || !this.props.socket.authToken) return;
       let payload = this.payload
+
+      if (!this.state.submissions.length) {
+          payload.paginate = true;
+      }
+
+      payload.authToken = this.props.socket.authToken;
 
       const timestamp = Date.now()
       const data = {
@@ -43,6 +49,10 @@ class DrillUsage extends Component {
           this.setState({
               submissions: responseData
           });
+          if (payload.paginate) {
+              payload.paginate = false;
+              this.dataSource();
+          }
       })
       console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
   }
@@ -139,6 +149,7 @@ class DrillUsage extends Component {
 
     componentDidMount() {
         this.props.socket.on('connect', this.dataSource.bind(this));
+        this.props.socket.on('authStateChange', this.dataSource.bind(this));
         this.dataSource();
     }
 
@@ -289,7 +300,7 @@ class DrillUsage extends Component {
                     <button className="btn">
                     <Link
                       to='/testsubmissions'>Test Submissions </Link>
-                      <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                      <i className="fa fa-arrow-right" aria-hidden="true"></i>
                     </button>
 
                   {/* React-Table */}

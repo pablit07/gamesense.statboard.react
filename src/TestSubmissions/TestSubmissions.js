@@ -20,13 +20,13 @@ class TestSubmissions extends Component {
     }
 
     dataSource() {
-        if (this.props.socket.state !== "open") return;
+        if (this.props.socket.state !== "open" || !this.props.socket.authToken) return;
 
         const timestamp = Date.now()
         const data = {
             timestamp: timestamp,
             routingKey: 'calc.test.usageSummary',
-            payload: {}
+            payload: {authToken: this.props.socket.authToken}
         };
         this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
         this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
@@ -140,6 +140,7 @@ class TestSubmissions extends Component {
 
     componentDidMount() {
         this.props.socket.on('connect', this.dataSource.bind(this));
+        this.props.socket.on('authStateChange', this.dataSource.bind(this));
         this.dataSource();
     }
 

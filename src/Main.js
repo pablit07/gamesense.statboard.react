@@ -4,7 +4,7 @@ import Home from './Home/Home';
 import TestSubmissions from './TestSubmissions/TestSubmissions';
 import DrillUsage from './DrillUsage/DrillUsage';
 import CoachReport from './CoachReport/CoachReport';
-import { create } from 'socketcluster-client';
+import { socket } from './Socket';
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /testsubmissions
@@ -14,31 +14,7 @@ import { create } from 'socketcluster-client';
 
 const Main = () => {
 
-	var socket = null;
-    try {
-        const opts = {
-          hostname: 'svc.gamesensesports.com',
-          secure: false,
-          rejectUnauthorized: false,
-          path: '/',
-          port: 8100
-        };
-        socket = create(opts);
 
-        socket.on('connect', function () {
-          console.log('Connected to worker via socket ID', socket.id);
-        })
-
-        socket.on('close', function () {
-          console.log('Socket is closing...');
-        })
-
-        socket.on('error', function (err) {
-          throw Error('Socket error: ' + err);
-        })
-    } catch (err) {
-      console.error(err);
-    }
 
 	return (
 	  <main>

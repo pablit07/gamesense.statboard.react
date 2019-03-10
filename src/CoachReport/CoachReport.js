@@ -26,8 +26,10 @@ class CoachReport extends Component {
 
 
     dataSource() {
-      if (this.props.socket.state !== "open") return;
-      let payload = this.payload
+      if (this.props.socket.state !== "open" || !this.props.socket.authToken) return;
+      let payload = this.payload;
+
+      payload.authToken = this.props.socket.authToken;
 
       const timestamp = Date.now()
       const data = {
@@ -140,6 +142,7 @@ class CoachReport extends Component {
 
     componentDidMount() {
         this.props.socket.on('connect', this.dataSource.bind(this));
+        this.props.socket.on('authStateChange', this.dataSource.bind(this));
         this.dataSource();
     }
 
