@@ -12,24 +12,32 @@ const CheckboxTable = checkboxHOC(ReactTable);
 
 class CoachReport extends Component {
     constructor(props) {
-        super(props)
+
+        super(props);
+
+        const now = new Date();
+        const dateOneMonthAgo = new Date();
+        dateOneMonthAgo.setDate(now.getDate() - 31);
+
         this.state = {
             submissions: [],
             selection: [],
-            date: Date.now(),
-        }
-        const dateOneMonthAgo = new Date();
-        dateOneMonthAgo.setDate(dateOneMonthAgo.getDate() - 31);
-        this.payload = {filters:{minDate:dateOneMonthAgo}}
-        console.log("Showing Drill Usage data since", dateOneMonthAgo)
+            endDate: now,
+            startDate: dateOneMonthAgo
+        };
+
     }
 
 
     dataSource() {
       if (this.props.socket.state !== "open" || !this.props.socket.authToken) return;
-      let payload = this.payload;
+      let payload = {filters:{}};
 
       payload.authToken = this.props.socket.authToken;
+
+      payload.filters.minDate = this.state.startDate;
+      payload.filters.maxDate = this.state.endDate;
+
 
       const timestamp = Date.now()
       const data = {
@@ -47,7 +55,7 @@ class CoachReport extends Component {
               submissions: responseData
           });
       })
-      console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
+      console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
   }
 
 
@@ -146,8 +154,10 @@ class CoachReport extends Component {
         this.dataSource();
     }
 
-    componentWillUpdate(){
-      localStorage.setItem('test', '123');
+    async handleDateChange({startDate, endDate}) {
+        // startDate.setDate(startDate.getDate() - 1);
+        await this.setState({startDate, endDate});
+        this.dataSource();
     }
 
 
@@ -293,7 +303,8 @@ class CoachReport extends Component {
                   {/* <button onClick={exportSource} id="test-table-xls-button" className="fa fa-table" type="button"> Export to XLS</button> */}
 
                   {/* Calendar */}
-                  <Calendar selected={this.state.date} onSelect={this.handleSelect} onChange={this.handleChange} />
+
+                  <Calendar startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)} />
 
                   {/* React-Table */}
                   {filteredData()}

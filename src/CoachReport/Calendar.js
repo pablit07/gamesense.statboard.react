@@ -5,12 +5,10 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export default class Calendar extends React.Component {
   constructor(props) {
-    const dateTwoWeeksAgo = new Date();
-        dateTwoWeeksAgo.setDate(dateTwoWeeksAgo.getDate() - 14);
     super(props);
     this.state = {
-      startDate: dateTwoWeeksAgo,
-      endDate: new Date()
+      startDate: this.props.startDate,
+      endDate: this.props.endDate
     };
 
   }
@@ -19,11 +17,19 @@ export default class Calendar extends React.Component {
     startDate = startDate || this.state.startDate;
     endDate = endDate || this.state.endDate;
 
+    let now = new Date();
+    if (isAfter(endDate, now)) {
+      endDate = now;
+    }
+
     if (isAfter(startDate, endDate)) {
       endDate = startDate;
     }
 
     this.setState({ startDate, endDate });
+    if (this.props.onChange) {
+      this.props.onChange({startDate, endDate});
+    }
   };
 
   handleChangeStart = startDate => this.handleChange({ startDate });
@@ -38,16 +44,15 @@ export default class Calendar extends React.Component {
         <br />
         <div className="dateColumns">
           <DatePicker
-            selected={this.state.startDate}
+            selected={this.props.startDate}
             selectsStart
             startDate={this.state.startDate}
             endDate={this.state.endDate}
             onChange={this.handleChangeStart}
-            minDate={this.dateTwoWeeksAgo}
             placeholderText="Select a day"
           />
           <DatePicker
-            selected={this.state.endDate}
+            selected={this.props.endDate}
             selectsEnd
             startDate={this.state.startDate}
             endDate={this.state.endDate}
