@@ -70,7 +70,7 @@ class CoachReport extends Component {
 
           console.log('Here is the payload:\n', response);
       });
-      console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
+      console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
       alert("Download will finish shortly")
   }
 

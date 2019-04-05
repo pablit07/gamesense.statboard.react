@@ -203,3 +203,7 @@ button.btn.btn-green:active {
   background-color: #043a08;
   border-color: rgba(0, 0, 0, 0.9);
 }
+
+.rt-thead.-filters {
+    background-color: #1F673B;
+}

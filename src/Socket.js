@@ -4,10 +4,10 @@ var socket = null;
     try {
         const opts = {
           hostname: 'svc.gamesensesports.com',
-          secure: false,
+          secure: true,
           rejectUnauthorized: false,
           path: '/',
-          port: 8100
+          port: 8101
         };
         const credentials = {
           username: 'coachkohlhoff',
@@ -37,7 +37,11 @@ var socket = null;
         })
 
         socket.on('error', function (err) {
-          throw Error('Socket error: ' + err);
+            try {
+                throw Error('Socket error: ' + err);
+            } catch (e) {
+                console.error(e);
+            }
         })
     } catch (err) {
       console.error(err);
