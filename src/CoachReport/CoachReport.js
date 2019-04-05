@@ -23,7 +23,8 @@ class CoachReport extends Component {
             submissions: [],
             selection: [],
             endDate: now,
-            startDate: dateOneMonthAgo
+            startDate: dateOneMonthAgo,
+            isLoading: false
         };
 
     }
@@ -39,22 +40,24 @@ class CoachReport extends Component {
       payload.filters.maxDate = this.state.endDate;
 
 
-      const timestamp = Date.now()
+      const timestamp = Date.now();
       const data = {
           timestamp: timestamp,
           routingKey: 'calc.drill.coachReport',
           payload
       };
+      this.setState({isLoading:true});
       this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
       this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
           this.props.socket.unsubscribe('gs-message-' + timestamp);
           console.log('GameSense API responded:\n', response);
           const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
           console.log('Here is the payload:\n', responseData);
+          this.setState({isLoading:false});
           this.setState({
               submissions: responseData
           });
-      })
+      });
       console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
   }
 
@@ -155,7 +158,6 @@ class CoachReport extends Component {
     }
 
     async handleDateChange({startDate, endDate}) {
-        // startDate.setDate(startDate.getDate() - 1);
         await this.setState({startDate, endDate});
         this.dataSource();
     }
@@ -285,7 +287,7 @@ class CoachReport extends Component {
             data={this.state.submissions}
             filterable
             defaultPageSize={25}
-            noDataText={"...Please Wait"}
+            noDataText={(this.state.isLoading ? "...Please Wait" : "No Data To Display")}
             {...checkboxProps}
             >
 
