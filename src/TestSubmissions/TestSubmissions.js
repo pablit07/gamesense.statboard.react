@@ -5,6 +5,8 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import ExportToExcel from './ExportToExcel';
 import checkboxHOC from "react-table/lib/hoc/selectTable";
+import Calendar from "../CoachReport/Calendar";
+import {downloadExcelSheet} from "../Utils";
 
 
 const CheckboxTable = checkboxHOC(ReactTable);
@@ -12,21 +14,29 @@ const CheckboxTable = checkboxHOC(ReactTable);
 
 class TestSubmissions extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+
+        const now = new Date();
+        const dateOneMonthAgo = new Date();
+        dateOneMonthAgo.setDate(now.getDate() - 31);
+
         this.state = {
             submissions: [],
             selection: [],
+            startDate: dateOneMonthAgo,
+            endDate: now,
+            isLoading: false
         }
     }
 
     dataSource() {
         if (this.props.socket.state !== "open" || !this.props.socket.authToken) return;
 
-        const timestamp = Date.now()
+        const timestamp = Date.now();
         const data = {
             timestamp: timestamp,
             routingKey: 'calc.test.usageSummary',
-            payload: {authToken: this.props.socket.authToken}
+            payload: {authToken: this.props.socket.authToken, filters: {minDate: this.state.startDate, maxDate: this.state.endDate}}
         };
         this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
         this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
@@ -55,19 +65,17 @@ class TestSubmissions extends Component {
         this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
             this.props.socket.unsubscribe('gs-message-' + timestamp);
             console.log('GameSense API responded:\n', response);
-            const res = typeof response.content === 'string' ? JSON.parse(response.content) : null;
-            let downloadFrame = document.getElementById("downloadFrame");
-            if (!downloadFrame) {
-                downloadFrame = document.createElement('iframe');
-                downloadFrame.id = "downloadFrame";
-                downloadFrame.style = "display: none;";
-                document.getElementsByTagName('body')[0].appendChild(downloadFrame);
-            }
-            downloadFrame.src = res.s3_presigned1wk;
+
+            downloadExcelSheet(response);
 
             console.log('Here is the payload:\n', res);
         });
         console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
+    }
+
+    async handleDateChange({startDate, endDate}) {
+        await this.setState({startDate, endDate});
+        this.dataSource();
     }
 
     toggleSelection = (key, shift, row) => {
@@ -146,138 +154,144 @@ class TestSubmissions extends Component {
 
   render() {
 
-    const columns = [
-      {
-        Header: "Player ID",
-        accessor: "player_id",
-        style: {
-          textAlign:'left'
-        },
-        width:300,
-        maxWidth: 100,
-        minWidth: 100
-      },
-      {
-        Header: "Team",
-        accessor: "team",
-        style: {
-          textAlign:'left'
-        },
-        width:200,
-        maxWidth: 100,
-        minWidth: 100
-      },
-      {
-        Header: "#",
-        accessor: "number_of_responses",
-        sortable: false,
-        filterable: false,
-        width:70,
-      },
-      {
-        Header: "Upload",
-        accessor: "source_etl",
-        sortable: false,
-        filterable: false,
-        style: {
-          textAlign:'left'
-        },
-      },
-      {
-        Header: "Test Date",
-        accessor: "test_date",
-        sortable: false,
-        filterable: false,
-        style: {
-          textAlign:'right'
-        },
-        width:200,
-      },
-      {
-        Header: "Actions",
-        Cell: props => {
-          return (
-            <button style={{backgroundColor:'green', color: '#fefefe'}}
-              onClick={() => {
-                this.exportSource(props.original.id_submission);
-              }}
-            >Download</button>
-          );
-        },
-        sortable: false,
-        filterable: false,
-        width:80,
-        maxWidth: 100,
-        minWidth: 100
-      },
-    ]
+      const columns = [
+          {
+              Header: "Player ID",
+              accessor: "player_id",
+              style: {
+                  textAlign: 'left'
+              },
+              width: 300,
+              maxWidth: 100,
+              minWidth: 100
+          },
+          {
+              Header: "Team",
+              accessor: "team",
+              style: {
+                  textAlign: 'left'
+              },
+              width: 200,
+              maxWidth: 100,
+              minWidth: 100
+          },
+          {
+              Header: "#",
+              accessor: "number_of_responses",
+              sortable: false,
+              filterable: false,
+              width: 70,
+          },
+          {
+              Header: "Upload",
+              accessor: "source_etl",
+              sortable: false,
+              filterable: false,
+              style: {
+                  textAlign: 'left'
+              },
+          },
+          {
+              Header: "Test Date",
+              accessor: "test_date",
+              sortable: false,
+              filterable: false,
+              style: {
+                  textAlign: 'right'
+              },
+              width: 200,
+          },
+          {
+              Header: "Actions",
+              Cell: props => {
+                  return (
+                      <button style={{backgroundColor: 'green', color: '#fefefe'}}
+                              onClick={() => {
+                                  this.exportSource(props.original.id_submission);
+                              }}
+                      >Download</button>
+                  );
+              },
+              sortable: false,
+              filterable: false,
+              width: 80,
+              maxWidth: 100,
+              minWidth: 100
+          },
+      ]
 
-    const { toggleSelection, toggleAll, logSelection } = this;
-    const { selectAll } = this.state;
-    const isSelected = this.isSelected.bind(this)
+      const {toggleSelection, toggleAll, logSelection} = this;
+      const {selectAll} = this.state;
+      const isSelected = this.isSelected.bind(this)
 
-    const checkboxProps = {
-      selectAll,
-      isSelected,
-      toggleSelection,
-      toggleAll,
-      selectType: "checkbox",
-      // getTdProps: (r, s) => {
-      //   const selected = this.isSelected(r.id_submission);
-      //   return {
-      //     style: {
-      //       backgroundColor: selected ? "lightgreen" : "inherit"
-      //       // color: selected ? 'white' : 'inherit',
-      //     }
-      //   };
-      // }
-    };
+      const checkboxProps = {
+          selectAll,
+          isSelected,
+          toggleSelection,
+          toggleAll,
+          selectType: "checkbox",
+          // getTdProps: (r, s) => {
+          //   const selected = this.isSelected(r.id_submission);
+          //   return {
+          //     style: {
+          //       backgroundColor: selected ? "lightgreen" : "inherit"
+          //       // color: selected ? 'white' : 'inherit',
+          //     }
+          //   };
+          // }
+      };
 
-    return (
-     <div className="background">
-      <h6 className="pageTitle">GameSense StatBoard</h6>
-        <div className="reactTable">
-        <div className="reportTitle">
-            <h3>Test Submissions</h3>
+      return (
+          <div className="background">
+              <h6 className="pageTitle">GameSense StatBoard</h6>
+              <div className="reactTable">
+                  <div className="reportTitle">
+                      <h3>Test Submissions</h3>
 
+                  </div>
+
+                  <CheckboxTable
+                      keyField='id_submission'
+                      ref={r => (this.checkboxTable = r)}
+                      className="-striped -highlight"
+                      columns={columns}
+                      data={this.state.submissions}
+                      filterable
+                      defaultPageSize={25}
+                      noDataText={"...Please Wait"}
+                      {...checkboxProps}
+                  >
+
+                      {(state, filteredData, instance) => {
+                          this.reactTable = state.pageRows.map(post => {
+                              return post
+                          });
+                          return (
+                              <div id="actionButtons">
+
+                                  <button onClick={logSelection} className="btn btn-blue">Log Selection</button>
+                                  {/* <button className="logSelectionButton" onClick={logSelection}>Log Selection</button> */}
+
+                                  <ExportToExcel posts={this.reactTable}/>
+
+                                  <button className="btn">
+                                      <Link
+                                          to='/drillusage'>Drill Usage Reports </Link>
+                                      <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                  </button>
+
+                                  <Calendar startDate={this.state.startDate}
+                                            endDate={this.state.endDate}
+                                            onChange={this.handleDateChange.bind(this)}/>
+                                  {/* React-Table */}
+                                  {filteredData()}
+                              </div>
+                          );
+                      }}
+                  </CheckboxTable>
+              </div>
           </div>
-
-          <CheckboxTable
-            keyField='id_submission'
-            ref={r => (this.checkboxTable = r)}
-            className="-striped -highlight"
-            columns={columns}
-            data={this.state.submissions}
-            filterable
-            defaultPageSize={25}
-            noDataText={"...Please Wait"}
-            {...checkboxProps}
-            >
-
-            {(state, filteredData, instance) => {
-              this.reactTable = state.pageRows.map(post => {return post});
-              return(
-                <div id="actionButtons">
-
-                  <button onClick={logSelection} className="btn btn-blue">Log Selection</button>
-                  {/* <button className="logSelectionButton" onClick={logSelection}>Log Selection</button> */}
-
-                  <ExportToExcel posts={this.reactTable}/>
-
-                  <button className="btn">
-                    <Link
-                      to='/drillusage'>Drill Usage Reports </Link>
-                      <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                  </button>
-                  {/* React-Table */}
-                  {filteredData()}
-                </div>
-              );
-            }}
-          </CheckboxTable>
-        </div>
-      </div>
-    );
+      );
   }
 }
 

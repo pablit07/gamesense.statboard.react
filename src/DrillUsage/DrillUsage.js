@@ -5,64 +5,75 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import 'font-awesome/css/font-awesome.min.css';
 import checkboxHOC from "react-table/lib/hoc/selectTable";
+import toggleHeader from "./ToggleHeader";
 import {downloadExcelSheet} from '../Utils'
+import Calendar from "../CoachReport/Calendar";
 
 
-const CheckboxTable = checkboxHOC(ReactTable);
+const CheckboxTable = toggleHeader(checkboxHOC(ReactTable));
 
 class DrillUsage extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            submissions: [],
-            selection: [],
-        }
-        const dateOneMonthAgo = new Date(new Date().toDateString());
-        dateOneMonthAgo.setDate(dateOneMonthAgo.getDate() - 31);
-        this.payload = {filters:{minDate:dateOneMonthAgo}}
-        console.log("Showing Drill Usage data since", dateOneMonthAgo)
+  constructor(props) {
+    super(props);
+
+    const now = new Date();
+    const dateOneMonthAgo = new Date();
+    dateOneMonthAgo.setDate(now.getDate() - 31);
+
+    this.state = {
+      submissions: [],
+      selection: [],
+      startDate: dateOneMonthAgo,
+      endDate: now,
+    };
+
+    this.payload = {filters: {minDate: dateOneMonthAgo}}
+    console.log("Showing Drill Usage data since", dateOneMonthAgo)
+  }
+
+
+  dataSource() {
+    if (this.props.socket.state !== "open" || !this.props.socket.authToken) return;
+    let payload = {filters:{}};
+
+    if (!this.state.submissions.length) {
+      payload.paginate = true;
     }
 
+    payload.authToken = this.props.socket.authToken;
 
-    dataSource() {
-      if (this.props.socket.state !== "open" || !this.props.socket.authToken) return;
-      let payload = this.payload
+    payload.filters.minDate = this.state.startDate;
+    payload.filters.maxDate = this.state.endDate;
 
-      if (!this.state.submissions.length) {
-          payload.paginate = true;
+    const timestamp = Date.now()
+    const data = {
+      timestamp: timestamp,
+      routingKey: 'calc.drill.usageSummary',
+      payload
+    };
+    this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
+    this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
+      this.props.socket.unsubscribe('gs-message-' + timestamp);
+      console.log('GameSense API responded:\n', response);
+      const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
+      console.log('Here is the payload:\n', responseData);
+      this.setState({
+        submissions: responseData
+      });
+      if (payload.paginate) {
+        payload.paginate = false;
+        this.dataSource();
       }
-
-      payload.authToken = this.props.socket.authToken;
-
-      const timestamp = Date.now()
-      const data = {
-          timestamp: timestamp,
-          routingKey: 'calc.drill.usageSummary',
-          payload
-      };
-      this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
-      this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
-          this.props.socket.unsubscribe('gs-message-' + timestamp);
-          console.log('GameSense API responded:\n', response);
-          const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
-          console.log('Here is the payload:\n', responseData);
-          this.setState({
-              submissions: responseData
-          });
-          if (payload.paginate) {
-              payload.paginate = false;
-              this.dataSource();
-          }
-      })
-      console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
+    });
+    console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
   }
 
 
   exportSource() {
     if (this.props.socket.state !== "open") return;
-    let payload = this.payload
+    let payload = this.payload;
 
-      const timestamp = Date.now()
+      const timestamp = Date.now();
       const data = {
           timestamp: timestamp,
           routingKey: 'export.drill.usageSummary',
@@ -73,7 +84,7 @@ class DrillUsage extends Component {
           this.props.socket.unsubscribe('gs-message-' + timestamp);
           console.log('GameSense API responded:\n', response);
 
-          downloadExcelSheet(response)
+          downloadExcelSheet(response);
 
           console.log('Here is the payload:\n', response);
       });
@@ -153,6 +164,10 @@ class DrillUsage extends Component {
         this.dataSource();
     }
 
+  async handleDateChange({startDate, endDate}) {
+    await this.setState({startDate, endDate});
+    this.dataSource();
+  }
 
 
   render() {
@@ -161,19 +176,20 @@ class DrillUsage extends Component {
         Header: "Team",
         accessor: "team_name",
         style: {
-          textAlign:'left'
+          textAlign: 'left'
         },
-        width:200,
+        width: 200,
         maxWidth: 100,
-        minWidth: 100
+        minWidth: 100,
+        toggle: [{label: 'Individ', value: ""}, {label: "Teams", value: "*"}]
       },
       {
         Header: "First Name",
         accessor: "player_first_name",
         style: {
-          textAlign:'left'
+          textAlign: 'left'
         },
-        width:150,
+        width: 150,
         maxWidth: 100,
         minWidth: 100
       },
@@ -181,9 +197,9 @@ class DrillUsage extends Component {
         Header: "Last Name",
         accessor: "player_last_name",
         style: {
-          textAlign:'left'
+          textAlign: 'left'
         },
-        width:150,
+        width: 150,
         maxWidth: 100,
         minWidth: 100
       },
@@ -191,9 +207,9 @@ class DrillUsage extends Component {
         Header: "Drill",
         accessor: "drill",
         style: {
-          textAlign:'left'
+          textAlign: 'left'
         },
-        width:300,
+        width: 300,
         maxWidth: 100,
         minWidth: 100
       },
@@ -201,9 +217,9 @@ class DrillUsage extends Component {
         Header: "Score",
         accessor: "first_glance_total_score",
         style: {
-          textAlign:'center'
+          textAlign: 'center'
         },
-        width:70,
+        width: 70,
         maxWidth: 100,
         minWidth: 100
       },
@@ -211,9 +227,9 @@ class DrillUsage extends Component {
         Header: "App",
         accessor: "app",
         style: {
-          textAlign:'center'
+          textAlign: 'center'
         },
-        width:50,
+        width: 50,
         maxWidth: 100,
         minWidth: 100
       },
@@ -221,9 +237,9 @@ class DrillUsage extends Component {
         Header: "Device",
         accessor: "device",
         style: {
-          textAlign:'left'
+          textAlign: 'left'
         },
-        width:150,
+        width: 150,
         maxWidth: 100,
         minWidth: 100
       },
@@ -231,16 +247,16 @@ class DrillUsage extends Component {
         Header: "Date",
         accessor: "completion_timestamp_formatted",
         style: {
-          textAlign:'right'
+          textAlign: 'right'
         },
-        width:225,
+        width: 225,
         maxWidth: 100,
         minWidth: 100
       },
     ];
 
-    const { toggleSelection, toggleAll, logSelection } = this;
-    const { selectAll } = this.state;
+    const {toggleSelection, toggleAll, logSelection} = this;
+    const {selectAll} = this.state;
     const isSelected = this.isSelected.bind(this)
     const exportSource = this.exportSource.bind(this)
 
@@ -263,56 +279,60 @@ class DrillUsage extends Component {
     };
 
     return (
-     <div className="background">
-      <h6 className="pageTitle">GameSense StatBoard</h6>
-        <div className="reactTable">
-          <div className="reportTitle">
-            <h3>Drill Usage Report</h3>
+        <div className="background">
+          <h6 className="pageTitle">GameSense StatBoard</h6>
+          <div className="reactTable">
+            <div className="reportTitle">
+              <h3>Drill Usage Report</h3>
 
-          </div>
-          <CheckboxTable
-            keyField='id_submission'
-            ref={r => (this.checkboxTable = r)}
-            className="-striped -highlight"
-            columns={columns}
-            data={this.state.submissions}
-            filterable
-            defaultPageSize={25}
-            noDataText={"...Please Wait"}
-            {...checkboxProps}
+            </div>
+            <CheckboxTable
+                keyField='id_submission'
+                ref={r => (this.checkboxTable = r)}
+                className="-striped -highlight"
+                columns={columns}
+                data={this.state.submissions}
+                filterable
+                defaultPageSize={25}
+                noDataText={"...Please Wait"}
+                {...checkboxProps}
             >
 
 
-            {(state, filteredData, instance) => {
-              return(
-                <div id="actionButtons">
+              {(state, filteredData, instance) => {
+                return (
+                    <div id="actionButtons">
 
-                  <button onClick={logSelection} className="btn btn-blue">Log Selection</button>
-                  <button onClick={exportSource} className="btn btn-green fa fa-table">Export to XLS</button>
+                      <button onClick={logSelection} className="btn btn-blue">Log Selection</button>
+                      <button onClick={exportSource} className="btn btn-green fa fa-table">Export to XLS</button>
 
-                    {/* Log Selection Button */}
-                    {/* <button className="logSelectionButton" onClick={logSelection}>Log Selection</button> */}
+                      {/* Log Selection Button */}
+                      {/* <button className="logSelectionButton" onClick={logSelection}>Log Selection</button> */}
 
-                    {/* Excel Button */}
-                    {/* <button onClick={exportSource} id="test-table-xls-button" className="fa fa-table" type="button"> Export to XLS</button> */}
+                      {/* Excel Button */}
+                      {/* <button onClick={exportSource} id="test-table-xls-button" className="fa fa-table" type="button"> Export to XLS</button> */}
 
-                    {/* Link Button */}
-                    <button className="btn">
-                    <Link
-                      to='/testsubmissions'>Test Submissions </Link>
-                      <i className="fa fa-arrow-right" aria-hidden="true"></i>
-                    </button>
+                      {/* Link Button */}
+                      <button className="btn">
+                        <Link
+                            to='/testsubmissions'>Test Submissions </Link>
+                        <i className="fa fa-arrow-right" aria-hidden="true"/>
+                      </button>
 
-                  {/* React-Table */}
-                  {filteredData()}
+                      <Calendar startDate={this.state.startDate}
+                                endDate={this.state.endDate}
+                                onChange={this.handleDateChange.bind(this)}/>
 
-                </div>
-              );
-            }}
+                      {/* React-Table */}
+                      {filteredData()}
+
+                    </div>
+                );
+              }}
 
             </CheckboxTable>
+          </div>
         </div>
-      </div>
     );
   }
 }

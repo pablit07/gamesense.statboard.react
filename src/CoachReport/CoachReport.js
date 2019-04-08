@@ -39,7 +39,6 @@ class CoachReport extends Component {
       payload.filters.minDate = this.state.startDate;
       payload.filters.maxDate = this.state.endDate;
 
-
       const timestamp = Date.now();
       const data = {
           timestamp: timestamp,

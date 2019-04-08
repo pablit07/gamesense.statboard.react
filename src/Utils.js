@@ -9,6 +9,5 @@ export function downloadExcelSheet(response) {
             document.getElementsByTagName('body')[0].appendChild(downloadFrame);
         }
         downloadFrame.src = responseData.s3_presigned1wk;
-        console.log('It works!');
   }
 
