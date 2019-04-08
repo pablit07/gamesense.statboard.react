@@ -8,9 +8,7 @@ const defaultToggleButtonComponent = ({ filter, onChange, column, toggle, instan
         marginBottom: '-8px',
         float: 'left',
         cursor: 'pointer',
-    }
-
-    this.selected = '';
+    };
 
     let toggles = toggle.map(({label, value}) => {
 
@@ -39,14 +37,17 @@ const defaultToggleButtonComponent = ({ filter, onChange, column, toggle, instan
                 {
                     filtered: newFiltering,
                 },
-                () => onFilteredChange && onFilteredChange(newFiltering, column, '')
-            )
+                () => onFilteredChange && onFilteredChange(newFiltering, column, value)
+            );
 
             column.filterMethod = original_filterMethod;
         };
 
         return (<label style={{display:"block",color:"white"}}>
-            <input type="radio" name="filter" onClick={onClick.bind(instance)} checked={this.selected === label}/>
+            <input type="radio"
+                   name={("filter-"+column.id)}
+                   onClick={onClick.bind(instance)}
+                   checked={!!instance.filtered.find(x => x.id === column.id && x.value === value)}/>
             {label}
         </label>);
     });
@@ -60,7 +61,7 @@ const defaultToggleButtonComponent = ({ filter, onChange, column, toggle, instan
                     <input
                     type="text"
                     style={{
-                        width: '50%',
+                        width: '60%',
                     }}
                     placeholder={column.Placeholder}
                     value={filter ? filter.value : ''}
@@ -147,32 +148,37 @@ export default ReactTable => {
         };
 
 
-        applyToggleHeaderForColumns = columns =>
-            columns.map((col, index) => {
-                if (!col.toggle) return col;
+        applyToggleHeaderForColumns = columns => columns.map((col, index) => {
+            if (!col.toggle) return col;
 
-                col.Filter = ({ filter, onChange, column }) => this.toggleFilterRender({ filter, onChange, column, toggle: col.toggle, instance: this });
-
-                return col;
+            col.Filter = ({filter, onChange, column}) => this.toggleFilterRender({
+                filter,
+                onChange,
+                column,
+                toggle: col.toggle,
+                instance: this
             });
+
+            return col;
+        });
 
 
         render() {
             const {
                 columns: originalCols,
                 ...rest
-            } = this.props
+            } = this.props;
             const columns = this.applyToggleHeaderForColumns([...originalCols]);
 
             const extra = {
                 columns,
-            }
+            };
 
             return <ReactTable {...rest} {...extra} ref={r => (this.wrappedInstance = r)} />
         }
     }
 
-    wrapper.displayName = 'RTToggleHeader'
+    wrapper.displayName = 'RTToggleHeader';
 
     return wrapper
 }
