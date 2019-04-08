@@ -25,6 +25,7 @@ class DrillUsage extends Component {
       selection: [],
       startDate: dateOneMonthAgo,
       endDate: now,
+      isLoading: false
     };
 
     this.dataSource = this.dataSource.bind(this);
@@ -53,12 +54,14 @@ class DrillUsage extends Component {
       routingKey: 'calc.drill.usageSummary',
       payload
     };
+    this.setState({isLoading:true});
     this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
     this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
       this.props.socket.unsubscribe('gs-message-' + timestamp);
       console.log('GameSense API responded:\n', response);
       const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
       console.log('Here is the payload:\n', responseData);
+      this.setState({isLoading:false});
       this.setState({
         submissions: responseData
       });
@@ -169,7 +172,7 @@ class DrillUsage extends Component {
     }
 
   async handleDateChange({startDate, endDate}) {
-    await this.setState({startDate, endDate});
+    await this.setState({startDate, endDate, submissions: []});
     this.dataSource();
   }
 

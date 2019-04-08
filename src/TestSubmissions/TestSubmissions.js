@@ -40,6 +40,7 @@ class TestSubmissions extends Component {
             routingKey: 'calc.test.usageSummary',
             payload: {authToken: this.props.socket.authToken, filters: {minDate: this.state.startDate, maxDate: this.state.endDate}}
         };
+        this.setState({isLoading:true});
         this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
         this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
             this.props.socket.unsubscribe('gs-message-' + timestamp);
@@ -47,6 +48,7 @@ class TestSubmissions extends Component {
             const res = typeof response.content === 'string' ? JSON.parse(response.content) : null;
                 // CreateTableFromJSON(res)
             console.log('Here is the payload:\n', res);
+            this.setState({isLoading:false});
             this.setState({
                 submissions: res
             });
@@ -75,7 +77,7 @@ class TestSubmissions extends Component {
     }
 
     async handleDateChange({startDate, endDate}) {
-        await this.setState({startDate, endDate});
+        await this.setState({startDate, endDate, submissions: []});
         this.dataSource();
     }
 
@@ -291,7 +293,7 @@ class TestSubmissions extends Component {
                                   <button className="btn">
                                       <Link
                                           to='/drillusage'>Drill Usage Reports </Link>
-                                      <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                      <i className="fa fa-arrow-right"/>
                                   </button>
 
                                   <Calendar startDate={this.state.startDate}
