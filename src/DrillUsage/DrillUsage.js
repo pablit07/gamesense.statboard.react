@@ -27,6 +27,8 @@ class DrillUsage extends Component {
       endDate: now,
     };
 
+    this.dataSource = this.dataSource.bind(this);
+
     this.payload = {filters: {minDate: dateOneMonthAgo}}
     console.log("Showing Drill Usage data since", dateOneMonthAgo)
   }
@@ -64,6 +66,8 @@ class DrillUsage extends Component {
         payload.paginate = false;
         this.dataSource();
       }
+
+      this.props.socket.off('connect', this.dataSource);
     });
     console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
   }
@@ -159,8 +163,8 @@ class DrillUsage extends Component {
     };
 
     componentDidMount() {
-        this.props.socket.on('connect', this.dataSource.bind(this));
-        this.props.socket.on('authStateChange', this.dataSource.bind(this));
+        this.props.socket.on('connect', this.dataSource);
+        this.props.socket.on('authStateChange', this.dataSource);
         this.dataSource();
     }
 
@@ -181,7 +185,7 @@ class DrillUsage extends Component {
         width: 200,
         maxWidth: 100,
         minWidth: 100,
-        toggle: [{label: 'Individ', value: ""}, {label: "Teams", value: "*"}]
+        toggle: [{label: 'Individ', value: "~"}, {label: "Teams", value: "*"}]
       },
       {
         Header: "First Name",
@@ -294,7 +298,7 @@ class DrillUsage extends Component {
                 data={this.state.submissions}
                 filterable
                 defaultPageSize={25}
-                noDataText={"...Please Wait"}
+                noDataText={(this.state.isLoading ? "...Please Wait" : "No Data To Display")}
                 {...checkboxProps}
             >
 

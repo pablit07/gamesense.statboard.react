@@ -10,8 +10,8 @@ var socket = null;
           port: 8101
         };
         const credentials = {
-          username: 'coachkohlhoff',
-          token:  window.document.location.search.replace('?token=', ''),
+          username: window.document.location.search.replace('?token=', '').split(':')[0],
+          token:  window.document.location.search.replace('?token=', '').split(':')[1],
           app: 'BB'
         };
         socket = create(opts);

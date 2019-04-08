@@ -26,7 +26,9 @@ class TestSubmissions extends Component {
             startDate: dateOneMonthAgo,
             endDate: now,
             isLoading: false
-        }
+        };
+
+        this.dataSource = this.dataSource.bind(this);
     }
 
     dataSource() {
@@ -48,6 +50,7 @@ class TestSubmissions extends Component {
             this.setState({
                 submissions: res
             });
+            this.props.socket.off('connect', this.dataSource);
         });
         console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
     }
@@ -67,8 +70,6 @@ class TestSubmissions extends Component {
             console.log('GameSense API responded:\n', response);
 
             downloadExcelSheet(response);
-
-            console.log('Here is the payload:\n', res);
         });
         console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
     }
@@ -147,8 +148,8 @@ class TestSubmissions extends Component {
     };
 
     componentDidMount() {
-        this.props.socket.on('connect', this.dataSource.bind(this));
-        this.props.socket.on('authStateChange', this.dataSource.bind(this));
+        this.props.socket.on('connect', this.dataSource);
+        this.props.socket.on('authStateChange', this.dataSource);
         this.dataSource();
     }
 
@@ -178,17 +179,30 @@ class TestSubmissions extends Component {
           {
               Header: "#",
               accessor: "number_of_responses",
-              sortable: false,
-              filterable: false,
+              sortable: true,
+              filterable: true,
+              style: {
+                  textAlign: 'center'
+              },
               width: 70,
           },
           {
               Header: "Upload",
               accessor: "source_etl",
-              sortable: false,
-              filterable: false,
+              sortable: true,
+              filterable: true,
               style: {
                   textAlign: 'left'
+              },
+              width: 100
+          },
+          {
+              Header: "Device",
+              accessor: "device",
+              sortable: true,
+              filterable: true,
+              style: {
+                  textAlign: 'right'
               },
           },
           {

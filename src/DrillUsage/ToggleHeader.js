@@ -8,6 +8,7 @@ const defaultToggleButtonComponent = ({ filter, onChange, column, toggle, instan
         marginBottom: '-8px',
         float: 'left',
         cursor: 'pointer',
+        fontSize: '80%'
     };
 
     let toggles = toggle.map(({label, value}) => {
@@ -16,7 +17,7 @@ const defaultToggleButtonComponent = ({ filter, onChange, column, toggle, instan
         let onClick = function() {
             let original_filterMethod = column.filterMethod;
 
-            let condition = (value === "*") ? x => x !== '' : x => x === value;
+            let condition = (value === "*") ? x => x !== '' : (value === '~') ? x => x === '' :  x => x === value;
             column.filterMethod = (filter, row) => {
                 const id = filter.pivotId || filter.id;
                 return condition(String(row[id]));
@@ -30,7 +31,8 @@ const defaultToggleButtonComponent = ({ filter, onChange, column, toggle, instan
 
             newFiltering.push({
                 id: column.id,
-                value
+                value,
+                isToggle: true
             });
 
             wrappedInstance.setStateWithData(
@@ -43,11 +45,11 @@ const defaultToggleButtonComponent = ({ filter, onChange, column, toggle, instan
             column.filterMethod = original_filterMethod;
         };
 
-        return (<label style={{display:"block",color:"white"}}>
+        return (<label style={{display:"block",color:"white"}} key={label}>
             <input type="radio"
                    name={("filter-"+column.id)}
-                   onClick={onClick.bind(instance)}
-                   checked={!!instance.filtered.find(x => x.id === column.id && x.value === value)}/>
+                   onChange={onClick.bind(instance)}
+                   checked={instance.getWrappedInstance() && instance.getWrappedInstance().state.filtered.find(x => x.id === column.id && x.value === value && x.isToggle)}/>
             {label}
         </label>);
     });
@@ -66,7 +68,6 @@ const defaultToggleButtonComponent = ({ filter, onChange, column, toggle, instan
                     placeholder={column.Placeholder}
                     value={filter ? filter.value : ''}
                     onChange={event => onChange(event.target.value)}
-                    onFocus={event => this.selected = ''}
                     />
                 </div>
             </div>
@@ -98,7 +99,10 @@ export default ReactTable => {
 
         // this is so we can expose the underlying ReactTable.
         getWrappedInstance = () => {
-            if (!this.wrappedInstance) console.warn('RTToggleHeader - No wrapped instance')
+            if (!this.wrappedInstance) {
+                console.warn('RTToggleHeader - No wrapped instance');
+                return;
+            }
             if (this.wrappedInstance.getWrappedInstance) return this.wrappedInstance.getWrappedInstance()
             return this.wrappedInstance
         }
