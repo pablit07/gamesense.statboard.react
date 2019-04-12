@@ -1,14 +1,14 @@
 import checkboxHOC from "react-table/lib/hoc/selectTable";
 import ReactTable from "react-table";
 import React, {Component} from 'react';
-import toggleHeaderHOC from "./DrillUsage/ToggleHeader";
+import toggleHeaderHOC from "./ToggleHeader";
 
 const CheckboxTable = toggleHeaderHOC(checkboxHOC(ReactTable));
 
 class Table extends Component {
 
-    constructor() {
-        super(...arguments);
+    constructor(props) {
+        super(props);
 
         this.state = {
             selectAll: false

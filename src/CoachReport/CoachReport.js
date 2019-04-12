@@ -85,7 +85,6 @@ class CoachReport extends Component {
           console.log('Here is the payload:\n', response);
       });
       console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
-      alert("Download will finish shortly")
   }
 
     componentDidMount() {
@@ -114,14 +113,11 @@ class CoachReport extends Component {
             (<Calendar key={'Calendar'} startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)}/>)
         ];
 
-        return (
-                    <Table
-                        columns={columns}
-                        submissions={this.state.submissions}
-                        isLoading={this.state.isLoading}
-                        buttons={buttons}/>
-
-        );
+        return (<Table
+                columns={columns}
+                submissions={this.state.submissions}
+                isLoading={this.state.isLoading}
+                buttons={buttons}/>);
     }
 }
 

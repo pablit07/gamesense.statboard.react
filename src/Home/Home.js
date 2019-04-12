@@ -14,6 +14,9 @@ const Home = () => (
         <li>
           <Link to='/coachreport'>Coach Report</Link>
         </li>
+        <li>
+          <Link to='/drilldetails'>Drill Breakdown</Link>
+        </li>
       </ul>
   </div>
 )

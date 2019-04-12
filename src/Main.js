@@ -22,10 +22,10 @@ const Main = () => {
 		<main>
 			<Switch>
 				<Route exact path='/' component={Home}/>
-				<Route exact path='/testsubmissions' render={() => (<TestSubmissions socket={socket}/>)}/>
-				<Route path='/drillusage' render={() => (<DrillUsage socket={socket}/>)}/>
-				<Route path='/coachreport' render={() => <PageContainer title={'Coach Report'} contents={ (<CoachReport socket={socket}/>)}/> }/>
-				<Route path='/drilldetails' render={() => (<DrillDetails socket={socket}/>)}/>
+				<Route exact path='/testsubmissions' render={() => <PageContainer title={'Test Submissions'} contents={<TestSubmissions socket={socket}/>}/>}/>
+				<Route path='/drillusage' render={() => <PageContainer title={'Drill Usage Report'} contents={<DrillUsage socket={socket}/>}/>}/>
+				<Route path='/coachreport' render={() => <PageContainer title={'Coach Report'} contents={<CoachReport socket={socket}/>}/>}/>
+				<Route path='/drilldetails' render={() => <PageContainer title={'Drill Breakdown Report'} contents={<DrillDetails socket={socket}/>}/>}/>
 			</Switch>
 		</main>
 	);
