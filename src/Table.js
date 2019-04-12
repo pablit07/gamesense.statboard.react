@@ -1,9 +1,9 @@
 import checkboxHOC from "react-table/lib/hoc/selectTable";
 import ReactTable from "react-table";
 import React, {Component} from 'react';
-import toggleHeader from "./DrillUsage/ToggleHeader";
+import toggleHeaderHOC from "./DrillUsage/ToggleHeader";
 
-const CheckboxTable = toggleHeader(checkboxHOC(ReactTable));
+const CheckboxTable = toggleHeaderHOC(checkboxHOC(ReactTable));
 
 class Table extends Component {
 
