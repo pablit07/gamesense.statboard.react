@@ -5,7 +5,7 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import ExportToExcel from './ExportToExcel';
 import checkboxHOC from "react-table/lib/hoc/selectTable";
-import Calendar from "../CoachReport/Calendar";
+import Calendar from "../Calendar";
 import {downloadExcelSheet} from "../Utils";
 
 

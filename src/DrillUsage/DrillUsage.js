@@ -7,7 +7,8 @@ import 'font-awesome/css/font-awesome.min.css';
 import checkboxHOC from "react-table/lib/hoc/selectTable";
 import toggleHeader from "./ToggleHeader";
 import {downloadExcelSheet} from '../Utils'
-import Calendar from "../CoachReport/Calendar";
+import Calendar from "../Calendar";
+import columns from './columns';
 
 
 const CheckboxTable = toggleHeader(checkboxHOC(ReactTable));
@@ -61,9 +62,9 @@ class DrillUsage extends Component {
       console.log('GameSense API responded:\n', response);
       const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
       console.log('Here is the payload:\n', responseData);
-      this.setState({isLoading:false});
       this.setState({
-        submissions: responseData
+        submissions: responseData,
+        isLoading:false
       });
       if (payload.paginate) {
         payload.paginate = false;
@@ -178,89 +179,6 @@ class DrillUsage extends Component {
 
 
   render() {
-    const columns = [
-      {
-        Header: "Team",
-        accessor: "team_name",
-        style: {
-          textAlign: 'left'
-        },
-        width: 200,
-        maxWidth: 100,
-        minWidth: 100,
-        toggle: [{label: 'Individ', value: "~"}, {label: "Teams", value: "*"}]
-      },
-      {
-        Header: "First Name",
-        accessor: "player_first_name",
-        style: {
-          textAlign: 'left'
-        },
-        width: 150,
-        maxWidth: 100,
-        minWidth: 100
-      },
-      {
-        Header: "Last Name",
-        accessor: "player_last_name",
-        style: {
-          textAlign: 'left'
-        },
-        width: 150,
-        maxWidth: 100,
-        minWidth: 100
-      },
-      {
-        Header: "Drill",
-        accessor: "drill",
-        style: {
-          textAlign: 'left'
-        },
-        width: 300,
-        maxWidth: 100,
-        minWidth: 100
-      },
-      {
-        Header: "Score",
-        accessor: "first_glance_total_score",
-        style: {
-          textAlign: 'center'
-        },
-        width: 70,
-        maxWidth: 100,
-        minWidth: 100
-      },
-      {
-        Header: "App",
-        accessor: "app",
-        style: {
-          textAlign: 'center'
-        },
-        width: 50,
-        maxWidth: 100,
-        minWidth: 100
-      },
-      {
-        Header: "Device",
-        accessor: "device",
-        style: {
-          textAlign: 'left'
-        },
-        width: 150,
-        maxWidth: 100,
-        minWidth: 100
-      },
-      {
-        Header: "Date",
-        accessor: "completion_timestamp_formatted",
-        style: {
-          textAlign: 'right'
-        },
-        width: 225,
-        maxWidth: 100,
-        minWidth: 100
-      },
-    ];
 
     const {toggleSelection, toggleAll, logSelection} = this;
     const {selectAll} = this.state;
