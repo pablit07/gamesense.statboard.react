@@ -11,7 +11,8 @@ class Table extends Component {
         super(props);
 
         this.state = {
-            selectAll: false
+            selectAll: false,
+            selection: []
         }
     }
 
