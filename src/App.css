@@ -150,6 +150,7 @@ button.btn {
   -webkit-border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-bottom-width: 3px;
+  cursor: pointer;
 }
 
 button.btn:hover {
@@ -171,11 +172,14 @@ button.btn.btn-blue {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
   color: #fff;
 }
-
-button.btn.btn-blue:hover {
-  background-color: #4f87a2;
-  border-color: rgba(0, 0, 0, 0.5);
+button.btn.flat-button.btn-blue {
+  background-color: #699db6;
 }
+
+/*button.btn.btn-blue:hover {*/
+/*  background-color: #4f87a2;*/
+/*  border-color: rgba(0, 0, 0, 0.5);*/
+/*}*/
 
 button.btn.btn-blue:active {
   background-color: #3c677b;
@@ -206,4 +210,36 @@ button.btn.btn-green:active {
 
 .rt-thead.-filters {
     background-color: #1F673B;
+}
+
+
+button.btn.flat-button {
+  background-color: #4f9358;
+  transition: color .3s;
+  line-height: 40px;
+  color: #ffffff;
+  height: 40px;
+  font-size: 0.9em;
+  position: relative;
+  border: none;
+  border-radius: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  letter-spacing: 0.05em;
+}
+
+button.btn.flat-button:after {
+  position: absolute;
+  top: 90%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  content: '';
+  transition: transform .3s;
+}
+
+button.btn.flat-button:hover::after {
+  transform: translateY(10%);
+  transition: transform .3s;
 }

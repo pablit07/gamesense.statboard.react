@@ -6,6 +6,7 @@ import Calendar from "../Calendar";
 import {downloadExcelSheet} from "../Utils";
 import columns from './columns';
 import {Table} from "../Table";
+import {LinkButton, LogSelectionButton} from "../Buttons";
 
 
 
@@ -93,13 +94,9 @@ class TestSubmissions extends Component {
   render() {
 
       const buttons = [
-          (<button key={'Log Selection'} onClick={this.logSelection.bind(this)} className="btn btn-blue">Log
-              Selection</button>),
+          (<LogSelectionButton logSelection={this.logSelection.bind(this)}/>),
 
-          (<button key={'Link'} className="btn">
-              <Link to='/drillusage'>Drill Usage Reports </Link>
-              <i className="fa fa-arrow-right"/>
-          </button>),
+          (<LinkButton inner={'Drill Usage'} href={'/drillusage'}/>),
 
           (<Calendar key={'Calendar'} startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)}/>)
       ];

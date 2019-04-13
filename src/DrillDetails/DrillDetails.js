@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import '../App.css';
 import 'react-table/react-table.css';
 import 'font-awesome/css/font-awesome.min.css';
+import columns from './columns';
+import {Table} from "../Table";
 
 
 class DrillDetails extends Component {
@@ -13,9 +15,13 @@ class DrillDetails extends Component {
         const dateOneMonthAgo = new Date();
         dateOneMonthAgo.setDate(now.getDate() - 31);
 
+
         this.state = {
             submissions: [],
-            isLoading: false
+            columns: columns,
+            isLoading: false,
+            startDate: dateOneMonthAgo,
+            endDate: now
         };
 
         this.dataSource = this.dataSource.bind(this);
@@ -27,9 +33,11 @@ class DrillDetails extends Component {
 
         this.setState({isLoading: true});
 
-        let payload = {filters: {}};
+        let payload = {filters: {}, rollUpType: 'teamPitcherResponse'};
 
         payload.authToken = this.props.socket.authToken;
+        payload.filters.minDate = this.state.startDate;
+        payload.filters.maxDate = this.state.endDate;
 
         // indiv or team
         // payload.filters.user_id = 150;
@@ -46,9 +54,26 @@ class DrillDetails extends Component {
             console.log('GameSense API responded:\n', response);
             const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
             console.log('Here is the payload:\n', responseData);
+
+            let columns = this.state.columns;
+            responseData.keys.forEach(pt => {
+                columns.push({
+                    Header: '% ' + pt,
+                    accessor: "pitchType_" + pt,
+                    style: {
+                        textAlign: 'center'
+                    },
+                    filterable: false,
+                    width: 100,
+                    maxWidth: 100,
+                    minWidth: 100
+                });
+            });
+
             this.setState({
                 isLoading: false,
-                submissions: responseData
+                columns: columns,
+                submissions: responseData.rows
             });
         });
         console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
@@ -61,7 +86,12 @@ class DrillDetails extends Component {
     }
 
     render() {
-        return (<div></div>);
+        return (<Table
+                    submissions={this.state.submissions}
+                    columns={columns}
+                    isLoading={this.state.isLoading}
+                    buttons={[]}
+                    defaultPageSize={10}/>);
     }
 }
 

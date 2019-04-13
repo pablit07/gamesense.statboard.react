@@ -19,7 +19,7 @@ class Table extends Component {
     render() {
 
         const {
-            columns, submissions, isLoading, buttons
+            columns, submissions, isLoading, buttons, defaultPageSize
         } = this.props;
 
         const {toggleSelection, toggleAll} = {
@@ -112,7 +112,7 @@ class Table extends Component {
             columns={columns}
             data={submissions}
             filterable
-            defaultPageSize={25}
+            defaultPageSize={defaultPageSize || 25}
             noDataText={(isLoading ? "...Please Wait" : "No Data To Display")}
             {...checkboxProps}
         >

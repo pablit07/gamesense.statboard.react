@@ -7,6 +7,7 @@ import {downloadExcelSheet} from '../Utils'
 import Calendar from "../Calendar";
 import columns from './columns';
 import {Table} from "../Table";
+import {ExportToXlsButton, LinkButton, LogSelectionButton} from "../Buttons/index";
 
 
 class DrillUsage extends Component {
@@ -26,6 +27,7 @@ class DrillUsage extends Component {
         };
 
         this.dataSource = this.dataSource.bind(this);
+        this.exportSource = this.exportSource.bind(this);
 
         this.payload = {filters: {minDate: dateOneMonthAgo}};
     }
@@ -94,6 +96,10 @@ class DrillUsage extends Component {
         console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
     }
 
+    navigate() {
+        this.props.history.push('/testsubmissions');
+    }
+
     componentDidMount() {
         this.props.socket.on('connect', this.dataSource);
         this.props.socket.on('authStateChange', this.dataSource);
@@ -114,15 +120,10 @@ class DrillUsage extends Component {
 
         const buttons = [
 
-            (<button key={'Log Selection Button'} onClick={this.logSelection.bind(this)} className="btn btn-blue">Log
-                Selection</button>),
-            (<button onClick={this.exportSource} className="btn btn-green fa fa-table">Export to XLS</button>),
+            (<LogSelectionButton logSelection={this.logSelection.bind(this)}/>),
+            (<ExportToXlsButton exportSource={this.exportSource} />),
 
-            (<button key={'Link Button'} className="btn">
-                <Link
-                    to='/testsubmissions'>Test Submissions </Link>
-                <i className="fa fa-arrow-right" aria-hidden="true"/>
-            </button>),
+            (<LinkButton inner={"Test Submissions"} href={'/testsubmissions'} />),
 
             (<Calendar key={'Calendar'} startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)}/>)
         ];
