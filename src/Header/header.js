@@ -4,6 +4,7 @@ import './header.css';
 const logo = require('./gsLogo.png');
 
 export const Header = () => {
+    const logout = () => { window.localStorage.clear(); window.location.href = window.location.host; };
         return(
             <div className="header">
                 <img src={logo}
@@ -11,6 +12,7 @@ export const Header = () => {
                      alt="GameSense Sports"
                      title="GameSense Sports"
                 />
+                <a onClick={logout} style={{float:'right'}} href='/logout'>Logout</a>
             </div>
 
         );

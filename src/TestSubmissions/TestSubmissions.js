@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import '../App.css';
 import 'react-table/react-table.css';
 import Calendar from "../Calendar";
@@ -94,9 +93,9 @@ class TestSubmissions extends Component {
   render() {
 
       const buttons = [
-          (<LogSelectionButton logSelection={this.logSelection.bind(this)}/>),
+          (<LogSelectionButton key={'Log Selection Button'} logSelection={this.logSelection.bind(this)}/>),
 
-          (<LinkButton inner={'Drill Usage'} href={'/drillusage'}/>),
+          (<LinkButton key={'Link Button'} inner={'Drill Usage'} href={'/drillusage'}/>),
 
           (<Calendar key={'Calendar'} startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)}/>)
       ];

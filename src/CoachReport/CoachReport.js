@@ -107,9 +107,9 @@ class CoachReport extends Component {
     render() {
 
         const buttons = [
-            (<LogSelectionButton logSelection={this.logSelection.bind(this)}/>),
+            (<LogSelectionButton key={'Log Selection Button'} logSelection={this.logSelection.bind(this)}/>),
 
-            (<ExportToXlsButton exportSource={this.exportSource} />),
+            (<ExportToXlsButton key={'Export to XLS'} exportSource={this.exportSource} />),
 
             (<Calendar key={'Calendar'} startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)}/>)
         ];

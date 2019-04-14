@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 import '../App.css';
 import 'react-table/react-table.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -120,10 +119,10 @@ class DrillUsage extends Component {
 
         const buttons = [
 
-            (<LogSelectionButton logSelection={this.logSelection.bind(this)}/>),
-            (<ExportToXlsButton exportSource={this.exportSource} />),
+            (<LogSelectionButton key={'Log Selection Button'} logSelection={this.logSelection.bind(this)}/>),
+            (<ExportToXlsButton key={'Export to XLS'} exportSource={this.exportSource} />),
 
-            (<LinkButton inner={"Test Submissions"} href={'/testsubmissions'} />),
+            (<LinkButton key={'Link Button'} inner={"Test Submissions"} href={'/testsubmissions'} />),
 
             (<Calendar key={'Calendar'} startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)}/>)
         ];
