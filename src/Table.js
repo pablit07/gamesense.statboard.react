@@ -46,6 +46,7 @@ class Table extends Component {
                 }
                 // update the state
                 this.setState({selection});
+                this.props.updateSelection(selection);
             },
 
             toggleAll: () => {
@@ -76,7 +77,7 @@ class Table extends Component {
                     const currentRecords = wrappedInstance.getResolvedState().sortedData;
                     // we just push all the IDs onto the selection array
                     currentRecords.forEach(item => {
-                        selection.push(item.id_submission);
+                        selection.push(item._original.id_submission);
                     });
                 }
                 this.setState({selectAll, selection});
@@ -87,6 +88,7 @@ class Table extends Component {
         const isSelected = (key) => {
             return this.state.selection.includes(key);
         };
+
 
         const checkboxProps = {
             selectAll,

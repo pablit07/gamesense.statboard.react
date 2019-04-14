@@ -131,7 +131,8 @@ class DrillUsage extends Component {
                 columns={columns}
                 submissions={this.state.submissions}
                 isLoading={this.state.isLoading}
-                buttons={buttons}/>);
+                buttons={buttons}
+                updateSelection={selection => this.setState({selection})}/>);
 
 
     }

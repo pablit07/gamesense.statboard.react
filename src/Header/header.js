@@ -4,7 +4,7 @@ import './header.css';
 const logo = require('./gsLogo.png');
 
 export const Header = () => {
-    const logout = () => { window.localStorage.clear(); window.location.href = window.location.host; };
+    const logout = () => { window.localStorage.clear(); };
         return(
             <div className="header">
                 <img src={logo}

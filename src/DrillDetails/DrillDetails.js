@@ -91,7 +91,8 @@ class DrillDetails extends Component {
                     columns={columns}
                     isLoading={this.state.isLoading}
                     buttons={[]}
-                    defaultPageSize={10}/>);
+                    defaultPageSize={10}
+                    updateSelection={selection => this.setState({selection})}/>);
     }
 }
 
