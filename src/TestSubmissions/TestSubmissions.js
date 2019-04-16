@@ -27,6 +27,16 @@ class TestSubmissions extends Component {
 
         this.dataSource = this.dataSource.bind(this);
         this.exportSource = this.exportSource.bind(this);
+
+        columns.find(h => h.Header === 'Actions').Cell = props => {
+            return (
+                <button style={{backgroundColor: 'green', color: '#fefefe'}}
+                        onClick={() => {
+                            this.exportSource(props.original.id_submission);
+                        }}
+                >Download</button>
+            );
+        };
     }
 
     dataSource() {

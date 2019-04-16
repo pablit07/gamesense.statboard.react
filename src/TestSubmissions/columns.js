@@ -62,15 +62,6 @@ import React from 'react';
           },
           {
               Header: "Actions",
-              Cell: props => {
-                  return (
-                      <button style={{backgroundColor: 'green', color: '#fefefe'}}
-                              onClick={() => {
-                                  this.exportSource(props.original.id_submission);
-                              }}
-                      >Download</button>
-                  );
-              },
               sortable: false,
               filterable: false,
               width: 80,

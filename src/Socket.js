@@ -3,7 +3,7 @@ import {create} from 'socketcluster-client';
 var socket = null;
 try {
     const opts = {
-        hostname: 'svc.gamesensesports.com',//'54.221.109.246',
+        hostname: 'svc.gamesensesports.com',
         secure: true,
         rejectUnauthorized: false,
         path: '/',
