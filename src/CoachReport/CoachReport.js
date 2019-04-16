@@ -32,61 +32,67 @@ class CoachReport extends Component {
 
 
     dataSource() {
-      if (this.props.socket.state !== "open" || !this.props.socket.authToken || this.state.isLoading) return;
+        if (this.props.socket.state !== "open" || !this.props.socket.authToken || this.state.isLoading) return;
 
-      this.setState({isLoading:true});
+        this.setState({isLoading: true});
 
-      let payload = {filters:{}};
+        let payload = {filters: {}};
 
-      payload.authToken = this.props.socket.authToken;
+        payload.authToken = this.props.socket.authToken;
 
-      payload.filters.minDate = this.state.startDate;
-      payload.filters.maxDate = this.state.endDate;
+        payload.filters.minDate = this.state.startDate;
+        payload.filters.maxDate = this.state.endDate;
 
-      const timestamp = Date.now();
-      const data = {
-          timestamp: timestamp,
-          routingKey: 'calc.drill.coachReport',
-          payload
-      };
-      this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
-      this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
-          this.props.socket.unsubscribe('gs-message-' + timestamp);
-          console.log('GameSense API responded:\n', response);
-          const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
-          console.log('Here is the payload:\n', responseData);
-          this.setState({isLoading:false});
-          this.setState({
-              submissions: responseData,
-              isLoading: false
-          });
-          this.props.socket.off('connect', this.dataSource);
-      });
-      console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
-  }
+        const timestamp = Date.now();
+        const data = {
+            timestamp: timestamp,
+            routingKey: 'calc.drill.coachReport',
+            payload
+        };
+        this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
+        this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
+            this.props.socket.unsubscribe('gs-message-' + timestamp);
+            console.log('GameSense API responded:\n', response);
+            const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
+            console.log('Here is the payload:\n', responseData);
+            this.setState({isLoading: false});
+            this.setState({
+                submissions: responseData,
+                isLoading: false
+            });
+            this.props.socket.off('connect', this.dataSource);
+        });
+        console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
+    }
 
 
-  exportSource() {
-    if (this.props.socket.state !== "open") return;
-    let payload = this.payload;
+    exportSource() {
+        if (this.props.socket.state !== "open") return;
 
-      const timestamp = Date.now()
-      const data = {
-          timestamp: timestamp,
-          routingKey: 'export.drill.coachReport',
-          payload
-      };
-      this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
-      this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
-          this.props.socket.unsubscribe('gs-message-' + timestamp);
-          console.log('GameSense API responded:\n', response);
+        let payload = {filters: {}};
 
-          downloadExcelSheet(response);
+        payload.authToken = this.props.socket.authToken;
 
-          console.log('Here is the payload:\n', response);
-      });
-      console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
-  }
+        payload.filters.minDate = this.state.startDate;
+        payload.filters.maxDate = this.state.endDate;
+
+        const timestamp = Date.now()
+        const data = {
+            timestamp: timestamp,
+            routingKey: 'export.drill.coachReport',
+            payload
+        };
+        this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
+        this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
+            this.props.socket.unsubscribe('gs-message-' + timestamp);
+            console.log('GameSense API responded:\n', response);
+
+            downloadExcelSheet(response);
+
+            console.log('Here is the payload:\n', response);
+        });
+        console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
+    }
 
     componentDidMount() {
         this.props.socket.on('connect', this.dataSource);
@@ -109,17 +115,18 @@ class CoachReport extends Component {
         const buttons = [
             (<LogSelectionButton key={'Log Selection Button'} logSelection={this.logSelection.bind(this)}/>),
 
-            (<ExportToXlsButton key={'Export to XLS'} exportSource={this.exportSource} />),
+            (<ExportToXlsButton key={'Export to XLS'} exportSource={this.exportSource}/>),
 
-            (<Calendar key={'Calendar'} startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)}/>)
+            (<Calendar key={'Calendar'} startDate={this.state.startDate} endDate={this.state.endDate}
+                       onChange={this.handleDateChange.bind(this)}/>)
         ];
 
         return (<Table
-                columns={columns}
-                submissions={this.state.submissions}
-                isLoading={this.state.isLoading}
-                buttons={buttons}
-                updateSelection={selection => this.setState({selection})}/>);
+            columns={columns}
+            submissions={this.state.submissions}
+            isLoading={this.state.isLoading}
+            buttons={buttons}
+            updateSelection={selection => this.setState({selection})}/>);
     }
 }
 

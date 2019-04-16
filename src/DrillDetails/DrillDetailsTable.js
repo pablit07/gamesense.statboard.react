@@ -6,7 +6,7 @@ import columns from './columns';
 import {Table} from "../Table";
 
 
-class DrillDetails extends Component {
+class DrillDetailsTable extends Component {
     constructor(props) {
 
         super(props);
@@ -104,4 +104,4 @@ class DrillDetails extends Component {
     }
 }
 
-export default DrillDetails;
+export default DrillDetailsTable;

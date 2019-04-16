@@ -75,7 +75,13 @@ class DrillUsage extends Component {
 
     exportSource() {
         if (this.props.socket.state !== "open") return;
-        let payload = this.payload;
+
+        let payload = {filters: {}};
+
+        payload.authToken = this.props.socket.authToken;
+
+        payload.filters.minDate = this.state.startDate;
+        payload.filters.maxDate = this.state.endDate;
 
         const timestamp = Date.now();
         const data = {
