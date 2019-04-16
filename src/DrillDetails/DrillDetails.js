@@ -18,7 +18,7 @@ class DrillDetails extends Component {
 
         this.state = {
             submissions: [],
-            columns: columns,
+            columns: [...columns],
             isLoading: false,
             startDate: dateOneMonthAgo,
             endDate: now
@@ -33,7 +33,7 @@ class DrillDetails extends Component {
 
         this.setState({isLoading: true});
 
-        let payload = {filters: {}, rollUpType: 'teamPitcherResponse'};
+        let payload = {filters: {}, rollUpType: this.props.rollUpType || 'teamPitcherResponseType'};
 
         payload.authToken = this.props.socket.authToken;
         payload.filters.minDate = this.state.startDate;
@@ -55,9 +55,9 @@ class DrillDetails extends Component {
             const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
             console.log('Here is the payload:\n', responseData);
 
-            let columns = this.state.columns;
-            responseData.keys.forEach(pt => {
-                columns.push({
+            let _columns = this.state.columns;
+            responseData.keys.sort().forEach(pt => {
+                _columns.push({
                     Header: '% ' + pt,
                     accessor: "pitchType_" + pt,
                     style: {
@@ -66,13 +66,21 @@ class DrillDetails extends Component {
                     filterable: false,
                     width: 100,
                     maxWidth: 100,
-                    minWidth: 100
+                    minWidth: 100,
+                    Cell: props => {
+                        let perc = props.original['pitchType_' + pt];
+                        let className = perc > 75 ? 'green' :
+                            perc > 50 ? 'blue' :
+                            perc > 25 ? 'orange' :
+                            perc > 0  ? 'red' : '';
+                        return (<div className={className}>{perc}</div> )
+                    }
                 });
             });
 
             this.setState({
                 isLoading: false,
-                columns: columns,
+                columns: _columns,
                 submissions: responseData.rows
             });
         });
@@ -88,10 +96,10 @@ class DrillDetails extends Component {
     render() {
         return (<Table
                     submissions={this.state.submissions}
-                    columns={columns}
+                    columns={this.state.columns}
                     isLoading={this.state.isLoading}
                     buttons={[]}
-                    defaultPageSize={10}
+                    defaultPageSize={25}
                     updateSelection={selection => this.setState({selection})}/>);
     }
 }

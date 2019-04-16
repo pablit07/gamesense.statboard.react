@@ -212,6 +212,11 @@ button.btn.btn-green:active {
     background-color: #1F673B;
 }
 
+.rt-td .green {background: #23FD5C;}
+.rt-td .blue {background: #29D4FC;}
+.rt-td .orange {background: #FFA751;}
+.rt-td .red {background: #FF6551;}
+
 
 button.btn.flat-button {
   background-color: #4f9358;
