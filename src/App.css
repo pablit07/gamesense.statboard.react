@@ -172,6 +172,7 @@ button.btn.btn-blue {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
   color: #fff;
 }
+
 button.btn.flat-button.btn-blue {
   background-color: #699db6;
 }
@@ -209,13 +210,24 @@ button.btn.btn-green:active {
 }
 
 .rt-thead.-filters {
-    background-color: #1F673B;
+  background-color: #1F673B;
 }
 
-.rt-td .green {background: #23FD5C;}
-.rt-td .blue {background: #29D4FC;}
-.rt-td .orange {background: #FFA751;}
-.rt-td .red {background: #FF6551;}
+.rt-td .green {
+  background: #23FD5C;
+}
+
+.rt-td .blue {
+  background: #29D4FC;
+}
+
+.rt-td .orange {
+  background: #FFA751;
+}
+
+.rt-td .red {
+  background: #FF6551;
+}
 
 
 button.btn.flat-button {
@@ -252,9 +264,16 @@ button.btn.flat-button:hover::after {
 .legend {
   padding-right: 30px;
 }
+
 .legend .box {
   display: inline-block;
   height: 20px;
   width: 20px;
   border: 2px solid white;
+}
+
+/* Collapse */
+.collapse-css-transition {
+  overflow: hidden;
+  transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
