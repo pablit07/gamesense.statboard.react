@@ -10,7 +10,7 @@ class DrillDetailsView extends Component {
 
     render() {
 
-        let style = {marginLeft: '3.3rem'};
+        let style = {marginLeft: '3.3rem', cursor: 'pointer'};
         return (<Fragment>
 
             {/* Team - Correct Type*/}
