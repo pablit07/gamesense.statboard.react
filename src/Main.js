@@ -7,6 +7,7 @@ import CoachReport from './CoachReport/CoachReport';
 import { socket } from './Socket';
 import DrillDetailsView from "./DrillDetails/DrillDetailsView";
 import PageContainer from "./PageContainer";
+import DrillDetailsChartView from "./DrillDetails/DrillDetailsChartsView";
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /testsubmissions
@@ -26,6 +27,7 @@ const Main = () => {
 				<Route path='/drillusage' render={() => <PageContainer title={'Drill Usage Report'} contents={<DrillUsage socket={socket}/>}/>}/>
 				<Route path='/coachreport' render={() => <PageContainer title={'Coach Report'} contents={<CoachReport socket={socket}/>}/>}/>
 				<Route path='/drilldetails' render={() => <PageContainer title={'Drill Breakdown Report'} contents={<DrillDetailsView socket={socket}/>}/>}/>
+				<Route path='/drilldetailscharts' render={() => <PageContainer title={'Drill Breakdown Charts'} contents={<DrillDetailsChartView socket={socket}/>}/>}/>
 				<Route path='/logout' render={() => "You have been logged out."}/>
 			</Switch>
 		</main>

@@ -15,7 +15,10 @@ const Home = () => (
           <Link to='/coachreport'>Coach Report</Link>
         </li>
         <li>
-          <Link to='/drilldetails'>Drill Breakdown</Link>
+          <Link to='/drilldetails'>Drill Breakdown (Tables)</Link>
+        </li>
+        <li>
+          <Link to='/drilldetailscharts'>Drill Breakdown (Charts)</Link>
         </li>
       </ul>
   </div>

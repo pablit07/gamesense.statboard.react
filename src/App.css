@@ -248,3 +248,13 @@ button.btn.flat-button:hover::after {
   transform: translateY(10%);
   transition: transform .3s;
 }
+
+.legend {
+  padding-right: 30px;
+}
+.legend .box {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  border: 2px solid white;
+}

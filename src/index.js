@@ -5,11 +5,18 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-render((
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  ), document.getElementById('root'));
+let root = document.getElementById('root');
+if (root) {
+    render((
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
+    ), root);
+} else {
+
+    window.XDomain = require('./XDomain');
+    console.log(window.XDomain)
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
