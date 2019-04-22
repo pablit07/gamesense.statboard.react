@@ -62,7 +62,7 @@ class DrillDetailsChart extends Component {
             if (this.ref) {
 
                 // console.warn(d3)
-                let svg = this.createChart();
+                let svg = d3.select(this.ref)
 
                 // Add X axis
                 let pitcherNames = responseData.rows.reduce((accum, next) => {
@@ -113,32 +113,6 @@ class DrillDetailsChart extends Component {
         console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
     }
 
-    createChart() {
-        let svg = d3.select(this.ref)
-            .append('svg')
-            .attr("width", 1220)
-            .attr("height", 400)
-            .append("g")
-            .attr("transform",
-                "translate(" + 30 + "," + 30 + ")");
-        svg
-            .append("rect")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("height", 400)
-            .attr("width", 1220)
-            .style("fill", "EBEBEB")
-
-        svg
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 0 - 35)
-            .attr("x", 0 - (400 / 2))
-            .attr("dy", "1em")
-            .style("text-anchor", "middle")
-            .text("% Correct");
-        return svg;
-    }
 
     addChartLayer(rows, pt, svg, x, y, color) {
         rows = rows.filter(x => !!x[pt] && x[pt] !== '-');
@@ -170,8 +144,18 @@ class DrillDetailsChart extends Component {
         };
 
         return (
-            <div style={style} id={'graph1'} ref={r => {this.ref = r}}>
+            <div style={style} id={'graph1'} >
                 <div style={{textAlign:'right'}}> <Legend/> </div>
+                <svg width={1220}
+                     height={400}
+                     ref={r => {this.ref = r}}>
+                    <g transform={("translate(" + 30 + "," + 30 + ")")}/>
+                    <rect x={0} y={0}  height={400} width={1220} style={{fill: "EBEBEB"}}/>
+                    <text transform={"rotate(-90)"} y={-35} x={-(400 / 2)} dy={"1em"} style={{"textAnchor": "middle"}}>
+                        % Correct
+                    </text>
+                </svg>
+
             </div>);
     }
 }

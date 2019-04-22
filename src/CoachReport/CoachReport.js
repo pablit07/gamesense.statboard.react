@@ -55,7 +55,6 @@ class CoachReport extends Component {
             console.log('GameSense API responded:\n', response);
             const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
             console.log('Here is the payload:\n', responseData);
-            this.setState({isLoading: false});
             this.setState({
                 submissions: responseData,
                 isLoading: false
