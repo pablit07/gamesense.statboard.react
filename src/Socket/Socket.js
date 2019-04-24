@@ -1,6 +1,6 @@
 import {create as createSocketClusterClient} from 'socketcluster-client';
 
-function create(username, app, token) {
+function create(username, app, key) {
     let socket = null;
     try {
         const opts = {
@@ -10,12 +10,16 @@ function create(username, app, token) {
             path: '/',
             port: 8101
         };
-        token = token || window.document.location.search.replace('?token=', '');
-        const credentials = token ? {
-            username: username || token.split(':')[0],
-            token: token || token.split(':')[1],
-            app: app || 'BB'
-        } : {};
+        let token = key ? false : window.document.location.search.replace('?token=', '');
+        const credentials = (!key) ? {
+            username: token.split(':')[0],
+            token: token.split(':')[1],
+            app: token.split(':')[2] || 'BB'
+        } : {
+           username,
+           token: key,
+           app
+        };
 
         if (credentials && credentials.username) window.localStorage.clear();
 

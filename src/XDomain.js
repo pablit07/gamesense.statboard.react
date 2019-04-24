@@ -11,7 +11,6 @@ import DrillDetailsChartView from "./DrillDetails/DrillDetailsChartsView";
 import DrillDetailsTable from "./DrillDetails/DrillDetailsTable";
 
 
-const DrillBreakdown = (username, app, token) =>
-	(<DrillDetailsTable socket={create(username, app, token)} rollUpType={"teamPitcherResponseType"}/>);
+const DrillBreakdown = ({username, app, token}) => (<DrillDetailsTable socket={create(username, app, token)} rollUpType={"teamPitcherResponseType"}/>);
 
 export {React, render, CoachReport, DrillBreakdown};
