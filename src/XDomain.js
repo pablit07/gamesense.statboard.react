@@ -9,8 +9,9 @@ import DrillDetailsView from "./DrillDetails/DrillDetailsView";
 import PageContainer from "./PageContainer";
 import DrillDetailsChartView from "./DrillDetails/DrillDetailsChartsView";
 import DrillDetailsTable from "./DrillDetails/DrillDetailsTable";
+import singlePlayerColumns from "./DrillDetails/columns_single";
 
 
-const DrillBreakdown = ({username, app, token}) => (<DrillDetailsTable socket={create(username, app, token)} rollUpType={"teamPitcherResponseType"}/>);
+const DrillBreakdown = ({username, app, token}) => (<DrillDetailsTable socket={create(username, app, token)} rollUpType={"singleUserPitcherResponseType"} columns={singlePlayerColumns}/>);
 
 export {React, render, CoachReport, DrillBreakdown};

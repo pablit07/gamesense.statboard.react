@@ -16,9 +16,11 @@ class DrillDetailsTable extends Component {
         dateOneMonthAgo.setDate(now.getDate() - 31);
 
 
+        let _columns = this.props.columns ? [...this.props.columns] : [...columns];
+
         this.state = {
             submissions: [],
-            columns: [...columns],
+            columns: _columns,
             isLoading: false,
             startDate: dateOneMonthAgo,
             endDate: now
@@ -56,6 +58,7 @@ class DrillDetailsTable extends Component {
             console.log('Here is the payload:\n', responseData);
 
             let _columns = this.state.columns;
+
             responseData.keys.sort().forEach(pt => {
                 _columns.push({
                     Header: '% ' + pt,
