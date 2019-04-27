@@ -102,8 +102,9 @@ class DrillDetailsTable extends Component {
                     columns={this.state.columns}
                     isLoading={this.state.isLoading}
                     buttons={[]}
-                    defaultPageSize={25}
-                    updateSelection={selection => this.setState({selection})}/>);
+                    defaultPageSize={(this.props.defaultPageSize || 25)}
+                    updateSelection={selection => this.setState({selection})}
+                    hideCheckboxes={this.props.hideCheckboxes}/>);
     }
 }
 

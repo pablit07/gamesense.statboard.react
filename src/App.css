@@ -10,6 +10,10 @@
   flex-wrap: wrap;
 }
 
+#actionButtons .btn ~ .ReactTable {
+  margin-top: 9px;
+}
+
 .dateColumns {
   margin-left: 8px;
 }
@@ -38,7 +42,6 @@
 
 .ReactTable .rt-table {
   border: 2px solid #4e9360;
-  margin-top: 9px;
 }
 
 .ReactTable .rt-tr-group {
@@ -133,8 +136,12 @@ h3 {
 /* Buttons */
 button {
   text-decoration: none;
-  margin: 0 10px;
+  margin: 0 0px;
   font-family: Quicksand, sans-serif;
+}
+
+button + button {
+  margin-left: 10px;
 }
 
 button.btn {
@@ -250,7 +257,7 @@ button.btn.flat-button:after {
   top: 90%;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 10%;
   background: black;
   content: '';
   transition: transform .3s;
