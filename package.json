@@ -5,9 +5,12 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.7.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "@kunukn/react-collapse": "^2.0.11",
+    "classnames": "^2.2.6",
     "d3": "^5.9.2",
     "d3-svg-legend": "^2.25.6",
     "font-awesome": "^4.7.0",
+    "node-sass": "^4.11.0",
     "prop-types": "15.6.1",
     "react": "^16.7.0",
     "react-alert": "^5.1.0",

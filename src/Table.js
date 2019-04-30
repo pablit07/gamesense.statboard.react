@@ -3,8 +3,6 @@ import ReactTable from "react-table";
 import React, {Component} from 'react';
 import toggleHeaderHOC from "./ToggleHeader";
 
-const CheckboxTable = toggleHeaderHOC(checkboxHOC(ReactTable));
-
 class Table extends Component {
 
     constructor(props) {
@@ -106,6 +104,8 @@ class Table extends Component {
             //   };
             // }
         };
+
+        const CheckboxTable = this.props.hideCheckboxes ? ReactTable : toggleHeaderHOC(checkboxHOC(ReactTable));
 
         return (<CheckboxTable
             keyField='id_submission'

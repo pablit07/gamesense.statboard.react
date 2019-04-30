@@ -11,7 +11,13 @@ window.DrillBreakdown = zoid.create({
     props: {
     	username: {
     		type: 'string',
-    		required: true
+    		required: true,
+    		decorate(original) {
+		        return function() {
+		            console.info('decorator', arguments);
+		            return original.apply(this, arguments);
+		        };
+		    }
     	},
     	app: {
     		type: 'string',
