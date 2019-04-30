@@ -147,9 +147,8 @@ class DrillDetailsChart extends Component {
             <div style={style} id={'graph1'} >
                 <div style={{textAlign:'right'}}> <Legend/> </div>
                 <svg width={1220}
-                     height={400}
-                     ref={r => {this.ref = r}}>
-                    <g transform={("translate(" + 30 + "," + 30 + ")")}>
+                     height={400}>
+                    <g transform={("translate(" + 30 + "," + 30 + ")")} ref={r => {this.ref = r}}>
                         <rect x={0} y={0}  height={400} width={1220} style={{fill: "EBEBEB"}}/>
                         <text transform={"rotate(-90)"} y={-35} x={-(400 / 2)} dy={"1em"} style={{"textAnchor": "middle"}}>
                             % Correct
