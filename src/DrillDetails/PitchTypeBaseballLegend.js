@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-export class Legend extends Component {
+export class PitchTypeBaseballLegend extends Component {
 
     render() {
         const colorList = {Fastball: 'red', Curveball: 'orange', Slider: 'green', Cutter: 'blue', Changeup: 'purple'};
@@ -8,10 +8,10 @@ export class Legend extends Component {
 
         for (let key in colorList) {
             boxContainer.push((
-                <div className={"box"} style={{backgroundColor: colorList[key]}}></div>
+                <div key={key} className={"box"} style={{backgroundColor: colorList[key]}}></div>
             ));
             boxContainer.push((
-                <span>{key}</span>
+                <span key={(key)+"-span"}>{key}</span>
             ));
 
         }

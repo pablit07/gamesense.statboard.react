@@ -3,7 +3,6 @@ import '../App.css';
 import 'react-table/react-table.css';
 import 'font-awesome/css/font-awesome.min.css';
 import * as d3 from 'd3';
-import {Legend} from "./Legend";
 
 
 class DrillDetailsChart extends Component {
@@ -17,114 +16,42 @@ class DrillDetailsChart extends Component {
 
 
         this.state = {
-            submissions: [],
             isLoading: false,
             startDate: dateOneMonthAgo,
-            endDate: now
+            endDate: now,
+            width: this.getWidth()
         };
 
-        this.dataSource = this.dataSource.bind(this);
+        this.handleResize = this.handleResize.bind(this);
     }
 
-
-    dataSource() {
-        if (this.props.socket.state !== "open" || !this.props.socket.authToken || this.state.isLoading) return;
-
-        this.setState({isLoading: true});
-
-        let payload = {filters: {}, rollUpType: this.props.rollUpType || 'globalPitcherResponseType'};
-
-        payload.authToken = this.props.socket.authToken;
-        payload.filters.minDate = this.state.startDate;
-        payload.filters.maxDate = this.state.endDate;
-
-        // indiv or team
-        // payload.filters.user_id = 150;
-
-        const timestamp = Date.now();
-        const data = {
-            timestamp: timestamp,
-            routingKey: 'calc.drill.usageDetail',
-            payload
-        };
-        this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
-
-        let addChartLayer = (svg, rows, x, y, pt, color = "red") => {
-            this.addChartLayer(rows, pt, svg, x, y, color);
-        };
-
-        this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
-            this.props.socket.unsubscribe('gs-message-' + timestamp);
-            console.log('GameSense API responded:\n', response);
-            const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
-            console.log('Here is the payload:\n', responseData);
-
-            if (this.ref) {
-
-                // console.warn(d3)
-                let svg = d3.select(this.ref)
-
-                // Add X axis
-                let pitcherNames = responseData.rows.reduce((accum, next) => {
-                    if (!accum.find(x => x === next.name)) {
-                        accum.push(next.name);
-                    }
-                    return accum;
-                }, []).sort();
-
-
-                let interval = 1200 / pitcherNames.length;
-                let numbers = Array.from({length: pitcherNames.length}, (v, k) => k*interval);
-                var xAxis = d3.scaleOrdinal()
-                    .domain(pitcherNames)
-                    .range( numbers)
-                // var xAxis = d3.scaleLinear()
-                //     .domain([0, 100])
-                //     .range([ 0, 100 ]);
-
-                svg.append("g")
-                    .attr("transform", "translate(0," + 350 + ")")
-                    .call(d3.axisBottom(xAxis));
-
-
-                // Add Y axis
-                var yAxis = d3.scaleLinear()
-                    .domain([100, 0])
-                    .range([ 0, 350 ]);
-
-                svg.append("g")
-                    .call(d3.axisLeft(yAxis));
-
-
-                let rows = responseData.rows;
-                addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Fastball', "red");
-                addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Slider', "green");
-                addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Curveball', "orange");
-                addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Cutter', "blue");
-                addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Changeup', "purple");
-
-            }
-
-            this.setState({
-                isLoading: false,
-                submissions: responseData.rows
-            });
-        });
-        console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
+    handleResize() {
+        this.setState({width: this.getWidth()});
     }
 
+    getWidth() {
+        return window.innerWidth - 150;
+    }
 
-    addChartLayer(rows, pt, svg, x, y, color) {
+    componentWillMount() {
+        window.addEventListener('resize', this.handleResize);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize);
+    }
+
+    addChartLayer(svg, rows, x, y, pt, color) {
         rows = rows.filter(x => !!x[pt] && x[pt] !== '-');
         svg.append('g')
             .selectAll('dot')
             .data(rows)
             .enter()
             .append("circle")
-            .attr("cx", function (d) {
-                return x(d.name);
+            .attr("cx", d => {
+                return x(d[this.props.name]);
             })
-            .attr("cy", function (d) {
+            .attr("cy", d => {
                 return y(d[pt]);
             })
             // .attr("cy", function (d) { return y(d.name); } )
@@ -132,31 +59,78 @@ class DrillDetailsChart extends Component {
             .style("fill", color)
     }
 
-    componentDidMount() {
-        this.props.socket.on('connect', this.dataSource);
-        this.props.socket.on('authStateChange', this.dataSource);
-        this.dataSource();
-    }
-
     render() {
         let style = {
             paddingLeft: '50px'
         };
 
-        return (
+        let result = (
             <div style={style} id={'graph1'} >
-                <div style={{textAlign:'right'}}> <Legend/> </div>
-                <svg width={1220}
+                <div style={{textAlign:'right'}}> {this.props.children} </div>
+                <svg width={this.state.width}
                      height={400}>
                     <g transform={("translate(" + 30 + "," + 30 + ")")} ref={r => {this.ref = r}}>
-                        <rect x={0} y={0}  height={400} width={1220} style={{fill: "EBEBEB"}}/>
-                        <text transform={"rotate(-90)"} y={-35} x={-(400 / 2)} dy={"1em"} style={{"textAnchor": "middle"}}>
-                            % Correct
+                        <rect x={0} y={0}  height={400} width={this.state.width} style={{fill: "EBEBEB"}}/>
+                        <text transform={"rotate(-90)"} y={-35} x={-(400 / 2)} dy={"1em"} style={{"textAnchor": "middle", "fontWeight": "bold"}}>
+                            {this.props.yLabel}
                         </text>
                     </g>
                 </svg>
 
             </div>);
+
+        if (this.ref) {
+
+            let rows = this.props.submissions;
+
+            // console.warn(d3)
+            let svg = d3.select(this.ref);
+
+            // Add X axis
+
+            let interval = (this.state.width - 20) / this.props.xValues.length;
+            let numbers = Array.from({length: this.props.xValues.length}, (v, k) => k*interval);
+            let xAxis = d3.scaleOrdinal()
+                .domain( this.props.xValues)
+                .range( numbers)
+
+            svg.append("g")
+                .attr("transform", "translate(0," + 350 + ")")
+                .call(d3.axisBottom(xAxis));
+
+            // Add Y axis
+            let yAxis = d3.scaleLinear()
+                .domain([this.props.yMax, 0])
+                .range([ 0, 350 ]);
+
+            svg.append("g")
+                .call(d3.axisLeft(yAxis));
+
+
+            const make_x_gridlines = () => {
+                return d3.axisBottom(xAxis)
+                    .ticks(5)
+            };
+
+            // add the X gridlines
+            svg.append("g")
+                .attr("class", "grid")
+                .attr("transform", "translate(0," + 400 + ")")
+                .call(make_x_gridlines()
+                    .tickSize(-400)
+                    .tickFormat("")
+                );
+
+            this.props.values.forEach(v => this.addChartLayer(svg, rows, xAxis, yAxis, v.value, v.color));
+            // this.addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Fastball', "red");
+            // this.addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Slider', "green");
+            // this.addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Curveball', "orange");
+            // this.addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Cutter', "blue");
+            // this.addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Changeup', "purple");
+
+        }
+
+        return result;
     }
 }
 
