@@ -6,7 +6,7 @@ import BarChart from "./BarChart";
 
 
 
-class SinglePlayerUseOverTimeContainer extends Container {
+class PlayerUseOverTimeContainer extends Container {
     getRoutingKey() {
         return 'calc.drill.completionSummary';
     }
@@ -85,15 +85,15 @@ class DrillDetailsChartView extends Component {
         return (<Fragment>
             <h4 style={style}>BAR CHART Single User - # Drills over Time</h4>
 
-            <SinglePlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
+            <PlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
                 <BarChart/>
-            </SinglePlayerUseOverTimeContainer>
+            </PlayerUseOverTimeContainer>
 
             <h4 style={style}>Single User - # Drills over Time</h4>
 
-            <SinglePlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
+            <PlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
                 <ScatterPlotChart/>
-            </SinglePlayerUseOverTimeContainer>
+            </PlayerUseOverTimeContainer>
 
             <h4 style={style}>All Users - % Correct for Pitch Type by Pitcher/Drill</h4>
 
