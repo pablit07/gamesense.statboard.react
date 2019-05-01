@@ -1,8 +1,10 @@
 import React, {Component, Fragment} from 'react';
-import DrillDetailsTable from './DrillDetailsTable';
-import DrillDetailsChart from './DrillDetailsChart';
+import ScatterPlotChart from './ScatterPlotChart';
 import {PitchTypeBaseballLegend} from "./PitchTypeBaseballLegend";
 import Container from '../Container';
+import BarChart from "./BarChart";
+
+
 
 class SinglePlayerUseOverTimeContainer extends Container {
     getRoutingKey() {
@@ -81,21 +83,26 @@ class DrillDetailsChartView extends Component {
 
         let style = {marginLeft: '3.3rem'};
         return (<Fragment>
+            <h4 style={style}>BAR CHART Single User - # Drills over Time</h4>
+
+            <SinglePlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
+                <BarChart/>
+            </SinglePlayerUseOverTimeContainer>
+
             <h4 style={style}>Single User - # Drills over Time</h4>
 
-            <SinglePlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150}}>
-                <DrillDetailsChart/>
+            <SinglePlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
+                <ScatterPlotChart/>
             </SinglePlayerUseOverTimeContainer>
 
             <h4 style={style}>All Users - % Correct for Pitch Type by Pitcher/Drill</h4>
 
             <TeamPitchTypeCorrectResponseContainer socket={this.props.socket} params={{rollUpType: 'globalPitcherResponseType'}}>
-                <DrillDetailsChart>
+                <ScatterPlotChart>
                     <PitchTypeBaseballLegend/>
-                </DrillDetailsChart>
+                </ScatterPlotChart>
             </TeamPitchTypeCorrectResponseContainer>
 
-            {/*<DrillDetailsChart socket={this.props.socket} name={"date"} value={"count"} yLabel={"% Correct"}><PitchTypeBaseballLegend/></DrillDetailsChart>*/}
         </Fragment>)
     }
 }

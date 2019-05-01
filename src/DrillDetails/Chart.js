@@ -5,7 +5,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import * as d3 from 'd3';
 
 
-class DrillDetailsChart extends Component {
+class Chart extends Component {
     constructor(props) {
 
         super(props);
@@ -42,21 +42,7 @@ class DrillDetailsChart extends Component {
     }
 
     addChartLayer(svg, rows, x, y, pt, color) {
-        rows = rows.filter(x => !!x[pt] && x[pt] !== '-');
-        svg.append('g')
-            .selectAll('dot')
-            .data(rows)
-            .enter()
-            .append("circle")
-            .attr("cx", d => {
-                return x(d[this.props.name]);
-            })
-            .attr("cy", d => {
-                return y(d[pt]);
-            })
-            // .attr("cy", function (d) { return y(d.name); } )
-            .attr("r", 5)
-            .style("fill", color)
+        throw new Error("Must override addChartLayer")
     }
 
     render() {
@@ -65,8 +51,12 @@ class DrillDetailsChart extends Component {
         };
 
         let result = (
-            <div style={style} id={'graph1'} >
+            <div style={style} >
+
+                {/* Legend or controls */}
                 <div style={{textAlign:'right'}}> {this.props.children} </div>
+
+                {/* Chart */}
                 <svg width={this.state.width}
                      height={400}>
                     <g transform={("translate(" + 30 + "," + 30 + ")")} ref={r => {this.ref = r}}>
@@ -122,16 +112,10 @@ class DrillDetailsChart extends Component {
                 );
 
             this.props.values.forEach(v => this.addChartLayer(svg, rows, xAxis, yAxis, v.value, v.color));
-            // this.addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Fastball', "red");
-            // this.addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Slider', "green");
-            // this.addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Curveball', "orange");
-            // this.addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Cutter', "blue");
-            // this.addChartLayer(svg, rows, xAxis, yAxis, 'pitchType_Changeup', "purple");
-
         }
 
         return result;
     }
 }
 
-export default DrillDetailsChart;
+export default Chart;
