@@ -1,81 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import ScatterPlotChart from './ScatterPlotChart';
 import {PitchTypeBaseballLegend} from "./PitchTypeBaseballLegend";
-import Container from '../Container';
 import BarChart from "./BarChart";
+import PlayerUseOverTimeContainer from "./PlayerUseOverTimeContainer";
+import TeamPitchTypeCorrectResponseContainer from "./TeamPitchTypeCorrectResponseContainer";
 
-
-
-class PlayerUseOverTimeContainer extends Container {
-    getRoutingKey() {
-        return 'calc.drill.completionSummary';
-    }
-
-    mapStateToProps(state) {
-        let defaultProps = {name:"date", values:[{value:"count",color:"black"}], yLabel:"# Drills"};
-
-        let dates = state.submissions.reduce((accum, next) => {
-            if (!accum.find(x => x === next[defaultProps.name])) {
-                accum.push(next[defaultProps.name]);
-            }
-            return accum;
-        }, []).sort();
-
-        return {
-            ...state,
-            ...defaultProps,
-            xValues: dates,
-            yMax: state.submissions.reduce((accum, next) => {
-                return (next[defaultProps.values[0].value] > accum) ? next[defaultProps.values[0].value] : accum;
-            }, 0)
-        };
-    }
-}
-
-class TeamPitchTypeCorrectResponseContainer extends Container {
-    getRoutingKey() {
-        return 'calc.drill.usageDetail';
-    }
-
-    mapStateToProps(state) {
-        let defaultProps = {
-            name: "name",
-            values: [{
-                value: 'pitchType_Fastball',
-                color: "red"
-            }, {
-                value: 'pitchType_Slider',
-                color: 'green'
-            }, {
-                value: 'pitchType_Curveball',
-                color: "orange"
-            }, {
-                value: 'pitchType_Cutter',
-                color: "blue"
-            }, {
-                value: 'pitchType_Changeup',
-                color: "purple"
-            }],
-            yLabel: "% Correct"
-        };
-
-        state.submissions = state.submissions.rows || [];
-
-        let pitchers = state.submissions.reduce((accum, next) => {
-            if (!accum.find(x => x === next[defaultProps.name])) {
-                accum.push(next[defaultProps.name]);
-            }
-            return accum;
-        }, []).sort();
-
-        return {
-            ...defaultProps,
-            ...state,
-            xValues: pitchers,
-            yMax: 100
-        };
-    }
-}
 
 class DrillDetailsChartView extends Component {
 
