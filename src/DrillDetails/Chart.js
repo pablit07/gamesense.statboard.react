@@ -16,7 +16,6 @@ class Chart extends Component {
 
 
         this.state = {
-            isLoading: false,
             startDate: dateOneMonthAgo,
             endDate: now,
             width: this.getWidth(),
@@ -47,6 +46,7 @@ class Chart extends Component {
     }
 
     render() {
+        const rows = this.props.submissions;
 
         let xPad = Math.max(Math.log10(this.props.yMax) * 2.5, 0);
         let xPadAxis = 27 + xPad;
@@ -62,6 +62,9 @@ class Chart extends Component {
             svg.selectAll("g").remove();
         }
 
+        let noDataMessage = rows && rows.length ? null : (
+            <text className={"rt-noData"} y={(this.state.height / 2)} x={(this.state.width / 2)} dy={"1em"}
+                  fill={"rgba(0,0,0,0.5)"} style={{"textAnchor": "middle"}}>{this.props.isLoading?"...Please Wait":"No Data To Display"}</text>);
         let rectOffset = this.state.height * 0.13;
         let result = (
             <div style={style}>
@@ -89,14 +92,13 @@ class Chart extends Component {
                               fill={"black"} style={{"textAnchor": "middle", "fontWeight": "bold"}}>
                             {this.props.yLabel}
                         </text>
+                        {noDataMessage}
                     </g>
                 </svg>
 
             </div>);
 
         if (this.ref) {
-
-            let rows = this.props.submissions;
 
             // console.warn(d3)
             let svg = d3.select(this.ref);
@@ -119,7 +121,7 @@ class Chart extends Component {
                 .range([0, (this.state.height - 50)]);
 
             svg.insert("g", "#yLabelBg")
-                .call(d3.axisLeft(yAxis));
+                .call(this.yAxisFormat(yAxis));
 
 
             const make_x_gridlines = () => {
@@ -140,6 +142,10 @@ class Chart extends Component {
         }
 
         return result;
+    }
+
+    yAxisFormat(yAxis) {
+        return d3.axisLeft(yAxis);
     }
 
     xAxisFormat(xAxis) {

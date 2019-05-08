@@ -1,6 +1,6 @@
 import Container from "../Container";
 
-export  default class TeamPitchTypeCorrectResponseContainer extends Container {
+export default class TeamPitchTypeCorrectResponseContainer extends Container {
     getRoutingKey() {
         return 'calc.drill.usageDetail';
     }

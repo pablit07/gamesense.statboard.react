@@ -8,7 +8,8 @@ class Container extends Component {
 
         this.state = {
             submissions: [],
-            params: props.params
+            params: props.params,
+            isLoading: false
         };
 
         this.dataSource = this.dataSource.bind(this);

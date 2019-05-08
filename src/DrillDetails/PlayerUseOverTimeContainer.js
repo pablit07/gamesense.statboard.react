@@ -1,6 +1,5 @@
 import Container from "../Container";
 import actions from "../actions";
-import * as d3 from 'd3';
 
 export default class PlayerUseOverTimeContainer extends Container {
     constructor(props) {
@@ -19,6 +18,7 @@ export default class PlayerUseOverTimeContainer extends Container {
 
     async handleChange(timeSeries) {
         await this.setState({
+            submissions: [],
             params: {
                 rollUpType: timeSeries
             }

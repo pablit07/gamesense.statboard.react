@@ -12,13 +12,13 @@ class DrillDetailsChartView extends Component {
 
         let style = {marginLeft: '3.3rem'};
         return (<Fragment>
-            <h4 style={style}>BAR CHART Single User - # Drills over Time</h4>
+            <h4 style={style}>coachkohlhoff - # Drills over Time</h4>
 
             <PlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
                 <BarChart/>
             </PlayerUseOverTimeContainer>
 
-            <h4 style={style}>Single User - # Drills over Time</h4>
+            <h4 style={style}>coachkohlhoff - # Drills over Time</h4>
 
             <PlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
                 <ScatterPlotChart/>

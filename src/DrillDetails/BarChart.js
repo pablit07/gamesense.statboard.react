@@ -29,6 +29,12 @@ class BarChart extends Chart {
             .attr("y", d => y(d[pt]))
             .attr("height", d => this.state.height - y(d[pt]) - 50)
     }
+
+    yAxisFormat(yAxis) {
+        let axis = super.yAxisFormat(yAxis);
+        axis.ticks(5, "s");
+        return axis;
+    }
 }
 
 export default BarChart;
