@@ -13,9 +13,7 @@ if (root) {
         </BrowserRouter>
     ), root);
 } else {
-
     window.XDomain = require('./XDomain');
-    console.log(window.XDomain)
 }
 
 // If you want your app to work offline and load faster, you can change

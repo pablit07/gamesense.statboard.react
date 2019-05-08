@@ -19,7 +19,8 @@ class Chart extends Component {
             isLoading: false,
             startDate: dateOneMonthAgo,
             endDate: now,
-            width: this.getWidth()
+            width: this.getWidth(),
+            height: 400
         };
 
         this.handleResize = this.handleResize.bind(this);
@@ -58,10 +59,10 @@ class Chart extends Component {
 
                 {/* Chart */}
                 <svg width={this.state.width}
-                     height={400}>
+                     height={this.state.height}>
                     <g transform={("translate(" + 30 + "," + 30 + ")")} ref={r => {this.ref = r}}>
-                        <rect x={0} y={0}  height={400} width={this.state.width} style={{fill: "EBEBEB"}}/>
-                        <text transform={"rotate(-90)"} y={-35} x={-(400 / 2)} dy={"1em"} style={{"textAnchor": "middle", "fontWeight": "bold"}}>
+                        <rect x={0} y={0}  height={this.state.height} width={this.state.width} style={{fill: "EBEBEB"}}/>
+                        <text transform={"rotate(-90)"} y={-35} x={-(this.state.height / 2)} dy={"1em"} style={{"textAnchor": "middle", "fontWeight": "bold"}}>
                             {this.props.yLabel}
                         </text>
                     </g>

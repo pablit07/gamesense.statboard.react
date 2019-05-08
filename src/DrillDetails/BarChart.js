@@ -16,7 +16,15 @@ class BarChart extends Chart {
         rows = rows.filter(x => !!x[pt] && x[pt] !== '-');
 
         svg.append('g')
-        // TODO!!!!
+            .selectAll('bar')
+            .data(rows)
+            .enter()
+            .append('rect')
+            .style('fill', color)
+            .attr("x", d => x(d.date))
+            .attr("width", 100)
+            .attr("y", d => y(d[pt]))
+            .attr("height", d => this.state.height - y(d[pt]))
     }
 }
 

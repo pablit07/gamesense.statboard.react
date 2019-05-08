@@ -3,7 +3,7 @@ import '../App.css';
 import 'react-table/react-table.css';
 import 'font-awesome/css/font-awesome.min.css';
 import {downloadExcelSheet} from '../Utils'
-import Calendar from '../Calendar'
+import Calendar from '../Buttons/Calendar'
 import columns from './columns';
 import {Table} from "../Table";
 import {ExportToXlsButton, LogSelectionButton} from "../Buttons";

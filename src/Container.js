@@ -7,7 +7,8 @@ class Container extends Component {
         super(props);
 
         this.state = {
-            submissions: []
+            submissions: [],
+            params: props.params
         };
 
         this.dataSource = this.dataSource.bind(this);
@@ -29,7 +30,7 @@ class Container extends Component {
         let payload = {filters: {}};
 
         if (this.props.filters) Object.assign(payload.filters, this.props.filters);
-        if (this.props.params) Object.assign(payload, this.props.params);
+        if (this.state.params) Object.assign(payload, this.state.params);
 
         payload.authToken = this.props.socket.authToken;
         // payload.filters.minDate = this.state.startDate;
@@ -51,7 +52,7 @@ class Container extends Component {
             console.log('GameSense API responded:\n', response);
             const responseData = typeof response.content === 'string' ? JSON.parse(response.content) : null;
             console.log('Here is the payload:\n', responseData);
-            this.setState({submissions: responseData});
+            this.setState({submissions: responseData, isLoading: false});
 
         });
         console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);

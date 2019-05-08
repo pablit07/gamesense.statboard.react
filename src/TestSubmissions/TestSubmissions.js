@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import 'react-table/react-table.css';
-import Calendar from "../Calendar";
+import Calendar from "../Buttons/Calendar";
 import {downloadExcelSheet} from "../Utils";
 import columns from './columns';
 import {Table} from "../Table";
