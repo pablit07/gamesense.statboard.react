@@ -6,7 +6,7 @@ window.DrillBreakdown = zoid.create({
 
     // The url that will be loaded in the iframe or popup, when someone includes my component on their page
 
-    url: 'http://localhost:3000/XDomain/DrillBreakdown/',
+    url: '/XDomain/DrillBreakdown/',
 
     props: {
     	username: {
