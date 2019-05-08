@@ -9,5 +9,5 @@ export default {
         }
     },
     on: emitter.on.bind(emitter),
-    publish: emitter.emit
+    publish: emitter.emit.bind(emitter)
 }
