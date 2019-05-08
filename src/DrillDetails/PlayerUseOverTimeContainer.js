@@ -1,5 +1,6 @@
 import Container from "../Container";
 import actions from "../actions";
+import * as d3 from 'd3';
 
 export default class PlayerUseOverTimeContainer extends Container {
     constructor(props) {
@@ -22,14 +23,16 @@ export default class PlayerUseOverTimeContainer extends Container {
     }
 
     mapStateToProps(state) {
-        let defaultProps = {name: "date", values: [{value: "count", color: "turquoise"}], yLabel: "# Drills"};
+        let defaultProps = {name: "date", values: [{value: "count", color: "#23FD5C"}], yLabel: "# Drills"};
 
         let dates = state.submissions.reduce((accum, next) => {
             if (!accum.find(x => x === next[defaultProps.name])) {
                 accum.push(next[defaultProps.name]);
             }
             return accum;
-        }, []).sort();
+        }, []).sort().map(d => new Date(d));
+
+        console.info(dates, dates.map(d => new Date(d)))
 
         return {
             ...state,

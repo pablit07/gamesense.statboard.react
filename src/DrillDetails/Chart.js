@@ -51,6 +51,12 @@ class Chart extends Component {
             paddingLeft: '50px'
         };
 
+        if (this.ref) {
+            let svg = d3.select(this.ref);
+            svg.selectAll("g").remove();
+        }
+        let xPad = 30 + Math.max(Math.log10(this.props.yMax) * 2.5, 0);
+
         let result = (
             <div style={style} >
 
@@ -60,9 +66,9 @@ class Chart extends Component {
                 {/* Chart */}
                 <svg width={this.state.width}
                      height={this.state.height}>
-                    <g transform={("translate(" + 30 + "," + 30 + ")")} ref={r => {this.ref = r}}>
+                    <g transform={("translate(" + xPad + "," + 30 + ")")} ref={r => {this.ref = r}}>
                         <rect x={0} y={0}  height={this.state.height} width={this.state.width} style={{fill: "EBEBEB"}}/>
-                        <text transform={"rotate(-90)"} y={-35} x={-(this.state.height / 2)} dy={"1em"} style={{"textAnchor": "middle", "fontWeight": "bold"}}>
+                        <text transform={"rotate(-90)"} y={-xPad} x={-(this.state.height / 2)} dy={"1em"} style={{"textAnchor": "middle", "fontWeight": "bold"}}>
                             {this.props.yLabel}
                         </text>
                     </g>
@@ -87,7 +93,7 @@ class Chart extends Component {
 
             svg.append("g")
                 .attr("transform", "translate(0," + 350 + ")")
-                .call(d3.axisBottom(xAxis));
+                .call(this.xAxisFormat(xAxis));
 
             // Add Y axis
             let yAxis = d3.scaleLinear()
@@ -116,6 +122,10 @@ class Chart extends Component {
         }
 
         return result;
+    }
+
+    xAxisFormat(xAxis) {
+        return d3.axisBottom(xAxis);
     }
 }
 
