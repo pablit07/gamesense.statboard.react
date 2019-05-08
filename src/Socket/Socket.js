@@ -21,7 +21,7 @@ function create(username, app, key) {
            app
         };
 
-        if (credentials && credentials.username) window.localStorage.clear();
+        if (credentials && credentials.username) window.localStorage.removeItem('socketCluster.authToken');
 
         socket = createSocketClusterClient(opts);
 

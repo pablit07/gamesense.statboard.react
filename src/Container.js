@@ -59,6 +59,10 @@ class Container extends Component {
     }
 
     componentDidMount() {
+        this.initDataSource();
+    }
+
+    initDataSource() {
         this.props.socket.on('connect', this.dataSource);
         this.props.socket.on('authStateChange', this.dataSource);
         this.dataSource();

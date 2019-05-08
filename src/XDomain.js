@@ -12,8 +12,10 @@ import actions from './actions';
 
 
 const TimeSeriesPickList = ({dispatch}) => (<PickList
+    name={"playerUseOverTime"}
     options={[{key:'Weekly',value:'weekly'}, {key:'Monthly',value:'monthly'}, {key:'Yearly',value:'yearly'}]}
     selectedValue={'monthly'}
+    onLoad={dispatch.makePublisher(actions.PICKLIST_INIT)}
     onChange={dispatch.makePublisher(actions.PICKLIST_UPDATE)}/>);
 
 
@@ -22,8 +24,8 @@ const DrillBreakdown = ({username, app, token}) => (
                        columns={singlePlayerColumns} defaultPageSize={10} hideCheckboxes={true}/>);
 
 
-const PlayerUseOverTimeWelcomeChart = ({username, app, token, timeSeries}) => (
-    <PlayerUseOverTime socket={create(username, app, token)} params={{rollUpType: (timeSeries || "monthly")}} dispatch={dispatch}>
+const PlayerUseOverTimeWelcomeChart = ({username, app, token}) => (
+    <PlayerUseOverTime socket={create(username, app, token)} dispatch={dispatch}>
         <BarChart>
             <TimeSeriesPickList dispatch={dispatch}/>
         </BarChart>

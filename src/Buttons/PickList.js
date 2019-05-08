@@ -7,11 +7,15 @@ export default class PickList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: props.selectedValue
+      active: window.localStorage.getItem('statboard-picklist.' + this.props.name) || props.selectedValue
     };
 
     this.handleChange = this.handleChange.bind(this);
+  }
 
+  componentDidMount() {
+    window.localStorage.setItem('statboard-picklist.' + this.props.name, this.state.active);
+    if (this.props.onLoad) this.props.onLoad(this.state.active);
   }
 
   handleChange = (event) => {
@@ -19,17 +23,19 @@ export default class PickList extends React.Component {
 
     this.setState({active});
 
+    window.localStorage.setItem('statboard-picklist.' + this.props.name, active);
+
     if (this.props.onChange) this.props.onChange(active);
   };
 
   render() {
 
     let options = this.props.options.map( o => {
-      return (<option name={o.key} value={o.value} selected={o.value === this.state.active}>{o.key}</option> );
+      return (<option name={o.key} value={o.value}>{o.key}</option> );
     });
 
     return (
-      <select onChange={this.handleChange}>
+      <select onChange={this.handleChange} value={this.state.active}>
         {options}
       </select>
     );

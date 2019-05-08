@@ -20,7 +20,7 @@ class Chart extends Component {
             startDate: dateOneMonthAgo,
             endDate: now,
             width: this.getWidth(),
-            height: 400
+            height: 380
         };
 
         this.handleResize = this.handleResize.bind(this);
@@ -31,7 +31,7 @@ class Chart extends Component {
     }
 
     getWidth() {
-        return window.innerWidth - 150;
+        return window.innerWidth - (window.innerWidth * 0.1);
     }
 
     componentWillMount() {
@@ -47,28 +47,46 @@ class Chart extends Component {
     }
 
     render() {
+
+        let xPad = Math.max(Math.log10(this.props.yMax) * 2.5, 0);
+        let xPadAxis = 27 + xPad;
+
         let style = {
-            paddingLeft: '50px'
+            background: "#E9ECEF",
+            marginLeft: "4%",
+            paddingLeft: xPad
         };
 
         if (this.ref) {
             let svg = d3.select(this.ref);
             svg.selectAll("g").remove();
         }
-        let xPad = 30 + Math.max(Math.log10(this.props.yMax) * 2.5, 0);
 
+        let rectOffset = this.state.height * 0.13;
         let result = (
-            <div style={style} >
+            <div style={style}>
 
                 {/* Legend or controls */}
-                <div style={{textAlign:'right'}}> {this.props.children} </div>
+                <div style={{textAlign: 'right'}}> {this.props.children} </div>
 
                 {/* Chart */}
-                <svg width={this.state.width}
+                <svg width={this.state.width + xPad}
                      height={this.state.height}>
-                    <g transform={("translate(" + xPad + "," + 30 + ")")} ref={r => {this.ref = r}}>
-                        <rect x={0} y={0}  height={this.state.height} width={this.state.width} style={{fill: "EBEBEB"}}/>
-                        <text transform={"rotate(-90)"} y={-xPad} x={-(this.state.height / 2)} dy={"1em"} style={{"textAnchor": "middle", "fontWeight": "bold"}}>
+                    <g transform={("translate(" + xPadAxis + "," + 30 + ")")} ref={r => {
+                        this.ref = r
+                    }}>
+                        <rect x={0} y={0} height={this.state.height - rectOffset} width={this.state.width} style={{fill: "d9dbdd"}}/>
+                        <text id={"yLabelBg"} transform={"rotate(-90)"} y={-xPadAxis} x={-(this.state.height / 2)}
+                              dy={"1em"} fill={"E9ECEF"} style={{
+                            "textAnchor": "middle",
+                            "fontWeight": "bold",
+                            stroke: "E9ECEF",
+                            strokeWidth: "0.5em"
+                        }}>
+                            {this.props.yLabel}
+                        </text>
+                        <text transform={"rotate(-90)"} y={-xPadAxis} x={-(this.state.height / 2)} dy={"1em"}
+                              fill={"black"} style={{"textAnchor": "middle", "fontWeight": "bold"}}>
                             {this.props.yLabel}
                         </text>
                     </g>
@@ -86,21 +104,21 @@ class Chart extends Component {
             // Add X axis
 
             let interval = (this.state.width - 20) / this.props.xValues.length;
-            let numbers = Array.from({length: this.props.xValues.length}, (v, k) => k*interval);
+            let numbers = Array.from({length: this.props.xValues.length}, (v, k) => k * interval);
             let xAxis = d3.scaleOrdinal()
-                .domain( this.props.xValues)
-                .range( numbers)
+                .domain(this.props.xValues)
+                .range(numbers)
 
             svg.append("g")
-                .attr("transform", "translate(0," + 350 + ")")
+                .attr("transform", "translate(0," + (this.state.height - 50) + ")")
                 .call(this.xAxisFormat(xAxis));
 
             // Add Y axis
             let yAxis = d3.scaleLinear()
                 .domain([this.props.yMax, 0])
-                .range([ 0, 350 ]);
+                .range([0, (this.state.height - 50)]);
 
-            svg.append("g")
+            svg.insert("g", "#yLabelBg")
                 .call(d3.axisLeft(yAxis));
 
 
