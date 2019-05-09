@@ -24,8 +24,8 @@ const DrillBreakdown = ({username, app, token}) => (
                        columns={singlePlayerColumns} defaultPageSize={10} hideCheckboxes={true}/>);
 
 
-const PlayerUseOverTimeWelcomeChart = ({username, app, token}) => (
-    <PlayerUseOverTime socket={create(username, app, token)} dispatch={dispatch}>
+const PlayerUseOverTimeWelcomeChart = ({username, app, token, userId}) => (
+    <PlayerUseOverTime socket={create(username, app, token)} dispatch={dispatch} filters={(userId?{user_id:userId}:null)}>
         <BarChart>
             <TimeSeriesPickList dispatch={dispatch}/>
         </BarChart>

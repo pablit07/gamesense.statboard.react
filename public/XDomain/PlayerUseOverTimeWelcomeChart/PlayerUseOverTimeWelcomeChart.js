@@ -20,6 +20,10 @@ window.PlayerUseOverTimeWelcomeChart = zoid.create({
     	token: {
     		type: 'string',
     		required: true
-    	}
+    	},
+		userId: {
+    		type: 'number',
+			required: false
+		}
     }
 });

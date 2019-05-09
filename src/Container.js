@@ -9,6 +9,7 @@ class Container extends Component {
         this.state = {
             submissions: [],
             params: props.params,
+            filters: props.filters,
             isLoading: false
         };
 
@@ -30,7 +31,7 @@ class Container extends Component {
 
         let payload = {filters: {}};
 
-        if (this.props.filters) Object.assign(payload.filters, this.props.filters);
+        if (this.state.filters) Object.assign(payload.filters, this.state.filters);
         if (this.state.params) Object.assign(payload, this.state.params);
 
         payload.authToken = this.props.socket.authToken;

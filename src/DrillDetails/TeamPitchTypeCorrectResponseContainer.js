@@ -8,6 +8,7 @@ export default class TeamPitchTypeCorrectResponseContainer extends Container {
     mapStateToProps(state) {
         let defaultProps = {
             name: "name",
+            // TODO switch for SB
             values: [{
                 value: 'pitchType_Fastball',
                 color: "red"
@@ -24,6 +25,25 @@ export default class TeamPitchTypeCorrectResponseContainer extends Container {
                 value: 'pitchType_Changeup',
                 color: "purple"
             }],
+            // values: [{
+            //     value: 'pitchType_Fastball',
+            //     color: "red"
+            // }, {
+            //     value: 'pitchType_Rise',
+            //     color: 'green'
+            // }, {
+            //     value: 'pitchType_Curveball',
+            //     color: "orange"
+            // }, {
+            //     value: 'pitchType_Drop',
+            //     color: "blue"
+            // }, {
+            //     value: 'pitchType_Knuckle',
+            //     color: "purple"
+            // }, {
+            //     value: 'pitchType_Screw',
+            //     color: "black"
+            // }]
             yLabel: "% Correct"
         };
 

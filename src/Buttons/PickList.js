@@ -31,7 +31,7 @@ export default class PickList extends React.Component {
   render() {
 
     let options = this.props.options.map( o => {
-      return (<option name={o.key} value={o.value}>{o.key}</option> );
+      return (<option name={o.key} value={o.value} key={o.key}>{o.key}</option> );
     });
 
     return (
