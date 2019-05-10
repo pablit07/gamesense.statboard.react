@@ -8,7 +8,8 @@ export default class ToggleRPC extends Component {
 
     toggle = () => {
         this.setState({
-            on: !this.state.on
+            on: !this.state.on,
+            off: this.state.on
         })
     }
 
@@ -19,6 +20,7 @@ export default class ToggleRPC extends Component {
     return (
         children({
             on: this.state.on,
+            off: !this.state.on,
             toggle: this.toggle
         })
     )
