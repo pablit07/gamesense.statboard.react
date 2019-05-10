@@ -13,6 +13,8 @@
   <link rel="manifest" href="/manifest.json" />
   <link href="https://fonts.googleapis.com/css?family=Quicksand|Raleway" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/standalone/jelly.min.css" rel="stylesheet" />
+  <link href="/static/css/0.chunk.css" rel="stylesheet">
+  <link href="/static/css/main.chunk.css" rel="stylesheet">
 
 
   <script src="../zoid.js"></script>
@@ -51,19 +53,8 @@
     // var xprops = window.xprops || {};
     var xprops = window.xprops || {};
 
-    // console.log(XDomain)
-    // console.log(XDomain)
-    // console.log("DrillBreakdown")
-
-    // XDomain.render(
-    //   XDomain.React.createElement(XDomain.CoachReport, xprops),
-    //   // <CoachReport { ...window.xprops } />
-    //   document.getElementById("container")
-    // );
-
     XDomain.render(
       XDomain.React.createElement(XDomain.DrillBreakdown, xprops),
-      // <CoachReport { ...window.xprops } />
       document.getElementById("container")
     );
   </script>
