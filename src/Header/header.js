@@ -12,7 +12,7 @@ export const Header = () => {
                      alt="GameSense Sports"
                      title="GameSense Sports"
                 />
-                <a onClick={logout} style={{float:'right'}} href='/logout'>Logout</a>
+                <a onClick={logout} style={{float:'right',color:'white'}} href='/logout'>Logout</a>
             </div>
 
         );

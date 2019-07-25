@@ -9,6 +9,8 @@ import BarChart from "./DrillDetails/BarChart";
 import PickList from "./Buttons/PickList";
 import dispatch from './dispatch';
 import actions from './actions';
+import DrillDetailsContainer from "./DrillDetails/DrillDetailsContainer";
+import {Table} from "./Table";
 
 
 const TimeSeriesPickList = ({dispatch}) => (<PickList
@@ -19,9 +21,17 @@ const TimeSeriesPickList = ({dispatch}) => (<PickList
     onChange={dispatch.makePublisher(actions.PICKLIST_UPDATE)}/>);
 
 
-const DrillBreakdown = ({username, app, token}) => (
-    <DrillDetailsTable socket={create(username, app, token)} rollUpType={"singleUserPitcherResponseType"}
-                       columns={singlePlayerColumns} defaultPageSize={10} hideCheckboxes={true}/>);
+const DrillBreakdown = ({username, app, token, userId}) => (
+    <DrillDetailsContainer
+        socket={create(username, app, token)}
+        params={{rollUpType:"singleUserPitcherResponseType"}}
+        filters={(userId?{user_id:userId}:null)}
+        columns={singlePlayerColumns}
+        defaultPageSize={10}
+        hideCheckboxes={true}>
+
+        <Table/>
+    </DrillDetailsContainer>);
 
 
 const PlayerUseOverTimeWelcomeChart = ({username, app, token, userId}) => (

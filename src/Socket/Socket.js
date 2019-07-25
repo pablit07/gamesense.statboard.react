@@ -11,6 +11,7 @@ function create(username, app, key) {
             port: 8101
         };
         let token = key ? false : window.document.location.search.replace('?token=', '');
+
         const credentials = (!key) ? {
             username: token.split(':')[0],
             token: token.split(':')[1],

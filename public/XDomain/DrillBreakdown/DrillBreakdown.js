@@ -21,5 +21,9 @@ window.DrillBreakdown = zoid.create({
     		type: 'string',
     		required: true
     	},
+		userId: {
+    		type: 'number',
+			required: false
+		}
     }
 });

@@ -8,6 +8,7 @@ import { socket } from './Socket';
 import DrillDetailsView from "./DrillDetails/DrillDetailsView";
 import PageContainer from "./PageContainer";
 import DrillDetailsChartView from "./DrillDetails/DrillDetailsChartsView";
+import TestSubmissionDetail from "./TestSubmissions/TestSubmissionDetail";
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /testsubmissions
@@ -23,6 +24,7 @@ const Main = () => {
 		<main>
 			<Switch>
 				<Route exact path='/' component={Home}/>
+				<Route exact path='/testsubmissions/:id_submission' render={props => <PageContainer title={'Test Submission Detail'} contents={<TestSubmissionDetail socket={socket} {...props}/>}/>}/>
 				<Route exact path='/testsubmissions' render={() => <PageContainer title={'Test Submissions'} contents={<TestSubmissions socket={socket}/>}/>}/>
 				<Route path='/drillusage' render={() => <PageContainer title={'Drill Usage Report'} contents={<DrillUsage socket={socket}/>}/>}/>
 				<Route path='/coachreport' render={() => <PageContainer title={'Coach Report'} contents={<CoachReport socket={socket}/>}/>}/>

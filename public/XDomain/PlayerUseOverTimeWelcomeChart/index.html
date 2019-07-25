@@ -55,6 +55,12 @@
       XDomain.React.createElement(XDomain.PlayerUseOverTimeWelcomeChart, xprops),
       document.getElementById("container")
     );
+
+    xprops.onProps(props =>
+      XDomain.render(
+              XDomain.React.createElement(XDomain.PlayerUseOverTimeWelcomeChart, props),
+              document.getElementById("container")
+      ));
   </script>
 </body>
 

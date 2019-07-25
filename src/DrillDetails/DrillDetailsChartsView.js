@@ -4,11 +4,15 @@ import {PitchTypeBaseballLegend} from "./PitchTypeBaseballLegend";
 import BarChart from "./BarChart";
 import PlayerUseOverTimeContainer from "./PlayerUseOverTimeContainer";
 import TeamPitchTypeCorrectResponseContainer from "./TeamPitchTypeCorrectResponseContainer";
+import {PitchTypeSoftballLegend} from "./PitchTypeSoftballLegend";
 
 
 class DrillDetailsChartView extends Component {
 
     render() {
+
+        let baseballLegend = (<PitchTypeBaseballLegend/>);
+        let softballLegend = (<PitchTypeSoftballLegend/>);
 
         let style = {marginLeft: '3.3rem'};
         return (<Fragment>
@@ -28,7 +32,7 @@ class DrillDetailsChartView extends Component {
 
             <TeamPitchTypeCorrectResponseContainer socket={this.props.socket} params={{rollUpType: 'globalPitcherResponseType'}}>
                 <ScatterPlotChart>
-                    <PitchTypeBaseballLegend/>
+                    {this.props.socket.authToken && this.props.socket.authToken.app != 'SB' ? baseballLegend : softballLegend}
                 </ScatterPlotChart>
             </TeamPitchTypeCorrectResponseContainer>
 

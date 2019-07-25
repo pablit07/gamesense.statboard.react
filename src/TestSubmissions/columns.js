@@ -7,9 +7,6 @@
               style: {
                   textAlign: 'left'
               },
-              width: 300,
-              maxWidth: 100,
-              minWidth: 100
           },
           {
               Header: "Team",
@@ -49,6 +46,7 @@
               style: {
                   textAlign: 'right'
               },
+              width: 200,
           },
           {
               Header: "Test Date",
@@ -64,9 +62,9 @@
               Header: "Actions",
               sortable: false,
               filterable: false,
-              width: 80,
-              maxWidth: 100,
-              minWidth: 100
+              width: 160,
+              maxWidth: 200,
+              minWidth: 200
           },
       ]
 

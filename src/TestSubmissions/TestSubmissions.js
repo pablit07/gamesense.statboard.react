@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import '../App.css';
 import 'react-table/react-table.css';
 import Calendar from "../Buttons/Calendar";
@@ -6,6 +6,7 @@ import {downloadExcelSheet} from "../Utils";
 import columns from './columns';
 import {Table} from "../Table";
 import {LinkButton, LogSelectionButton} from "../Buttons";
+import { Redirect } from 'react-router';
 
 
 
@@ -27,14 +28,28 @@ class TestSubmissions extends Component {
 
         this.dataSource = this.dataSource.bind(this);
         this.exportSource = this.exportSource.bind(this);
+        this.recalculate = this.recalculate.bind(this);
+        this.openDetail = this.openDetail.bind(this);
 
         columns.find(h => h.Header === 'Actions').Cell = props => {
             return (
+                <Fragment>
+                <button style={{backgroundColor: 'green', color: '#fefefe'}}
+                        onClick={() => {
+                            this.openDetail(props.original.id_submission);
+                        }}
+                >View</button>
                 <button style={{backgroundColor: 'green', color: '#fefefe'}}
                         onClick={() => {
                             this.exportSource(props.original.id_submission);
                         }}
                 >Download</button>
+                <button style={{backgroundColor: 'green', color: '#fefefe'}}
+                    onClick={() => {
+                        this.recalculate(props.original.id_submission);
+                    }}
+                >Recalc</button>
+                </Fragment>
             );
         };
     }
@@ -84,6 +99,24 @@ class TestSubmissions extends Component {
         console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
     }
 
+    recalculate(submissionId) {
+        if (this.props.socket.state !== "open") return;
+
+        const timestamp = Date.now()
+        const data = {
+            timestamp: timestamp,
+            routingKey: 'calc.test.recalculate',
+            payload: {"id_submission":submissionId}
+        };
+        this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
+
+        console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
+    }
+
+    openDetail(openDetailId) {
+        this.setState({openDetailId});
+    }
+
     async handleDateChange({startDate, endDate}) {
         await this.setState({startDate, endDate, submissions: []});
         this.dataSource();
@@ -100,23 +133,27 @@ class TestSubmissions extends Component {
         this.dataSource();
     }
 
-  render() {
+    render() {
 
-      const buttons = [
+        if (this.state.openDetailId) {
+            return (<Redirect push to={"/TestSubmissions/" + this.state.openDetailId} />);
+        }
+
+        const buttons = [
           (<LogSelectionButton key={'Log Selection Button'} logSelection={this.logSelection.bind(this)}/>),
 
           (<LinkButton key={'Link Button'} inner={'Drill Usage'} href={'/drillusage'}/>),
 
           (<Calendar key={'Calendar'} startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)}/>)
-      ];
+        ];
 
-      return (<Table
-          columns={columns}
-          submissions={this.state.submissions}
-          isLoading={this.state.isLoading}
-          buttons={buttons}
-          updateSelection={selection => this.setState({selection})}/>);
-  }
+        return (<Table
+            columns={columns}
+            submissions={this.state.submissions}
+            isLoading={this.state.isLoading}
+            buttons={buttons}
+            updateSelection={selection => this.setState({selection})}/>);
+    }
 }
 
 export default TestSubmissions;

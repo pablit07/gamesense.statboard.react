@@ -54,9 +54,14 @@
     var xprops = window.xprops || {};
 
     XDomain.render(
-      XDomain.React.createElement(XDomain.DrillBreakdown, xprops),
-      document.getElementById("container")
+            XDomain.React.createElement(XDomain.DrillBreakdown, xprops),
+            document.getElementById("container")
     );
+
+    window.xprops.onProps(props => XDomain.render(
+            XDomain.React.createElement(XDomain.DrillBreakdown, props),
+            document.getElementById("container")
+    ));
   </script>
 </body>
 

@@ -16,6 +16,15 @@ class Container extends Component {
         this.dataSource = this.dataSource.bind(this);
     }
 
+    async componentWillReceiveProps(nextProps, nextContext) {
+        await this.setState({
+            params: nextProps.params,
+            filters: nextProps.filters,
+            isLoading: false
+        });
+        this.dataSource();
+    }
+
     getRoutingKey() {
         throw new Error("Must override getRoutingKey");
     }

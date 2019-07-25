@@ -3,7 +3,8 @@
   flex-wrap: wrap;
 } */
 
-#actionButtons {
+#actionButtons,
+.data-view {
   margin-right: 2%;
   margin-left: 2%;
   display: flex;
@@ -293,4 +294,14 @@ button.btn.flat-button:hover::after {
 
 .grid path {
   stroke-width: 0;
+}
+
+.data-view dl dt .info {
+  font-size: 0.75em;
+  font-family: Arial;
+}
+
+.data-view dl dd {
+  font-weight: bold;
+  padding: 8px 0;
 }

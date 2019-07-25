@@ -6,9 +6,9 @@ export default class PlayerUseOverTimeContainer extends Container {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleInit = this.handleInit.bind(this);
-        if (this.props.dispatch) {
-            this.props.dispatch.on(actions.PICKLIST_UPDATE, this.handleChange);
-            this.props.dispatch.on(actions.PICKLIST_INIT, this.handleInit);
+        if (props.dispatch) {
+            props.dispatch.on(actions.PICKLIST_UPDATE, this.handleChange);
+            props.dispatch.on(actions.PICKLIST_INIT, this.handleInit);
         }
     }
 

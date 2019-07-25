@@ -15,11 +15,11 @@ class DrillDetailsView extends Component {
 
             {/* Team - Correct Type*/}
             <Toggle>
-                {({off, toggle}) => (
+                {({on, toggle}) => (
                     <div>
 
                         <h4 style={style} onClick={toggle}><li>Team - Correct Type</li></h4>
-                        {off && <DrillDetailsTable socket={this.props.socket} rollUpType={""}/>}
+                        {on && <DrillDetailsTable socket={this.props.socket} rollUpType={""}/>}
                     </div>
                 )}
             </Toggle>
