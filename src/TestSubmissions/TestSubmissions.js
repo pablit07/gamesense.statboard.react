@@ -87,7 +87,7 @@ class TestSubmissions extends Component {
         const data = {
             timestamp: timestamp,
             routingKey: 'export.test.singlePlayer',
-            payload: {"id_submission":submissionId}
+            payload: {"id_submission":submissionId, force:true},
         };
         this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
         this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
