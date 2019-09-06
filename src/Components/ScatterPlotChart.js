@@ -1,7 +1,7 @@
 import '../App.css';
 import 'react-table/react-table.css';
 import 'font-awesome/css/font-awesome.min.css';
-import Chart from "./Chart";
+import Chart from "../Components/Chart";
 
 
 class ScatterPlotChart extends Chart {

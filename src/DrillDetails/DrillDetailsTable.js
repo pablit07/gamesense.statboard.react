@@ -3,7 +3,7 @@ import '../App.css';
 import 'react-table/react-table.css';
 import 'font-awesome/css/font-awesome.min.css';
 import columns from './columns';
-import {Table} from "../Table";
+import {Table} from "../Components/Table";
 
 
 class DrillDetailsTable extends Component {

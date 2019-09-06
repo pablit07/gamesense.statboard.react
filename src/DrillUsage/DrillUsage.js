@@ -5,7 +5,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import {downloadExcelSheet} from '../Utils'
 import Calendar from "../Buttons/Calendar";
 import columns from './columns';
-import {Table} from "../Table";
+import {Table} from "../Components/Table";
 import {ExportToXlsButton, LinkButton, LogSelectionButton} from "../Buttons/index";
 
 

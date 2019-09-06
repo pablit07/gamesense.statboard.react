@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
-import ScatterPlotChart from './ScatterPlotChart';
+import ScatterPlotChart from '../Components/ScatterPlotChart';
 import {PitchTypeBaseballLegend} from "./PitchTypeBaseballLegend";
-import BarChart from "./BarChart";
+import BarChart from "../Components/BarChart";
 import PlayerUseOverTimeContainer from "./PlayerUseOverTimeContainer";
 import TeamPitchTypeCorrectResponseContainer from "./TeamPitchTypeCorrectResponseContainer";
 import {PitchTypeSoftballLegend} from "./PitchTypeSoftballLegend";

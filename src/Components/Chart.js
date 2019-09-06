@@ -130,18 +130,22 @@ class Chart extends Component {
             };
 
             // add the X gridlines
-            svg.append("g")
-                .attr("class", "grid")
-                .attr("transform", "translate(0," + 400 + ")")
-                .call(make_x_gridlines()
-                    .tickSize(-400)
-                    .tickFormat("")
-                );
+            this.drawXGridlines(svg, make_x_gridlines);
 
             this.props.values.forEach(v => this.addChartLayer(svg, rows, xAxis, yAxis, v.value, v.color));
         }
 
         return result;
+    }
+
+    drawXGridlines(svg, make_x_gridlines) {
+        svg.append("g")
+            .attr("class", "grid")
+            .attr("transform", "translate(0," + 400 + ")")
+            .call(make_x_gridlines()
+                .tickSize(-400)
+                .tickFormat("")
+            );
     }
 
     yAxisFormat(yAxis) {

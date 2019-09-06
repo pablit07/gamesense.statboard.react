@@ -5,12 +5,12 @@ import { create } from './Socket/Socket';
 import DrillDetailsTable from "./DrillDetails/DrillDetailsTable";
 import singlePlayerColumns from "./DrillDetails/columns_single";
 import PlayerUseOverTime from './DrillDetails/PlayerUseOverTimeContainer';
-import BarChart from "./DrillDetails/BarChart";
+import BarChart from "./Components/BarChart";
 import PickList from "./Buttons/PickList";
 import dispatch from './dispatch';
 import actions from './actions';
 import DrillDetailsContainer from "./DrillDetails/DrillDetailsContainer";
-import {Table} from "./Table";
+import {Table} from "./Components/Table";
 
 
 const TimeSeriesPickList = ({dispatch}) => (<PickList

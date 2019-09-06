@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import DrillDetailsTable from './DrillDetailsTable';
 // import ScatterPlotChart from './ScatterPlotChart';
-import Toggle from './toggleRPC';
+import Toggle from '../Components/toggleRPC';
 
 
 

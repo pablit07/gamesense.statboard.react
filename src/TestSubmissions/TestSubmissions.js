@@ -4,7 +4,7 @@ import 'react-table/react-table.css';
 import Calendar from "../Buttons/Calendar";
 import {downloadExcelSheet} from "../Utils";
 import columns from './columns';
-import {Table} from "../Table";
+import {Table} from "../Components/Table";
 import {LinkButton, LogSelectionButton} from "../Buttons";
 import { Redirect } from 'react-router';
 
