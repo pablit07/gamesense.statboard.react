@@ -36,7 +36,7 @@
               style: {
                   textAlign: 'left'
               },
-              width: 100
+              width: 25
           },
           {
               Header: "Device",
@@ -46,7 +46,7 @@
               style: {
                   textAlign: 'right'
               },
-              width: 200,
+              width: 100,
           },
           {
               Header: "Test Date",
@@ -62,9 +62,7 @@
               Header: "Actions",
               sortable: false,
               filterable: false,
-              width: 160,
-              maxWidth: 200,
-              minWidth: 200
+              width: 200
           },
       ]
 

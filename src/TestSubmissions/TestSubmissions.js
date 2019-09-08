@@ -34,6 +34,7 @@ class TestSubmissions extends Component {
         columns.find(h => h.Header === 'Actions').Cell = props => {
             return (
                 <Fragment>
+                <span className={('indicator'+( props.original.number_of_responses === 0 || props.original.total_completely_correct_scores === props.original.number_of_responses ? ' good' : (props.original.completely_correct_scores === props.original.number_of_responses ? ' bad' : ' warning') ))}>&nbsp;</span>
                 <button style={{backgroundColor: 'green', color: '#fefefe'}}
                         onClick={() => {
                             this.openDetail(props.original.id_submission);

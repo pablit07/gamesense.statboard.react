@@ -305,3 +305,25 @@ button.btn.flat-button:hover::after {
   font-weight: bold;
   padding: 8px 0;
 }
+
+span.indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 6px;
+  margin-right: 4px;
+  border: 1px solid lightgray;
+  vertical-align: middle;
+}
+
+span.indicator.good {
+  background-color: #58ff58;
+}
+
+span.indicator.warning {
+  background-color: #e8e813;
+}
+
+span.indicator.bad {
+  background-color: #FF6551;
+}
