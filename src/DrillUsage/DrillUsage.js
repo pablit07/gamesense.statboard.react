@@ -6,7 +6,7 @@ import {downloadExcelSheet} from '../Utils'
 import Calendar from "../Buttons/Calendar";
 import columns from './columns';
 import {Table} from "../Components/Table";
-import {ExportToXlsButton, LinkButton, LogSelectionButton} from "../Buttons/index";
+import {ExportToXlsButton, LinkButton, SelectionActionButton} from "../Buttons/index";
 
 
 class DrillUsage extends Component {
@@ -125,7 +125,7 @@ class DrillUsage extends Component {
 
         const buttons = [
 
-            (<LogSelectionButton key={'Log Selection Button'} logSelection={this.logSelection.bind(this)}/>),
+            (<SelectionActionButton key={'Log Selection Button'} logSelection={this.logSelection.bind(this)}/>),
             (<ExportToXlsButton key={'Export to XLS'} exportSource={this.exportSource} />),
 
             (<LinkButton key={'Link Button'} inner={"Test Submissions"} href={'/testsubmissions'} />),

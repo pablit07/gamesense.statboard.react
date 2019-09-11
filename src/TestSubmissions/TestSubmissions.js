@@ -5,7 +5,7 @@ import Calendar from "../Buttons/Calendar";
 import {downloadExcelSheet} from "../Utils";
 import columns from './columns';
 import {Table} from "../Components/Table";
-import {LinkButton, LogSelectionButton} from "../Buttons";
+import {LinkButton, SelectionActionButton} from "../Buttons";
 import { Redirect } from 'react-router';
 
 
@@ -126,6 +126,24 @@ class TestSubmissions extends Component {
 
     logSelection = () => {
       console.log("selection:", this.state.selection);
+
+            if (this.props.socket.state !== "open") return;
+
+            const timestamp = Date.now();
+            const data = {
+                timestamp: timestamp,
+                routingKey: 'export.test.calcSummary',
+                payload: {authToken: this.props.socket.authToken, filters: {id_submission: {$in:this.state.selection}}}
+            };
+            this.setState({isLoading:true});
+            this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
+            this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
+                this.props.socket.unsubscribe('gs-message-' + timestamp);
+                console.log('GameSense API responded:\n', response);
+
+                downloadExcelSheet(response);
+            });
+            console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
     };
 
     componentDidMount() {
@@ -141,7 +159,7 @@ class TestSubmissions extends Component {
         }
 
         const buttons = [
-          (<LogSelectionButton key={'Log Selection Button'} logSelection={this.logSelection.bind(this)}/>),
+          (<SelectionActionButton key={'Log Selection Button'} logSelection={this.logSelection.bind(this)} name={"Save PR Scores"}/>),
 
           (<LinkButton key={'Link Button'} inner={'Drill Usage'} href={'/drillusage'}/>),
 

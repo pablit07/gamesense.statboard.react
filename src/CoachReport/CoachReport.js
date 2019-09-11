@@ -6,7 +6,7 @@ import {downloadExcelSheet} from '../Utils'
 import Calendar from '../Buttons/Calendar'
 import columns from './columns';
 import {Table} from "../Components/Table";
-import {ExportToXlsButton, LogSelectionButton} from "../Buttons";
+import {ExportToXlsButton, SelectionActionButton} from "../Buttons";
 
 
 class CoachReport extends Component {
@@ -112,7 +112,7 @@ class CoachReport extends Component {
     render() {
 
         const buttons = [
-            (<LogSelectionButton key={'Log Selection Button'} logSelection={this.logSelection.bind(this)}/>),
+            (<SelectionActionButton key={'Log Selection Button'} logSelection={this.logSelection.bind(this)}/>),
 
             (<ExportToXlsButton key={'Export to XLS'} exportSource={this.exportSource}/>),
 

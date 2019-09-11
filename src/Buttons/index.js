@@ -19,10 +19,9 @@ class LinkButton extends Component {
 LinkButton = withRouter(LinkButton);
 
 
-class LogSelectionButton extends Component {
+class SelectionActionButton extends Component {
     render() {
-        return (<button onClick={this.props.logSelection} className="btn flat-button btn-blue">Log
-            Selection</button>);
+        return (<button onClick={this.props.logSelection} className="btn flat-button btn-blue">{this.props.name || "Log Selection"}</button>);
     }
 }
 
@@ -34,4 +33,4 @@ class ExportToXlsButton extends Component {
 }
 
 
-export {LinkButton, LogSelectionButton, ExportToXlsButton};
+export {LinkButton, SelectionActionButton, ExportToXlsButton};
