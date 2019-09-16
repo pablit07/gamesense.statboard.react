@@ -23,6 +23,8 @@ class Table extends Component {
         const {toggleSelection, toggleAll} = {
 
             toggleSelection: (key, shift, row) => {
+
+                console.log(this.checkboxTable.state.page);
                 /*
                   Implementation of how to manage the selection state is up to the developer.
                   This implementation uses an array stored in the component state.
@@ -114,6 +116,8 @@ class Table extends Component {
             columns={columns}
             data={submissions}
             filterable
+            onPageChange={page => this.setState({ page }) }
+            page={this.state.page}
             defaultPageSize={defaultPageSize || 25}
             noDataText={(isLoading ? "...Please Wait" : "No Data To Display")}
             {...checkboxProps}
