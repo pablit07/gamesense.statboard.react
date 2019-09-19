@@ -2,6 +2,7 @@ import checkboxHOC from "react-table/lib/hoc/selectTable";
 import ReactTable from "react-table";
 import React, {Component} from 'react';
 import toggleHeaderHOC from "./ToggleHeader";
+import fuzzy from "./FilterMethods/Fuzzy";
 
 class Table extends Component {
 
@@ -120,6 +121,7 @@ class Table extends Component {
             page={this.state.page}
             defaultPageSize={defaultPageSize || 25}
             noDataText={(isLoading ? "...Please Wait" : "No Data To Display")}
+            defaultFilterMethod={fuzzy}
             {...checkboxProps}
         >
 
