@@ -21,8 +21,8 @@ class TestSubmissions extends Component {
         this.state = {
             submissions: [],
             selection: [],
-            startDate: dateOneMonthAgo,
-            endDate: now,
+            startDate: localStorage.getItem('Test Submission Calendar - startDate') ? new Date(Date.parse(localStorage.getItem('Test Submission Calendar - startDate'))) : dateOneMonthAgo,
+            endDate: localStorage.getItem('Test Submission Calendar - endDate') ? new Date(Date.parse(localStorage.getItem('Test Submission Calendar - endDate'))) : now,
             isLoading: false
         };
 

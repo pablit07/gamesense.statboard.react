@@ -20,8 +20,8 @@ class DrillUsage extends Component {
         this.state = {
             submissions: [],
             selection: [],
-            startDate: dateOneMonthAgo,
-            endDate: now,
+            startDate: localStorage.getItem('Drill Usage Calendar - startDate') ? new Date(Date.parse(localStorage.getItem('Drill Usage Calendar - startDate'))) : dateOneMonthAgo,
+            endDate: localStorage.getItem('Drill Usage Calendar - endDate') ? new Date(Date.parse(localStorage.getItem('Drill Usage Calendar - endDate'))) : now,
             isLoading: false
         };
 
@@ -130,7 +130,7 @@ class DrillUsage extends Component {
 
             (<LinkButton key={'Link Button'} inner={"Test Submissions"} href={'/testsubmissions'} />),
 
-            (<Calendar key={'Calendar'} startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)}/>)
+            (<Calendar key={'Calendar'} uniqueKey={'Drill Usage Calendar'} startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)}/>)
         ];
 
         return (<Table
