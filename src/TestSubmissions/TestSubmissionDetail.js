@@ -15,6 +15,7 @@ class TestSubmissionDetail extends Component {
             totalScore: "",
             typeScore: "",
             locationScore: "",
+            activityId: null,
             isLoading: false
         };
 
@@ -42,6 +43,7 @@ class TestSubmissionDetail extends Component {
                 totalScore: res[0].first_glance_total_score,
                 locationScore: res[0].first_glance_location_score,
                 typeScore: res[0].first_glance_type_score,
+                activityId: res[0].activity_id,
                 isLoading:false
             });
             this.props.socket.off('connect', this.dataSource);
@@ -66,6 +68,14 @@ class TestSubmissionDetail extends Component {
               <dd>{this.state.typeScore}</dd>
               <dt>Pitch Location gS Score™ - <span className="info">correct response ball or strike</span></dt>
               <dd>{this.state.locationScore}</dd>
+          </dl>
+          <dl>
+              <dt>&nbsp;</dt>
+              <dd></dd>
+          </dl>
+          <dl>
+              <dt>Activity ID</dt>
+              <dd><a href={(this.state.activityId ? "https://app.gamesensesports.com/admin/account/testactivity/" + this.state.activityId + "/change/?_changelist_filters=p%3D1" : '')}>{this.state.activityId}</a></dd>
           </dl>
       </div>);
   }
