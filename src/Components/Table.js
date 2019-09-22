@@ -11,8 +11,11 @@ class Table extends Component {
 
         this.state = {
             selectAll: false,
-            selection: []
-        }
+            selection: [],
+            page: 0
+        };
+
+        this.CheckboxTableComponent = props.hideCheckboxes ? ReactTable : toggleHeaderHOC(checkboxHOC(ReactTable));
     }
 
     render() {
@@ -24,8 +27,6 @@ class Table extends Component {
         const {toggleSelection, toggleAll} = {
 
             toggleSelection: (key, shift, row) => {
-
-                console.log(this.checkboxTable.state.page);
                 /*
                   Implementation of how to manage the selection state is up to the developer.
                   This implementation uses an array stored in the component state.
@@ -51,6 +52,7 @@ class Table extends Component {
             },
 
             toggleAll: () => {
+
                 /*
                   'toggleAll' is a tricky concept with any filterable table
                   do you just select ALL the records that are in your data?
@@ -108,16 +110,18 @@ class Table extends Component {
             // }
         };
 
-        const CheckboxTable = this.props.hideCheckboxes ? ReactTable : toggleHeaderHOC(checkboxHOC(ReactTable));
 
+        const CheckboxTable = this.CheckboxTableComponent;
         return (<CheckboxTable
+            key={'Checkbox Table'}
             keyField='id_submission'
             ref={r => (this.checkboxTable = r)}
             className="-striped -highlight"
             columns={columns}
             data={submissions}
             filterable
-            onPageChange={page => this.setState({ page }) }
+            onPageChange={page => this.setState({page})}
+            onFilteredChange={filtered => this.setState({page:0})}
             page={this.state.page}
             defaultPageSize={defaultPageSize || 25}
             noDataText={(isLoading ? "...Please Wait" : "No Data To Display")}

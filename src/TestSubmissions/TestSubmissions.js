@@ -125,25 +125,25 @@ class TestSubmissions extends Component {
 
 
     logSelection = () => {
-      console.log("selection:", this.state.selection);
+        if (this.props.socket.state !== "open") return;
 
-            if (this.props.socket.state !== "open") return;
+        const timestamp = Date.now();
+        const ids = this.table
+        const filteredSelection = this.state.selection.filter(id => ids.find(id));
+        const data = {
+            timestamp: timestamp,
+            routingKey: 'export.test.calcSummary',
+            payload: {authToken: this.props.socket.authToken, filters: {id_submission: {$in: filteredSelection}}}
+        };
+        this.setState({isLoading:true});
+        this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
+        this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
+            this.props.socket.unsubscribe('gs-message-' + timestamp);
+            console.log('GameSense API responded:\n', response);
 
-            const timestamp = Date.now();
-            const data = {
-                timestamp: timestamp,
-                routingKey: 'export.test.calcSummary',
-                payload: {authToken: this.props.socket.authToken, filters: {id_submission: {$in:this.state.selection}}}
-            };
-            this.setState({isLoading:true});
-            this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
-            this.props.socket.subscribe('gs-message-' + timestamp).watch((response) => {
-                this.props.socket.unsubscribe('gs-message-' + timestamp);
-                console.log('GameSense API responded:\n', response);
-
-                downloadExcelSheet(response);
-            });
-            console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
+            downloadExcelSheet(response);
+        });
+        console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
     };
 
     componentDidMount() {
@@ -167,6 +167,7 @@ class TestSubmissions extends Component {
         ];
 
         return (<Table
+            key={'Test Submissions Table'}
             columns={columns}
             submissions={this.state.submissions}
             isLoading={this.state.isLoading}

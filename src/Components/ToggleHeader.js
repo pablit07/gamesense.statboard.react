@@ -93,7 +93,7 @@ export default ReactTable => {
 
             this.state = {
                 folded: props.onFoldChange ? undefined : {},
-                resized: props.resized || [],
+                resized: props.resized || []
             }
         }
 
@@ -175,7 +175,7 @@ export default ReactTable => {
             const columns = this.applyToggleHeaderForColumns([...originalCols]);
 
             const extra = {
-                columns,
+                columns
             };
 
             return <ReactTable {...rest} {...extra} ref={r => (this.wrappedInstance = r)} />
