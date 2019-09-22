@@ -128,12 +128,10 @@ class TestSubmissions extends Component {
         if (this.props.socket.state !== "open") return;
 
         const timestamp = Date.now();
-        const ids = this.table
-        const filteredSelection = this.state.selection.filter(id => ids.find(id));
         const data = {
             timestamp: timestamp,
             routingKey: 'export.test.calcSummary',
-            payload: {authToken: this.props.socket.authToken, filters: {id_submission: {$in: filteredSelection}}}
+            payload: {authToken: this.props.socket.authToken, filters: {id_submissions: this.state.selection}}
         };
         this.setState({isLoading:true});
         this.props.socket.publish('SC_MESSAGE-' + this.props.socket.id, data);
@@ -163,11 +161,12 @@ class TestSubmissions extends Component {
 
           (<LinkButton key={'Link Button'} inner={'Drill Usage'} href={'/drillusage'}/>),
 
-          (<Calendar key={'Calendar'} startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)}/>)
+          (<Calendar key={'Test Submission Calendar'} uniqueKey={'Test Submission Calendar'} startDate={this.state.startDate} endDate={this.state.endDate} onChange={this.handleDateChange.bind(this)}/>)
         ];
 
         return (<Table
             key={'Test Submissions Table'}
+            uniqueKey={'Test Submissions Table'}
             columns={columns}
             submissions={this.state.submissions}
             isLoading={this.state.isLoading}

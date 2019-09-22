@@ -15,6 +15,13 @@ class Table extends Component {
             page: 0
         };
 
+        if (localStorage.getItem(props.uniqueKey + ' - filtered')) {
+            this.state.defaultFiltered = JSON.parse(localStorage.getItem(props.uniqueKey + ' - filtered'));
+        }
+        if (localStorage.getItem(props.uniqueKey + ' - page')) {
+            this.state.page = JSON.parse(localStorage.getItem(props.uniqueKey + ' - page'));
+        }
+
         this.CheckboxTableComponent = props.hideCheckboxes ? ReactTable : toggleHeaderHOC(checkboxHOC(ReactTable));
     }
 
@@ -84,6 +91,7 @@ class Table extends Component {
                     });
                 }
                 this.setState({selectAll, selection});
+                this.props.updateSelection(selection);
             },
 
         };
@@ -98,31 +106,23 @@ class Table extends Component {
             isSelected,
             toggleSelection,
             toggleAll,
-            selectType: "checkbox",
-            // getTdProps: (r, s) => {
-            //   const selected = this.isSelected(r.id_submission);
-            //   return {
-            //     style: {
-            //       backgroundColor: selected ? "lightgreen" : "inherit"
-            //       // color: selected ? 'white' : 'inherit',
-            //     }
-            //   };
-            // }
+            selectType: "checkbox"
         };
 
 
         const CheckboxTable = this.CheckboxTableComponent;
         return (<CheckboxTable
-            key={'Checkbox Table'}
+            key={this.props.uniqueKey}
             keyField='id_submission'
             ref={r => (this.checkboxTable = r)}
             className="-striped -highlight"
             columns={columns}
             data={submissions}
             filterable
-            onPageChange={page => this.setState({page})}
-            onFilteredChange={filtered => this.setState({page:0})}
+            onPageChange={page => {this.setState({page});this.savePage(page);}}
+            onFilteredChange={filtered => {this.setState({page:0}); this.savePage(0); this.saveFiltered(filtered);}}
             page={this.state.page}
+            defaultFiltered={this.state.defaultFiltered}
             defaultPageSize={defaultPageSize || 25}
             noDataText={(isLoading ? "...Please Wait" : "No Data To Display")}
             defaultFilterMethod={fuzzy}
@@ -145,6 +145,14 @@ class Table extends Component {
 
         </CheckboxTable>);
     };
+
+    saveFiltered(filtered) {
+        localStorage.setItem(this.props.uniqueKey + ' - filtered', JSON.stringify(filtered))
+    }
+
+    savePage(page) {
+        localStorage.setItem(this.props.uniqueKey + ' - page', page)
+    }
 }
 
 export { Table };

@@ -134,6 +134,8 @@ class DrillUsage extends Component {
         ];
 
         return (<Table
+                key={'Drill Submissions Table'}
+                uniqueKey={'Drill Submissions Table'}
                 columns={columns}
                 submissions={this.state.submissions}
                 isLoading={this.state.isLoading}

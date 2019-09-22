@@ -11,6 +11,21 @@ export default class Calendar extends React.Component {
       endDate: this.props.endDate
     };
 
+    this.handleChange = this.handleChange.bind(this);
+
+    let fromLocalStorage = false;
+    if (localStorage.getItem(props.uniqueKey + ' - startDate')) {
+      this.state.startDate = JSON.parse(localStorage.getItem(props.uniqueKey + ' - startDate'));
+      fromLocalStorage = true;
+    }
+    if (localStorage.getItem(props.uniqueKey + ' - endDate')) {
+      this.state.endDate = JSON.parse(localStorage.getItem(props.uniqueKey + ' - endDate'));
+      fromLocalStorage = true;
+    }
+    if (fromLocalStorage) {
+      this.handleChange({startDate: this.state.startDate, endDate: this.state.endDate});
+    }
+
   }
 
   handleChange = ({ startDate, endDate }) => {
@@ -32,9 +47,15 @@ export default class Calendar extends React.Component {
     }
   };
 
-  handleChangeStart = startDate => this.handleChange({ startDate });
+  handleChangeStart = startDate => {
+    localStorage.setItem(this.props.uniqueKey + ' - startDate', JSON.stringify(startDate));
+    this.handleChange({ startDate });
+  };
 
-  handleChangeEnd = endDate => this.handleChange({ endDate });
+  handleChangeEnd = endDate => {
+    localStorage.setItem(this.props.uniqueKey + ' - endDate', JSON.stringify(endDate));
+    this.handleChange({ endDate });
+  };
 
   render() {
     return (
