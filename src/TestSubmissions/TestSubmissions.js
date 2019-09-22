@@ -78,7 +78,7 @@ class TestSubmissions extends Component {
             });
             this.props.socket.off('connect', this.dataSource);
         });
-        console.log('Sent message to GameSense API:', 'gs-message-' + timestamp);
+        console.log('Sent message to GameSense API:', 'gs-message-' + timestamp, data);
     }
 
     exportSource(submissionId) {

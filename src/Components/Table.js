@@ -25,6 +25,18 @@ class Table extends Component {
         this.CheckboxTableComponent = props.hideCheckboxes ? ReactTable : toggleHeaderHOC(checkboxHOC(ReactTable));
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        const wrappedInstance = this.checkboxTable.getWrappedInstance();
+        if (wrappedInstance) {
+            const pageSize = wrappedInstance.getResolvedState().pageSize;
+
+            if (nextProps.submissions.length < (this.state.page * pageSize)) {
+                this.setState({page:0});
+                this.savePage(0);
+            }
+        }
+    }
+
     render() {
 
         const {
