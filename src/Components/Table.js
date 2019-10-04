@@ -26,13 +26,15 @@ class Table extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        const wrappedInstance = this.checkboxTable.getWrappedInstance();
-        if (wrappedInstance) {
-            const pageSize = wrappedInstance.getResolvedState().pageSize;
+        if (this.checkboxTable && this.checkboxTable.getWrappedInstance) {
+            const wrappedInstance = this.checkboxTable.getWrappedInstance();
+            if (wrappedInstance) {
+                const pageSize = wrappedInstance.getResolvedState().pageSize;
 
-            if (nextProps.submissions.length < (this.state.page * pageSize)) {
-                this.setState({page:0});
-                this.savePage(0);
+                if (nextProps.submissions.length < (this.state.page * pageSize)) {
+                    this.setState({page: 0});
+                    this.savePage(0);
+                }
             }
         }
     }

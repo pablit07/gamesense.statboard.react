@@ -1,6 +1,6 @@
 import {create as createSocketClusterClient} from 'socketcluster-client';
 
-function create(username, app, key) {
+function createSocket(username, app, key) {
     let socket = null;
     try {
         const opts = {
@@ -61,4 +61,4 @@ function create(username, app, key) {
     return socket;
 }
 
-export {create};
+export {createSocket};

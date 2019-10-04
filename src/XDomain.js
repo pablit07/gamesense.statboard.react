@@ -1,9 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom'
 import CoachReport from './CoachReport/CoachReport';
-import { create } from './Socket/Socket';
+import { createSocket } from './Socket/Socket';
 import DrillDetailsTable from "./DrillDetails/DrillDetailsTable";
 import singlePlayerColumns from "./DrillDetails/columns_single";
+import teamColumns from "./DrillDetails/columns_team";
 import PlayerUseOverTime from './DrillDetails/PlayerUseOverTimeContainer';
 import BarChart from "./Components/BarChart";
 import PickList from "./Buttons/PickList";
@@ -23,10 +24,10 @@ const TimeSeriesPickList = ({dispatch}) => (<PickList
 
 const DrillBreakdown = ({username, app, token, userId}) => (
     <DrillDetailsContainer
-        socket={create(username, app, token)}
-        params={{rollUpType:"singleUserPitcherResponseType"}}
+        socket={createSocket(username, app, token)}
+        params={{rollUpType:userId?"singleUserPitcherResponseType":"teamResponseType"}}
         filters={(userId?{user_id:userId}:null)}
-        columns={singlePlayerColumns}
+        columns={(userId?singlePlayerColumns:teamColumns)}
         defaultPageSize={10}
         hideCheckboxes={true}>
 
@@ -35,7 +36,7 @@ const DrillBreakdown = ({username, app, token, userId}) => (
 
 
 const PlayerUseOverTimeWelcomeChart = ({username, app, token, userId}) => (
-    <PlayerUseOverTime socket={create(username, app, token)} dispatch={dispatch} filters={(userId?{user_id:userId}:null)}>
+    <PlayerUseOverTime socket={createSocket(username, app, token)} dispatch={dispatch} filters={(userId?{user_id:userId}:null)}>
         <BarChart>
             <TimeSeriesPickList dispatch={dispatch}/>
         </BarChart>

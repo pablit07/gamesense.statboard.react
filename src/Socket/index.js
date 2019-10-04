@@ -1,5 +1,5 @@
-import {create} from './Socket';
+import {createSocket} from './Socket';
 
-const socket = create();
+const socket = createSocket();
 
 export {socket};
