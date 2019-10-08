@@ -20,7 +20,8 @@ export default class PersonalStreakContainer extends Container {
             }]
         };
 
-        state.submissions = [{day:1, count:0},{day:2, count:0},{day:3, count:0},{day:4, count:0},{day:5, count:0},{day:6, count:0},{day:7, count:0}];
+        // TODO map this
+        state.submissions = [{day:1, inStreak:true},{day:2, inStreak:false},{day:3, inStreak:false},{day:4, inStreak:false},{day:5, inStreak:false},{day:6, inStreak:true},{day:7, inStreak:false},{day:8, inStreak:false},{day:9, inStreak:false},{day:10, inStreak:false},{day:11, inStreak:false},{day:12, inStreak:true}];
 
         return {
             ...defaultProps,
