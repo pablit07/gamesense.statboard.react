@@ -11,14 +11,8 @@ class DrillDetailsContainer extends Container {
 
         super(props);
 
-        const now = new Date();
-        const dateOneMonthAgo = new Date();
-        dateOneMonthAgo.setDate(now.getDate() - 31);
-
         this.state.columns = this.props.columns ? [...this.props.columns] : [...columns];
         this.state.filters = this.state.filters || {};
-        this.state.filters.minDate = dateOneMonthAgo;
-        this.state.filters.maxDate = now;
         this.state.submissions = {
             keys: [],
             rows: []
@@ -38,7 +32,8 @@ class DrillDetailsContainer extends Container {
             hideCheckboxes: this.props.hideCheckboxes
         };
 
-        let _columns = [...state.columns];
+        let _columns = [...this.props.columns];
+
 
         state.submissions.keys.sort().forEach(pt => {
             _columns.push({

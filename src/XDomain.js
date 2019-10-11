@@ -22,17 +22,23 @@ const TimeSeriesPickList = ({dispatch}) => (<PickList
     onChange={dispatch.makePublisher(actions.PICKLIST_UPDATE)}/>);
 
 
-const DrillBreakdown = ({username, app, token, userId}) => (
-    <DrillDetailsContainer
+const DrillBreakdown = ({username, app, token, userId}) => {
+
+    const maxDate = new Date();
+    const minDate = new Date();
+    minDate.setDate(minDate.getDate() - 31);
+
+    return (<DrillDetailsContainer
         socket={createSocket(username, app, token)}
-        params={{rollUpType:userId?"singleUserPitcherResponseType":"teamResponseType"}}
-        filters={(userId?{user_id:userId}:null)}
-        columns={(userId?singlePlayerColumns:teamColumns)}
+        params={{rollUpType: userId ? "singleUserPitcherResponseType" : "teamResponseType"}}
+        filters={(userId ? {user_id: userId, minDate, maxDate} : {minDate, maxDate})}
+        columns={(userId ? singlePlayerColumns : teamColumns)}
         defaultPageSize={10}
         hideCheckboxes={true}>
 
         <Table/>
     </DrillDetailsContainer>);
+}
 
 
 const PlayerUseOverTimeWelcomeChart = ({username, app, token, userId}) => (
