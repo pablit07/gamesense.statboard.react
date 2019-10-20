@@ -327,3 +327,5 @@ span.indicator.warning {
 span.indicator.bad {
   background-color: #FF6551;
 }
+
+.react-datepicker-popper { z-index: 10000 !important; }
