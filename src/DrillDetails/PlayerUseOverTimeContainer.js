@@ -4,11 +4,11 @@ import actions from "../actions";
 export default class PlayerUseOverTimeContainer extends Container {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleInit = this.handleInit.bind(this);
+        this.updateTimeSeries = this.updateTimeSeries.bind(this);
+        this.updateTimeSeriesFromLocalStorage = this.updateTimeSeriesFromLocalStorage.bind(this);
         if (props.dispatch) {
-            props.dispatch.on(actions.PICKLIST_UPDATE, this.handleChange);
-            props.dispatch.on(actions.PICKLIST_INIT, this.handleInit);
+            props.dispatch.on(actions.TIMESERIES_PICKLIST_UPDATE, this.updateTimeSeries);
+            props.dispatch.on(actions.TIMESERIES_PICKLIST_INIT, this.updateTimeSeriesFromLocalStorage);
         }
     }
 
@@ -16,7 +16,7 @@ export default class PlayerUseOverTimeContainer extends Container {
         return 'calc.drill.completionSummary';
     }
 
-    async handleChange(timeSeries) {
+    async updateTimeSeries(timeSeries) {
         await this.setState({
             submissions: [],
             params: {
@@ -26,8 +26,22 @@ export default class PlayerUseOverTimeContainer extends Container {
         this.dataSource();
     }
 
+    // almost the same but need to accomodate the component trying to mount
+    async updateTimeSeriesFromLocalStorage(timeSeries) {
+        await this.setState({
+            params: {
+                rollUpType: timeSeries
+            },
+            hasInitBeenCalled: true
+        });
+
+        if (this.state.isMounted) {
+            this.initDataSource();
+        }
+    }
+
     mapStateToProps(state) {
-        let defaultProps = {name: "date_format", values: [{value: "count", color: "turquoise"}], yLabel: "# Drills"};
+        let defaultProps = {name: "date_format", values: [{value: "count", color: "#4D9360"}], yLabel: "# Drills"};
 
         state.submissions = state.submissions.slice(Math.max(state.submissions.length - 24, 0))
 
@@ -48,27 +62,12 @@ export default class PlayerUseOverTimeContainer extends Container {
         };
     }
 
+    // override - need to make sure initDataSource is only called after both the picklist and this component are finished mounting
     componentDidMount() {
-        if (!this.props.dispatch) {
+        if (!this.props.dispatch || this.state.hasInitBeenCalled) {
             this.initDataSource();
         } else {
             this.setState({isMounted: true});
-        }
-    }
-
-    async handleInit(timeSeries) {
-        await this.setState({
-            params: {
-                rollUpType: timeSeries
-            }
-        });
-
-        if (this.state.isMounted) {
-            this.props.socket.on('connect', this.dataSource);
-            this.props.socket.on('authStateChange', this.dataSource);
-            this.dataSource();
-        } else {
-            this.componentDidMount = this.initDataSource;
         }
     }
 }

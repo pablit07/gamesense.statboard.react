@@ -4,6 +4,7 @@ import 'react-table/react-table.css';
 import 'font-awesome/css/font-awesome.min.css';
 import columns from './columns';
 import Container from "../Container";
+import actions from "../actions";
 
 
 class DrillDetailsContainer extends Container {
@@ -17,6 +18,31 @@ class DrillDetailsContainer extends Container {
             keys: [],
             rows: []
         };
+        this.updateMinDate = this.updateMinDate.bind(this);
+        this.updateMinDateFromLocalStorage = this.updateMinDateFromLocalStorage.bind(this);
+        
+        if (props.dispatch) {
+            props.dispatch.on(actions.DATERANGE_PICKLIST_UPDATE, this.updateMinDate);
+            props.dispatch.on(actions.DATERANGE_PICKLIST_INIT, this.updateMinDateFromLocalStorage);
+        }
+    }
+
+    async updateMinDate(newDate) {
+        let filters = this.state.filters;
+        filters.minDate = this.props.dateMap[newDate];
+        await this.setState({submissions: {keys: [], rows: []}, filters});
+        this.dataSource();
+    }
+
+    // almost the same but need to accomodate the component trying to mount
+    async updateMinDateFromLocalStorage(newDate) {
+        let filters = this.state.filters;
+        filters.minDate = this.props.dateMap[newDate];
+        await this.setState({filters, hasInitBeenCalled: true});
+
+        if (this.state.isMounted) {
+            this.initDataSource();
+        }
     }
 
     getRoutingKey() {
@@ -64,6 +90,16 @@ class DrillDetailsContainer extends Container {
             columns: _columns
         };
     }
+
+    // override - need to make sure initDataSource is only called after both the picklist and this component are finished mounting
+    componentDidMount() {
+        if (!this.props.dispatch || this.state.hasInitBeenCalled) {
+            this.initDataSource();
+        } else {
+            this.setState({isMounted: true});
+        }
+    }
+        
 }
 
 export default DrillDetailsContainer;
