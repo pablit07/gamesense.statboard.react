@@ -44,6 +44,14 @@ export default class PlayerUseOverTimeContainer extends Container {
         let defaultProps = {name: "date_format", values: [{value: "count", color: "#4D9360"}], yLabel: "# Drills"};
 
         state.submissions = state.submissions.slice(Math.max(state.submissions.length - 24, 0))
+            .sort((l, r) => {
+                console.log(l, r)
+                if (l.year !== r.year) {
+                    return l.year - r.year;
+                } else {
+                    return l.month - r.month;
+                }
+            });
 
         let dates = state.submissions.reduce((accum, next) => {
             if (!accum.find(x => x === next[defaultProps.name])) {
