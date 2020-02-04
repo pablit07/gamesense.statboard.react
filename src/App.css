@@ -339,3 +339,18 @@ span.indicator.bad {
 }
 
 .react-datepicker-popper { z-index: 10000 !important; }
+
+.stop-left {
+  stop-color: #515252; /* #D7DF01  was Indigo */
+}
+.stop-right {
+  stop-color: #6ec057;  /* #009688 was Teal */
+}
+.filled {
+  fill: url(#mainGradient);
+}
+.outlined {
+  fill:   none;
+  stroke: url(#mainGradient);
+  stroke-width: 4;
+}
