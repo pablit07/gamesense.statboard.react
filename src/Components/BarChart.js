@@ -47,7 +47,7 @@ class BarChart extends Chart {
         var tooltip = d3.select("body")
             .append("div")
             .style("position", "absolute")
-            // .style("opacity", 1)
+            .style("opacity", 0)
             .attr("class", "tooltip")
             .style("background-color", "white")
             .style("border", "solid")
