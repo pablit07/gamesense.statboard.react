@@ -78,7 +78,7 @@ class Chart extends Component {
                     <g transform={("translate(" + xPadAxis + "," + 30 + ")")} ref={r => {
                         this.ref = r
                     }}>
-                        <rect x={0} y={0} height={this.state.height - rectOffset} width={this.state.width} style={{fill: "d9dbdd"}}/>
+                        <rect x={15} y={0} height={this.state.height - rectOffset} width={this.state.width} style={{fill: "d9dbdd"}}/>
                         <text id={"yLabelBg"} transform={"rotate(-90)"} y={-xPadAxis} x={-(this.state.height / 2)}
                               dy={"1em"} fill={"E9ECEF"} style={{
                             "textAnchor": "middle",
@@ -112,15 +112,16 @@ class Chart extends Component {
                 .range(numbers)
 
             svg.append("g")
-                .attr("transform", "translate(0," + (this.state.height - 50) + ")")
+                .attr("transform", "translate(15," + (this.state.height - 50) + ")")
                 .call(this.xAxisFormat(xAxis));
 
             // Add Y axis
             let yAxis = d3.scaleLinear()
                 .domain([this.props.yMax, 0])
-                .range([0, (this.state.height - 50)]);
+                .range([5, (this.state.height - 50)]);
 
             svg.insert("g", "#yLabelBg")
+            .attr("transform", "translate(15," + 0 + ")")
                 .call(this.yAxisFormat(yAxis));
 
 
@@ -141,7 +142,7 @@ class Chart extends Component {
     drawXGridlines(svg, make_x_gridlines) {
         svg.append("g")
             .attr("class", "grid")
-            .attr("transform", "translate(0," + 400 + ")")
+            .attr("transform", "translate(15," + 400 + ")")
             .call(make_x_gridlines()
                 .tickSize(-400)
                 .tickFormat("")
