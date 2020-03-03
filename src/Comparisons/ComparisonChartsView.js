@@ -22,6 +22,12 @@ class ComparisonChartsView extends Component {
                 <HorizontalQuartileChart/>
             </ComparisonChartContainer>
 
+            <br/>
+
+            <ComparisonChartContainer socket={this.props.socket}>
+                <HorizontalQuartileChart/>
+            </ComparisonChartContainer>
+
         </Fragment>)
     }
 }

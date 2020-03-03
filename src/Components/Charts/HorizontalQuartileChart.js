@@ -66,7 +66,7 @@ class HorizontalQuartileChart extends Chart {
 
 
 // Create a group, g, element for each series
-        var g = d3.select('g')
+        var g = svg.select('g')
             .selectAll('g.series')
             .data(stackedSeries)
             .enter()
