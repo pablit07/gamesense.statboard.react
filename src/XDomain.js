@@ -6,7 +6,7 @@ import DrillDetailsTable from "./DrillDetails/DrillDetailsTable";
 import singlePlayerColumns from "./DrillDetails/columns_single";
 import teamColumns from "./DrillDetails/columns_team";
 import PlayerUseOverTime from './DrillDetails/PlayerUseOverTimeContainer';
-import BarChart from "./Components/BarChart";
+import BarChart from "./Components/Charts/BarChart";
 import PickList from "./Buttons/PickList";
 import dispatch from './dispatch';
 import actions from './actions';

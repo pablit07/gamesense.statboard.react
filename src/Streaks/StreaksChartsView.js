@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
-import BarChart from "../Components/BarChart";
-import CalendarBubbleChart from "../Components/CalendarBubbleChart";
+import BarChart from "../Components/Charts/BarChart";
+import CalendarBubbleChart from "../Components/Charts/CalendarBubbleChart";
 import OverallStreaksContainer from "./OverallStreaksContainer";
 import PersonalStreakContainer from "./PersonalStreakContainer";
 

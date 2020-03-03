@@ -1,10 +1,10 @@
-import '../App.css';
+import '../../App.css';
 import 'react-table/react-table.css';
 import 'font-awesome/css/font-awesome.min.css';
-import Chart from "../Components/Chart";
+import Axes2dChart from "./Axes2dChart";
 
 
-class ScatterPlotChart extends Chart {
+class ScatterPlotChart extends Axes2dChart {
     constructor(props) {
         super(props);
     }

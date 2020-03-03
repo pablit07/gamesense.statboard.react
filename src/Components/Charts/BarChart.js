@@ -1,11 +1,11 @@
-import '../App.css';
+import '../../App.css';
 import 'react-table/react-table.css';
 import 'font-awesome/css/font-awesome.min.css';
 import * as d3 from 'd3';
-import Chart from "./Chart";
+import Axes2dChart from "./Axes2dChart";
 
 
-class BarChart extends Chart {
+class BarChart extends Axes2dChart {
     addChartLayer(svg, rows, x, y, pt, color) {
         // ignore blank rows
         rows = rows.filter(x => !!x[pt] && x[pt] !== '-');

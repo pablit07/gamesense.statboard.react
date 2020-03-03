@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import '../App.css';
+import '../../App.css';
 import 'react-table/react-table.css';
 import 'font-awesome/css/font-awesome.min.css';
 import * as d3 from 'd3';
 
 
-class Chart extends Component {
+class Axes2dChart extends Component {
     constructor(props) {
 
         super(props);
@@ -158,4 +158,4 @@ class Chart extends Component {
     }
 }
 
-export default Chart;
+export default Axes2dChart;

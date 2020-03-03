@@ -10,6 +10,7 @@ import PageContainer from "./Components/PageContainer";
 import DrillDetailsChartView from "./DrillDetails/DrillDetailsChartsView";
 import TestSubmissionDetail from "./TestSubmissions/TestSubmissionDetail";
 import StreaksChartView from "./Streaks/StreaksChartsView";
+import ComparisonChartsView from "./Comparisons/ComparisonChartsView";
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /testsubmissions
@@ -32,6 +33,7 @@ const Main = () => {
 				<Route path='/drilldetails' render={() => <PageContainer title={'Drill Breakdown Report'} contents={<DrillDetailsView socket={socket}/>}/>}/>
 				<Route path='/drilldetailscharts' render={() => <PageContainer title={'Drill Breakdown Charts'} contents={<DrillDetailsChartView socket={socket}/>}/>}/>
 				<Route path='/streaks' render={() => <PageContainer title={'Usage Streaks Charts'} contents={<StreaksChartView socket={socket}/>}/>}/>
+				<Route path='/scorecomparisoncharts' render={() => <PageContainer title={'Score Comparison Charts'} contents={<ComparisonChartsView socket={socket}/>}/>}/>
 				<Route path='/logout' render={() => "You have been logged out."}/>
 			</Switch>
 		</main>

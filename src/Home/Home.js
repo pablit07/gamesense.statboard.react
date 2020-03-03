@@ -22,6 +22,9 @@ const Home = () => (
         <li>
           <Link to='/streaks'>Usage Streaks (Charts)</Link>
         </li>
+        <li>
+          <Link to='/scorecomparisoncharts'>Score Comparisons (Charts)</Link>
+        </li>
       </ul>
   </div>
 )
