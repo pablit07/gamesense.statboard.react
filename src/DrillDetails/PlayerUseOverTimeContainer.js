@@ -41,7 +41,7 @@ export default class PlayerUseOverTimeContainer extends Container {
     }
 
     mapStateToProps(state) {
-        let defaultProps = {name: "date_format", values: [{value: "count", color: "#4D9360"}], yLabel: "# Drills"};
+        let defaultProps = {name: "date_format", values: [{value: "count", color: "#4D9360"}], yLabel: "Drills Completed"};
 
         state.submissions = state.submissions.slice(Math.max(state.submissions.length - 24, 0))
             .sort((l, r) => {

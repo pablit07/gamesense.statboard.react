@@ -90,8 +90,8 @@ class BarChart extends Chart {
         // UPDATE
 
         svg.append('g')
-            .attr("transform", "translate(5,0)")
-            .selectAll('fart') // seems to work with anything/nothing?
+            .attr("transform", "translate(20,0)")
+            .selectAll('foo') // seems to work with anything/nothing?
             .data(rows) // This is indeed the data!
             .enter()
             .append('rect')
@@ -109,9 +109,9 @@ class BarChart extends Chart {
             .style("opacity", 1)
             //  Transition up!
             .transition(t)
-            .attrTween('width', widthTween)
-            .attr("height", d => this.state.height - y(d[pt])  - 50)
-            .attr("y", d => y(d[pt]));
+                .attrTween('width', widthTween)
+                .attr("height", d => this.state.height - y(d[pt])  - 50)
+                .attr("y", d => y(d[pt]));
     }
 }
 export default BarChart;
