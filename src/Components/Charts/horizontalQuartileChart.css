@@ -6,7 +6,7 @@ svg {
 .axis path,
 .axis line {
     fill: none;
-    stroke: #00000;
+    stroke: #0000;
 }
 
 path.domain {
