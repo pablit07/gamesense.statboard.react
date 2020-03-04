@@ -6,7 +6,7 @@ svg {
 .axis path,
 .axis line {
     fill: none;
-    stroke: #00000;
+    stroke: #0000;
 }
 
 path.domain {
@@ -15,4 +15,20 @@ path.domain {
 
 .y .tick line {
     stroke: #DDDDDD;
+}
+
+.xAxis.white line {
+     stroke: white;
+ }
+
+.xAxis.white g text {
+    fill: white;
+}
+
+.xAxis.red line {
+    stroke: red;
+}
+
+.xAxis.red g text {
+    fill: red;
 }

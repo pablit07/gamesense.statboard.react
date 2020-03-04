@@ -19,13 +19,12 @@ class ComparisonChartsView extends Component {
             <h4 style={style}>Horizontal Quartile Comparisons</h4>
 
             <ComparisonChartContainer socket={this.props.socket}>
-                <HorizontalQuartileChart/>
-            </ComparisonChartContainer>
-
-            <br/>
-
-            <ComparisonChartContainer socket={this.props.socket}>
-                <HorizontalQuartileChart/>
+                <HorizontalQuartileChart svg_width={650} svg_height= {175}/>
+                <HorizontalQuartileChart svg_width={350} svg_height= {175}/>
+                <HorizontalQuartileChart svg_width={450} svg_height= {125} textColor={"red"}/>
+                <HorizontalQuartileChart svg_width={280} svg_height= {115}/>
+                <HorizontalQuartileChart svg_width={1050} svg_height= {175}/>
+                <HorizontalQuartileChart svg_width={650} svg_height= {285}/><br />
             </ComparisonChartContainer>
 
         </Fragment>)

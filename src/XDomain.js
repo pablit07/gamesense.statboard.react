@@ -13,6 +13,7 @@ import actions from './actions';
 import DrillDetailsContainer from "./DrillDetails/DrillDetailsContainer";
 import HorizontalQuartile from "./Components/Charts/HorizontalQuartileChart";
 import {Table} from "./Components/Table";
+import PassThruContainer from "./Comparisons/PassThruContainer";
 
 
 const TimeSeriesPickList = ({dispatch}) => (<PickList
@@ -85,7 +86,9 @@ const DrillBreakdown = ({username, app, token, userId}) => {
 
 
 const HorizontalQuartileChart = ({q1, median, q3, max, userScore, textColor}) => {
-    return (<HorizontalQuartile values={{q1, median, q3, max, userScore}} textColor={textColor} />)
+    return (<PassThruContainer values={{q1, median, q3, max, userScore}} textColor={textColor} svg_width={510} svg_height={110}>
+                <HorizontalQuartile/>
+            </PassThruContainer>)
 };
 
 
