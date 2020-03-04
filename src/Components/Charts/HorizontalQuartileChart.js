@@ -5,7 +5,7 @@ import Chart from "./Chart";
 
 class HorizontalQuartileChart extends Chart {
 
-    addChartLayer({svg, values}) {
+    addChartLayer({svg, values, textColor}) {
 
         let {q1, median, q3, max, userScore} = values;
 
@@ -15,6 +15,8 @@ class HorizontalQuartileChart extends Chart {
 
         var height = 200 - margin.top - margin.bottom,
             width = 640 - margin.left - margin.right;
+
+        textColor = textColor || "black";
 
         svg
             .attr("width", width + margin.left + margin.right)
@@ -97,7 +99,7 @@ class HorizontalQuartileChart extends Chart {
             .attr("height",y.bandwidth()*.5)
 
             .attr("ry", "3")
-            .style("stroke", "black")
+            .style("stroke", textColor)
 
 // User's Score -
         var scoreVal = userScore;
@@ -126,7 +128,7 @@ class HorizontalQuartileChart extends Chart {
         g.append("text")
             .text(scoreVal)
             // .attr("font-size", 12)
-            .attr("fill", "black")
+            .attr("fill", textColor)
             .attr("opacity", 0)
             .attr("y",(y.bandwidth() * .6 ))
             .attr("x", scoreScale(scoreVal) - 10)

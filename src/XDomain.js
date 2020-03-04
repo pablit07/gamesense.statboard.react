@@ -11,6 +11,7 @@ import PickList from "./Buttons/PickList";
 import dispatch from './dispatch';
 import actions from './actions';
 import DrillDetailsContainer from "./DrillDetails/DrillDetailsContainer";
+import HorizontalQuartile from "./Components/Charts/HorizontalQuartileChart";
 import {Table} from "./Components/Table";
 
 
@@ -56,8 +57,7 @@ const DateRangePickList = ({dispatch}) => {
     selectedValue={monthDate}
     onLoad={dispatch.makePublisher(actions.DATERANGE_PICKLIST_INIT)}
     onChange={dispatch.makePublisher(actions.DATERANGE_PICKLIST_UPDATE)}/>);
-}
-
+};
 
 
 const DrillBreakdown = ({username, app, token, userId}) => {
@@ -81,10 +81,14 @@ const DrillBreakdown = ({username, app, token, userId}) => {
 
         <Table/>
     </DrillDetailsContainer>);
-}
+};
+
+
+const HorizontalQuartileChart = ({q1, median, q3, max, userScore, textColor}) => {
+    return (<HorizontalQuartile values={{q1, median, q3, max, userScore}} textColor={textColor} />)
+};
 
 
 
 
-
-export {React, render, CoachReport, DrillBreakdown, PlayerUseOverTimeWelcomeChart};
+export {React, render, CoachReport, DrillBreakdown, PlayerUseOverTimeWelcomeChart, HorizontalQuartileChart};
