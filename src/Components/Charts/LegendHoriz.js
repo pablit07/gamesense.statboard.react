@@ -3,14 +3,22 @@ import * as d3 from 'd3';
 import Chart from "./Chart";
 
 class LegendHoriz extends Chart {
-    addChartLayer({svg, textColor}) {
+    addChartLayer({svg, xPos, spacing, svg_width, textColor}) {
 
         textColor = textColor || "black";
         var colors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574"];
         colors = colors.reverse();
 
-        var width = 680,
+        var width = svg_width || 680,
             height = 40;
+        xPos = xPos || 0;   // move Legend left(neg. number) 
+                            // and right (pos. number). 
+        
+        spacing = spacing || 90;   //Distance between each item in the Legend
+        if (spacing < 65) {
+            spacing = 65
+        };
+                                       
 
 // Draw legend
 
@@ -18,13 +26,13 @@ class LegendHoriz extends Chart {
             .attr("width", width)
             .attr("height", height)
             .append("g")
-            .attr("transform", "translate(" + (width * .25) + ", 0)")
+            .attr("transform", "translate(" + ((width * .25) +xPos) + ", 0)")
 
         var legend = legendSvg.selectAll("legend")
             .data(colors)
             .enter().append("g")
               .attr("class", "legend")
-              .attr("transform", function(d, i) { return "translate(" + (i * 90) + ", 0)"; });
+              .attr("transform", function(d, i) { return "translate(" + (i * spacing) + ", 0)"; });
               // .attr("transform", "translate(20, 0)");
 
         legend.append("rect")
