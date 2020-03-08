@@ -15,8 +15,8 @@ class LegendHoriz extends Chart {
 // Draw legend
 
         var legendSvg = svg
-            .attr("width", 580)
-            .attr("height", 40)
+            .attr("width", width)
+            .attr("height", height)
             .append("g")
             .attr("transform", "translate(" + (width * .25) + ", 0)")
 

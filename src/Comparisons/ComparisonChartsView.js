@@ -24,14 +24,17 @@ class ComparisonChartsView extends Component {
                 <LegendHoriz  />
                 <HorizontalQuartileChart svg_width={680} svg_height= {80}/>
             <hr/>
-                <HorizontalQuartileChart svg_width={550} svg_height= {100}/>
-                <LegendVertical />
+                {/* Paul, the below 2 svg_height vars must match. Not sure best way to implement/force that. 
+                yPos moves the Legend items up and down in its own svg. */}
+                <HorizontalQuartileChart svg_width={550} svg_height= {100}/> 
+                <LegendVertical  yPos={25}               svg_height= {100}/>  
             
             < hr/>
                 <HorizontalQuartileChart svg_width={595} svg_height= {90}/><br/>
                 <LegendHoriz  />
             < hr/>               
                 <HorizontalQuartileChart svg_width={350} svg_height= {200} textColor={"red"}/>
+                <LegendVertical  yPos={25}               svg_height= {200}/>
 
             < hr/>   
             </ComparisonChartContainer>
