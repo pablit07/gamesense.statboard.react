@@ -39,7 +39,6 @@ class BarChart extends Axes2dChart {
 
             // return a function which takes in a time ticker 't'
             return function(t){
-
                 return i(t);
             }
         }
@@ -51,19 +50,19 @@ class BarChart extends Axes2dChart {
             .attr("class", "tooltip")
             .style("background-color", "white")
             .style("border", "solid")
-            .style("border-width", "2px")
+            .style("border-width", "1.2px")
             .style("border-radius", "5px")
             .style("padding", "5px");
 
         var mouseover = function(d) {
             d3.select(this)
-                // .style("stroke", "red")
-                .style("opacity", 1)
+                .style("stroke-width", "2px")
 
             tooltip
                 .style("opacity", 1)
                 .style("left",  "300px")
                 .style("top", (parseInt(d3.select(this).attr("cy")) + "px"))
+                .style("visibility", "visible")
         }
         var mousemove = function(d) {
             tooltip
@@ -73,10 +72,11 @@ class BarChart extends Axes2dChart {
         }
 
         var mouseleave = function(d) {
+            d3.select(this)
+                .style("stroke", "black")
+                .style("stroke-width", "1px")
             tooltip
-                .style("opacity", 0)
-                .style("stroke", "blue")
-
+                .style("visibility", "hidden")
         }
 
 
@@ -90,9 +90,9 @@ class BarChart extends Axes2dChart {
         // UPDATE
 
         svg.append('g')
-            .attr("transform", "translate(20,0)")
-            .selectAll('foo') // seems to work with anything/nothing?
-            .data(rows) // This is indeed the data!
+            .attr("transform", "translate(25,0)")
+            .selectAll('rect') // this 'selects' the yet to be created rects.
+            .data(rows) 
             .enter()
             .append('rect')
             .classed('filled', true)
@@ -106,6 +106,7 @@ class BarChart extends Axes2dChart {
             .on("mouseleave", mouseleave)
             .attr("ry", "3")
             .style("stroke", "black")
+            .style("stroke-width", "1px")
             .style("opacity", 1)
             //  Transition up!
             .transition(t)

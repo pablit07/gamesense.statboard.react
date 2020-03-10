@@ -7,11 +7,12 @@ class HorizontalQuartileChart extends Chart {
 
     addChartLayer({svg, values, svg_width, svg_height, textColor}) {
 
+        svg_width = svg_width || 580;
         let {q1, median, q3, max, userScore} = values;
 
         // Setup svg using d3's margin convention
 
-        var margin = {top: 25, right: 130, bottom: 5, left: 30};
+        var margin = {top: 25, right: 25, bottom: 5, left: 30};
 
 
         var height = svg_height - margin.top - margin.bottom,
@@ -100,7 +101,7 @@ class HorizontalQuartileChart extends Chart {
             .attr("width", function(d) { return x(d[1]) - x(d[0]); })
             .attr("x", function(d) { return x(d[0]); })
             .attr('y', function(d, i) { return i * 10; })
-            .attr("height",y.bandwidth()*.5)
+            .attr("height",y.bandwidth()*.9)
 
             .attr("ry", "3")
             .style("stroke", "black")
@@ -118,9 +119,9 @@ class HorizontalQuartileChart extends Chart {
             .enter()
             .append("circle")
             .attr("opacity", 0)
-            .attr("cy", (y.bandwidth()*.25))    // location in bar
+            .attr("cy", (y.bandwidth()*.45))    // location in bar
             .attr("cx", 0)   // Starting cond. for X
-            .attr("r", (y.bandwidth()*.20))
+            .attr("r", (y.bandwidth()*.375))
             .attr("fill", "#515252")
             .style("stroke", "black")
             .style("stroke-width", 1.5)
@@ -134,7 +135,7 @@ class HorizontalQuartileChart extends Chart {
             // .attr("font-size", 12)
             .attr("fill", textColor)
             .attr("opacity", 0)
-            .attr("y",(y.bandwidth() * .65 ))
+            .attr("y",(y.bandwidth() + 10 ))
             .attr("x", scoreScale(scoreVal) - 10)
             .transition(t)
                 .attr("opacity", 1)
@@ -143,39 +144,10 @@ class HorizontalQuartileChart extends Chart {
             .text("Your Score")
             .attr("fill", textColor)
             .attr("opacity", 0)
-            .attr("y",(y.bandwidth() * .8 ))
+            .attr("y",(y.bandwidth() + 20 ))
             .attr("x", scoreScale(scoreVal) - 25)
             .transition(t)
-                .attr("opacity", 1)              
-
-// Draw legend
-        var drop = 25;
-        var legend = svg.selectAll(".legend")
-            .data(colors)
-            .enter().append("g")
-            .attr("class", "legend")
-            .attr("transform", function(d, i) { return "translate(70," + (drop +(i * 19)) + ")"; });
-
-        legend.append("rect")
-            .attr("x", width - 18)
-            .attr("width", 18)
-            .attr("height", 18)
-            .style("fill", function(d, i) {return colors.slice().reverse()[i];});
-
-        legend.append("text")
-            .attr('fill', textColor)
-            .attr("x", width + 5)
-            .attr("y", 9)
-            .attr("dy", ".35em")
-            .style("text-anchor", "start")
-            .text(function(d, i) {
-                switch (i) {
-                    case 0: return "Top 25%";
-                    case 1: return "Top 50%";
-                    case 2: return "Top 75%";
-                    case 3: return "Lowest";
-                }
-            });
+                .attr("opacity", 1)
 
     }
 }

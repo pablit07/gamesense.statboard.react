@@ -14,7 +14,7 @@ export default class ComparisonChartContainer extends Container {
     mapStateToProps(state) {
 
         return {
-            values: {q1: 695, median: 765, q3: 845, max: 1400, userScore: 1086 }
+            values: {q1: 695, median: 765, q3: 845, max: 1400, userScore: 832 }
         };
     }
 }
