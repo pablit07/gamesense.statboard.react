@@ -4,7 +4,6 @@ import Chart from "./Chart";
 
 
 class HorizontalQuartileChart extends Chart {
-
     addChartLayer({svg, values, svg_width, svg_height, textColor}) {
 
         svg_width = svg_width || 580;
