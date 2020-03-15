@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import HorizontalQuartileChart from "../Components/Charts/HorizontalQuartileChart";
+import TeamCompareChart from "../Components/Charts/TeamCompareChart";
 import LegendVertical from "../Components/Charts/LegendVertical";
 import LegendHoriz from "../Components/Charts/LegendHoriz";
 import ComparisonChartContainer from "./ComparisonContainer";
@@ -39,7 +40,10 @@ class ComparisonChartsView extends Component {
                 <HorizontalQuartileChart svg_width={350} svg_height= {200} textColor={"red"}/>
                 <LegendVertical  yPos={25}               svg_height= {200}/>
 
-            < hr/>   
+            < hr/> 
+                <p>"--------- TeamCompare -----------"</p>
+                <TeamCompareChart svg_width={385} svg_height= {160}/>
+
             </ComparisonChartContainer>
 
         </Fragment>)
