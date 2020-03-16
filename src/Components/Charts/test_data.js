@@ -1,155 +1,174 @@
 const test_data = [
   {
-    "First Name": "Brett",
-    "Last Name": "McCleary",
-    "Pitch Type": "360",
-    "Ball/Strike": "300",
-    "PR Score": "770",
-    "Bonus": "110"
+    id: 1,
+    firstName: "Brett",
+    lastName: "McCleary",
+    pitchType: "360",
+    location: "300",
+    prScore: "770",
+    bonus: "110"
   },
   {
-    "First Name": "Lorenzo",
-    "Last Name": "Elion",
-    "Pitch Type": "300",
-    "Ball/Strike": "360",
-    "PR Score": "765",
-    "Bonus": "105"
+    id: 2,
+    firstName: "Lorenzo",
+    lastName: "Elion",
+    pitchType: "300",
+    location: "360",
+    prScore: "765",
+    bonus: "105"
   },
   {
-    "First Name": "Trenton",
-    "Last Name": "Wallace",
-    "Pitch Type": "360",
-    "Ball/Strike": "350",
-    "PR Score": "850",
-    "Bonus": "140"
+    id: 3,
+    firstName: "Trenton",
+    lastName: "Wallace",
+    pitchType: "360",
+    location: "350",
+    prScore: "850",
+    bonus: "140"
   },
   {
-    "First Name": "Peyton",
-    "Last Name": "Williams",
-    "Pitch Type": "310",
-    "Ball/Strike": "320",
-    "PR Score": "715",
-    "Bonus": "85"
+    id: 4,
+    firstName: "Peyton",
+    lastName: "Williams",
+    pitchType: "310",
+    location: "320",
+    prScore: "715",
+    bonus: "85"
   },
   {
-    "First Name": "Dylan",
-    "Last Name": "Nedved",
-    "Pitch Type": "330",
-    "Ball/Strike": "350",
-    "PR Score": "775",
-    "Bonus": "95"
+    id: 5,
+    firstName: "Dylan",
+    lastName: "Nedved",
+    pitchType: "330",
+    location: "350",
+    prScore: "775",
+    bonus: "95"
   },
   {
-    "First Name": "Izaya",
-    "Last Name": "Fullard",
-    "Pitch Type": "350",
-    "Ball/Strike": "360",
-    "PR Score": "850",
-    "Bonus": "140"
+    id: 6,
+    firstName: "Izaya",
+    lastName: "Fullard",
+    pitchType: "350",
+    location: "360",
+    prScore: "850",
+    bonus: "140"
   },
   {
-    "First Name": "Andrew",
-    "Last Name": "Nord",
-    "Pitch Type": "320",
-    "Ball/Strike": "290",
-    "PR Score": "710",
-    "Bonus": "100"
+    id: 7,
+    firstName: "Andrew",
+    lastName: "Nord",
+    pitchType: "320",
+    location: "290",
+    prScore: "710",
+    bonus: "100"
   },
   {
-    "First Name": "Zeb",
-    "Last Name": "Adreon",
-    "Pitch Type": "350",
-    "Ball/Strike": "410",
-    "PR Score": "900",
-    "Bonus": "140"
+    id: 8,
+    firstName: "Zeb",
+    lastName: "Adreon",
+    pitchType: "350",
+    location: "410",
+    prScore: "900",
+    bonus: "140"
   },
   {
-    "First Name": "Paul",
-    "Last Name": "Vossen",
-    "Pitch Type": "320",
-    "Ball/Strike": "360",
-    "PR Score": "780",
-    "Bonus": "100"
+    id: 9,
+    firstName: "Paul",
+    lastName: "Vossen",
+    pitchType: "320",
+    location: "360",
+    prScore: "780",
+    bonus: "100"
   },
   {
-    "First Name": "Austin",
-    "Last Name": "Martin",
-    "Pitch Type": "340",
-    "Ball/Strike": "350",
-    "PR Score": "810",
-    "Bonus": "120"
+    id: 10,
+    firstName: "Austin",
+    lastName: "Martin",
+    pitchType: "340",
+    location: "350",
+    prScore: "810",
+    bonus: "120"
   },
   {
-    "First Name": "Matt",
-    "Last Name": "Sosa",
-    "Pitch Type": "320",
-    "Ball/Strike": "350",
-    "PR Score": "765",
-    "Bonus": "95"
+    id: 11,
+    firstName: "Matt",
+    lastName: "Sosa",
+    pitchType: "320",
+    location: "350",
+    prScore: "765",
+    bonus: "95"
   },
   {
-    "First Name": "Justin",
-    "Last Name": "Jenkins",
-    "Pitch Type": "300",
-    "Ball/Strike": "370",
-    "PR Score": "780",
-    "Bonus": "110"
+    id: 12,
+    firstName: "Justin",
+    lastName: "Jenkins",
+    pitchType: "300",
+    location: "370",
+    prScore: "780",
+    bonus: "110"
   },
   {
-    "First Name": "Tyler",
-    "Last Name": "Snep",
-    "Pitch Type": "290",
-    "Ball/Strike": "340",
-    "PR Score": "730",
-    "Bonus": "100"
+    id: 13,
+    firstName: "Tyler",
+    lastName: "Snep",
+    pitchType: "290",
+    location: "340",
+    prScore: "730",
+    bonus: "100"
   },
   {
-    "First Name": "Ben",
-    "Last Name": "Norman",
-    "Pitch Type": "320",
-    "Ball/Strike": "280",
-    "PR Score": "705",
-    "Bonus": "105"
+    id: 14,
+    firstName: "Ben",
+    lastName: "Norman",
+    pitchType: "320",
+    location: "280",
+    prScore: "705",
+    bonus: "105"
   },
   {
-    "First Name": "Brendan",
-    "Last Name": "Sher",
-    "Pitch Type": "280",
-    "Ball/Strike": "340",
-    "PR Score": "725",
-    "Bonus": "105"
+    id: 15,
+    firstName: "Brendan",
+    lastName: "Sher",
+    pitchType: "280",
+    location: "340",
+    prScore: "725",
+    bonus: "105"
   },
   {
-    "First Name": "Brayden",
-    "Last Name": "Frazier",
-    "Pitch Type": "340",
-    "Ball/Strike": "340",
-    "PR Score": "800",
-    "Bonus": "120"
+    id: 16,
+    firstName: "Brayden",
+    lastName: "Frazier",
+    pitchType: "340",
+    location: "340",
+    prScore: "800",
+    bonus: "120"
   },
   {
-    "First Name": "Sam",
-    "Last Name": "Link",
-    "Pitch Type": "330",
-    "Ball/Strike": "310",
-    "PR Score": "750",
-    "Bonus": "110"
+    id: 17,
+    firstName: "Sam",
+    lastName: "Link",
+    pitchType: "330",
+    location: "310",
+    prScore: "750",
+    bonus: "110"
   },
   {
-    "First Name": "Coach",
-    "Last Name": "Coach",
-    "Pitch Type": "330",
-    "Ball/Strike": "360",
-    "PR Score": "805",
-    "Bonus": "115"
+    id: 18,
+    firstName: "Coach",
+    lastName: "Coach",
+    pitchType: "330",
+    location: "360",
+    prScore: "805",
+    bonus: "115"
   },
   {
-    "First Name": "Team",
-    "Last Name": "Average",
-    "Pitch Type": "325.00",
-    "Ball/Strike": "341.11",
-    "PR Score": "776.94",
-    "Bonus": "0"
+    id: 19,
+    firstName: "Team",
+    lastName: "Average",
+    pitchType: "325.00",
+    location: "341.11",
+    prScore: "776.94",
+    bonus: "0"
   }
 ];
 
