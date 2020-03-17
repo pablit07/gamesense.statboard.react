@@ -72,8 +72,7 @@ class HorizontalQuartileChart extends Chart {
             .domain([0, max])
             .range([ 0, width ]);
         svg.append("g")
-            .attr('class', 'xAxis ' + textColor)
-            // .attr("transform", "translate(0, -20)")
+            .attr('class', 'xAxisHQ ' + textColor)
             .attr("transform", "translate(" + margin.left + ", " + axis_top + ")")
             .call(d3.axisBottom(x)
                     .ticks(numTicks));

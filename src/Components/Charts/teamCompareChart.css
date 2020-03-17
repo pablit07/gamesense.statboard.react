@@ -3,41 +3,27 @@ svg {
   shape-rendering: crispEdges;
 }
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #0000;
+/* yAxis tick style */
+.yAxisTC line {
+  fill: path;
+  stroke: blue;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
 }
 
-path.domain {
-  stroke: none;
+/* yAxis line style */
+.yAxisTC path {
+  stroke-width: 1.2;
 }
 
-/* .y .tick line {
-  stroke: #DDDDDD;
-} */
-
-.xAxis.white line {
-   stroke: greenyellow;
-}
-
-.xAxis.white g text {
-  fill: white;
-}
-
-.xAxis.red line {
-  stroke: red;
-}
-
-.xAxis.red g text {
-  fill: red;
-}
-
-
-.axis path,
-.axis line {
-    fill: none;
+/* xAxis tick style */
+.xAxisTC line {
+    fill: path;
     stroke: black;
     stroke-width: 1.2;
-    shape-rendering: crispEdges;
+}
+
+/* xAxis line style */
+.xAxisTC path {
+  stroke-width: 1.2;
 }

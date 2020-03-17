@@ -100,9 +100,6 @@ var players = test_data;
             .enter()
             .append("rect")
             .attr("class", "bar location")
-            // .attr("ry", "1")
-            // .style("fill","#ebbd8f")
-            //.style("fill", "#7394cb")
             .style("fill", "#ea4335")
             .style("stroke", "black")
             .style("stroke-width", .5)
@@ -123,7 +120,6 @@ var players = test_data;
             .append("rect")
             .attr("class", "bar prScore")
             .style("fill","#fbbc04")
-            //.style("fill","#f66e5c")
             .style("stroke", "black")
             .style("stroke-width", .5)
             .attr("opacity", 1.0)
@@ -138,7 +134,7 @@ var players = test_data;
 
         // Add the X Axis
         svg.append("g")
-            .attr("class", "x axis")
+            .attr("class", "xAxisTC")
             .attr("transform", `translate(${margin.left},${height - margin.top - margin.bottom+10})`)
             .call(xAxis)
             // rotate labels
@@ -152,7 +148,7 @@ var players = test_data;
         
         // Add the Y Axis
         svg.append("g")
-            .attr("class", "y axis")
+            .attr("class", "yAxisTC")
             .attr("transform", `translate(${margin.left},10)`)
             .call(yAxis); 
 

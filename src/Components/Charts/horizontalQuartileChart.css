@@ -3,32 +3,24 @@ svg {
     shape-rendering: crispEdges;
 }
 
-.axis path,
-.axis line {
-    fill: none;
-    stroke: #0000;
+/* want to see only ticks, remove horiz. line */
+.xAxisHQ path {
+    stroke-width: 0;
 }
 
-path.domain {
-    stroke: none;
-}
 
-.y .tick line {
-    stroke: #DDDDDD;
-}
-
-.xAxis.white line {
+.xAxisHQ.white line {
      stroke: white;
  }
 
-.xAxis.white g text {
+.xAxisHQ.white g text {
     fill: white;
 }
 
-.xAxis.red line {
+.xAxisHQ.red line {
     stroke: red;
 }
 
-.xAxis.red g text {
+.xAxisHQ.red g text {
     fill: red;
 }
