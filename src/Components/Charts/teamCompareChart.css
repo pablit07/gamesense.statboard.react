@@ -13,9 +13,9 @@ path.domain {
   stroke: none;
 }
 
-.y .tick line {
+/* .y .tick line {
   stroke: #DDDDDD;
-}
+} */
 
 .xAxis.white line {
    stroke: greenyellow;
@@ -38,6 +38,6 @@ path.domain {
 .axis line {
     fill: none;
     stroke: black;
-    stroke-width: 1.0;
+    stroke-width: 1.2;
     shape-rendering: crispEdges;
 }

@@ -21,7 +21,12 @@ class ComparisonChartsView extends Component {
 
             <h4 style={style}>Horizontal Quartile Comparisons</h4>
             <hr/>
+            
             <ComparisonChartContainer socket={this.props.socket}>
+
+            <p>"--------- TeamCompare -----------"</p>
+                <TeamCompareChart svg_width={385} svg_height= {160}/>
+
                 <LegendHoriz  />
                 <HorizontalQuartileChart svg_width={680} svg_height= {80}/>
             <hr/>
