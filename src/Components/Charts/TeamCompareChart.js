@@ -3,16 +3,12 @@ import * as d3 from 'd3';
 import Chart from "./Chart";
 import test_data from "./test_data";
 
-
-console.log(test_data);
-
-class TeamCompareChart extends Chart {
+class GroupedBarChart extends Chart {
 
     addChartLayer({svg, values, svg_width, svg_height, textColor}) {
 
-        
 /////////////
-var players = test_data;
+var data = test_data;
 
 // Sample data:
         // var players = [
@@ -33,45 +29,53 @@ var players = test_data;
         //     "bonus": "105"
         //     }
         // ];
-        players = players.map(i => {
-            i.lastName = i.lastName;
-            return i;
-        });
-        
-        var width = 800,
-            height = 250,
+        var players = data.map(i => i.lastName); 
 
-            margin = {top: 30, right: 10, bottom: 30, left: 50},
-            barPadding = .2,
-            axisTicks = {qty: 7, outerSize: 0, dateFormat: '%m-%d'};
+        
+        var margin = {top: 30, right: 20, bottom: 30, left: 50},
+            width = 550 - margin.left - margin.right,
+            height = 800 - margin.top - margin.bottom,
+            
+            axisTicks = {qty: 7};
+        
+        var yScale0 = d3.scaleBand()
+            .range([height,0])
+            .paddingInner(.1);
+                    
+        var yScale1 = d3.scaleBand()
+            .padding(0.05);
+
+        var xScale = d3.scaleLinear()
+            .range([0, width]);
+
+
+
+        var color =d3.scaleOrdinal()
+            .range(["#4285f4", "#ea4335","#fbbc04"]);
+        
+        var xAxis = d3.axisBottom(xScale).ticks(axisTicks.qty).tickSizeOuter(axisTicks.outerSize);    
+        var yAxis = d3.axisLeft(yScale0).tickSizeOuter(axisTicks.outerSize);
+
+        // Define a common transition 
+        const t = d3.transition().duration(1000);
+        
+        yScale0.domain(data.map(d => d.lastName));
+        yScale1.domain(['pitchType', 'prScore', 'location']).range([0, yScale0.bandwidth()]);
+   
+        xScale.domain([0, d3.max(data, d => d.prScore)]);
 
         svg
             .attr("width", width)
             .attr("height", height)
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
-        
-        var xScale0 = d3.scaleBand().range([0, width - margin.left - margin.right]).padding(barPadding);
-        var xScale1 = d3.scaleBand()
-        var yScale = d3.scaleLinear()
-                    .range([height - margin.top - margin.bottom, 0]);
-        
-        var xAxis = d3.axisBottom(xScale0).tickSizeOuter(axisTicks.outerSize);
-        var yAxis = d3.axisLeft(yScale).ticks(axisTicks.qty).tickSizeOuter(axisTicks.outerSize);
 
-        // Define a common transition 
-        const trn = d3.transition().duration(1000);
-        
-        xScale0.domain(players.map(d => d.lastName));
-        xScale1.domain(['pitchType', 'prScore', 'location']).range([0, xScale0.bandwidth()]);
-        // yScale.domain([0, d3.max(players, d => d.pitchType > d.location ? d.pitchType : d.location)]);
-        yScale.domain([0, d3.max(players, d => d.prScore)]);
 
         var lastName = svg.selectAll(".lastName")
-            .data(players)
+            .data(data)
             .enter().append("g")
             .attr("class", "lastName")
-            .attr("transform", d => `translate( ${xScale0(d.lastName) +50 },10)`); // WTF !
+            .attr("transform", d => `translate( ${yScale0(d.lastName) +50 },10)`); 
 
         /* Add pitchType bars */
         lastName.selectAll(".bar.pitchType")
@@ -82,17 +86,11 @@ var players = test_data;
             .style("fill","#4285f4")
             .style("stroke", "black")
             .style("stroke-width", .5)
+            .attr("opacity", 1.0)
             .attr("ry", "1")
-            .attr("x", d => xScale1('pitchType'))
-            // .attr("y", d => yScale(d.pitchType))
-            .attr("width", xScale1.bandwidth()*1.0)
-            .attr("transform", `translate(${xScale1.bandwidth()*.25},0)`) // move thebar over to edge of PR bar.
-            
-            .attr("y", d => height - margin.top - margin.bottom)                 // Starting cond. for height
-            .attr("height", d => 0)     // Starting cond. for Y
-            .transition(trn)
-                .attr("y", d => yScale(d.pitchType))
-                .attr("height", d => height - margin.top - margin.bottom - yScale(d.pitchType));
+            .attr("y", d => height - margin.top - margin.bottom)          // Starting cond. for height
+        
+
             
         /* Add ball/strike location bars */
         lastName.selectAll(".bar.location") 
@@ -105,12 +103,14 @@ var players = test_data;
             .style("stroke-width", .5)
             .attr("opacity", 1.0)
             .attr("ry", "1")
-            .attr("x", d => xScale1('location'))
-            .attr("y", d => yScale(d.location))
-            .attr("width", xScale1.bandwidth()*1)
-            .attr("transform", `translate(${xScale1.bandwidth()*(-0.25)},0)`) 
-            .attr("height", d => {
-            return height - margin.top - margin.bottom - yScale(d.location)
+            .attr("x", d => yScale1('location'))
+            .attr("y", d => xScale(d.location))
+            .attr("height", yScale1.bandwidth()*1)
+
+            // .attr("transform", `translate(${yScale1.bandwidth()*(-0.25)},0)`) 
+
+            .attr("width", d => {
+            return width - margin.top - margin.bottom + xScale(d.location)
             });
 
         /* Add prScore bars */
@@ -124,11 +124,11 @@ var players = test_data;
             .style("stroke-width", .5)
             .attr("opacity", 1.0)
             .attr("ry", "1")
-            .attr("x", d => xScale1('prScore'))
-            .attr("y", d => yScale(d.prScore))
-            .attr("width", xScale1.bandwidth()* 1.0)
+            .attr("x", d => yScale1('prScore'))
+            .attr("y", d => xScale(d.prScore))
+            .attr("width", yScale1.bandwidth()* 1.0)
             .attr("height", d => {
-            return height - margin.top - margin.bottom - yScale(d.prScore)
+            return height - margin.top - margin.bottom - xScale(d.prScore)
             });
 
 
@@ -152,10 +152,6 @@ var players = test_data;
             .attr("transform", `translate(${margin.left},10)`)
             .call(yAxis); 
 
-
-
-
-
     }
 }
-export default TeamCompareChart;
+export default GroupedBarChart;
