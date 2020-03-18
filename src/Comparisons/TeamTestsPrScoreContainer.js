@@ -12,9 +12,8 @@ export default class TeamTestsPrScoreContainer extends Container {
     }
 
     mapStateToProps(state) {
-        console.log(state.submissions);
         return {
-            rows: state.submissions
+            values: state.submissions
         };
     }
 }
