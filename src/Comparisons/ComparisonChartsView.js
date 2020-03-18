@@ -3,6 +3,7 @@ import HorizontalQuartileChart from "../Components/Charts/HorizontalQuartileChar
 import TeamCompareChart from "../Components/Charts/TeamCompareChart";
 import LegendVertical from "../Components/Charts/LegendVertical";
 import LegendHoriz from "../Components/Charts/LegendHoriz";
+import GroupedBarChart from "../Components/Charts/GroupedBarChart";
 import ComparisonChartContainer from "./ComparisonContainer";
 
 
@@ -26,7 +27,7 @@ class ComparisonChartsView extends Component {
 
             <p>"--------- TeamCompare -----------"</p>
                 <TeamCompareChart svg_width={385} svg_height= {160}/>
-
+            < hr/> 
                 <LegendHoriz  />
                 <HorizontalQuartileChart svg_width={680} svg_height= {80}/>
             <hr/>
@@ -44,10 +45,10 @@ class ComparisonChartsView extends Component {
             < hr/>               
                 <HorizontalQuartileChart svg_width={350} svg_height= {200} textColor={"red"}/>
                 <LegendVertical  yPos={25}               svg_height= {200}/>
+            < hr/>
 
-            < hr/> 
-                <p>"--------- TeamCompare -----------"</p>
-                <TeamCompareChart svg_width={385} svg_height= {160}/>
+            <p>"--------- GroupedBarChart -----------"</p>
+            <GroupedBarChart svg_width={385} svg_height= {160}/>
 
             </ComparisonChartContainer>
 

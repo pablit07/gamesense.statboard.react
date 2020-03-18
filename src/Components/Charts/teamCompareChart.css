@@ -6,14 +6,14 @@ svg {
 /* yAxis tick style */
 .yAxisTC line {
   fill: path;
-  stroke: blue;
+  stroke: black;
   stroke-width: 1;
   shape-rendering: crispEdges;
 }
 
 /* yAxis line style */
 .yAxisTC path {
-  stroke-width: 1.2;
+  stroke-width: 1.1;
 }
 
 /* xAxis tick style */
@@ -25,5 +25,5 @@ svg {
 
 /* xAxis line style */
 .xAxisTC path {
-  stroke-width: 1.2;
+  stroke-width: 1.1;
 }
