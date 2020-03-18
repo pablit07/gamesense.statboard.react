@@ -1,6 +1,6 @@
 import Container from "../Container";
 
-export default class ComparisonChartContainer extends Container {
+export default class TeamTestsPrScoreContainer extends Container {
 
     constructor(props) {
         super(props);
