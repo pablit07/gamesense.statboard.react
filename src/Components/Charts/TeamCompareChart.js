@@ -7,8 +7,8 @@ class GroupedBarChart extends Chart {
 
     addChartLayer({svg, values, svg_width, svg_height, textColor}) {
 
-/////////////
-var data = test_data;
+        /////////////
+        var data = test_data;
 
         var players = data.map(i => i.lastName); 
 
@@ -21,10 +21,12 @@ var data = test_data;
 
         var xScale = d3.scaleLinear()
             .range([0, width])
-            .domain([0, d3.max(data, d => d.prScore)]);
+            //.domain([0, d3.max(data, d => d.prScore)]);
+            .domain([250, 460]);
 
             console.log('================================')
             console.log(d3.max(data, d => d.prScore)); //900
+            console.log()
 
 
         var yScale = d3.scaleBand()
@@ -33,6 +35,10 @@ var data = test_data;
             .padding(.125);
             console.log('============ xxx ==================')
             console.log(yScale("Coach")); //38.947
+
+        var logScale= d3.scaleLog()
+            .range([0, width])
+            .domain([0, d3.max(data, d => d.prScore)]);   
 
         var color =d3.scaleOrdinal()
             .range(["#4285f4", "#ea4335","#fbbc04"]);
@@ -55,18 +61,19 @@ var data = test_data;
             .enter()
                 .append("g")
                 .attr("class", "lastName")
-                .attr("transform", `translate(${margin.left},-4)`);
+                .attr("transform", `translate(${margin.left+1},-4)`);
             
         /* Add ball/strike location bars */
         lastName.selectAll(".bar.location") 
             .data(d => [d])
             .enter()
-              .append("rect")
+                .append("rect")
                 .attr("class", "bar location")
                 .attr("x", 0)
                 .attr("width", d => xScale(d.location))
+
                 .attr("y", function(d) { return yScale(d.lastName); }) //This took 2 hours!!
-               
+                
                 .attr("height", yScale.bandwidth())
             
             .style("fill", "#4285f4")
@@ -119,13 +126,13 @@ var data = test_data;
             .attr("transform", `translate(${margin.left},${height - margin.top - margin.bottom - 5})`)
             .call(xAxis)
             // rotate labels
-            .selectAll("text")
-                .style("text-anchor", "start")
-                .attr("dx", ".8em")
-                .attr("dy", ".25em")
-                .attr("transform", function (d) {
-                return "rotate(45)";
-            });
+            // .selectAll("text")
+            //     .style("text-anchor", "start")
+            //     .attr("dx", ".8em")
+            //     .attr("dy", ".25em")
+            //     .attr("transform", function (d) {
+            //     return "rotate(45)";
+            // });
         
         // Add the Y Axis
         svg.append("g")
