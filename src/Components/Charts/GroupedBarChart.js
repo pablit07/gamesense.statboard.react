@@ -3,9 +3,6 @@ import * as d3 from 'd3';
 import Chart from "./Chart";
 import test_data from "./test_data";
 
-
-console.log(test_data);
-
 class GroupedBarChart extends Chart {
 
     addChartLayer({svg, values, svg_width, svg_height, textColor}) {
@@ -23,20 +20,7 @@ var players = test_data;
         //     "location": "300",
         //     "prScore": "770",
         //     "bonus": "110"
-        //     },
-        //     {
-        //     "firstName": "Lorenzo",
-        //     "lastName": "Elion",
-        //     "pitchType": "300",
-        //     "location": "360",
-        //     "prScore": "765",
-        //     "bonus": "105"
         //     }
-        // ];
-        players = players.map(i => {
-            i.lastName = i.lastName;
-            return i;
-        });
         
         var width = 800,
             height = 250,

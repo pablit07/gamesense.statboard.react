@@ -55,8 +55,8 @@ class HorizontalQuartileChart extends Chart {
 /// THIS IS HUGE !!! this stackedSeries WORKS!
         var stackedSeries = stack(data);
 
-// group names  --> show them on the Y axis - "notUsed" here
-        var groups = d3.map(data, function(d){return(d.name)}).keys()
+// group names  --> show them on the Y axis - "notUsed" here, shown for reference.
+        //var groups = d3.map(data, function(d){return(d.name)}).keys()
 
 // Add Y axis
         var y = d3.scaleBand()

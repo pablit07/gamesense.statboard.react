@@ -25,6 +25,9 @@ const Home = () => (
         <li>
           <Link to='/scorecomparisoncharts'>Score Comparisons (Charts)</Link>
         </li>
+        <li>
+          <Link to='/teamcomparecharts'>Team Vertical Comparisons (Chart)</Link>
+        </li>
       </ul>
   </div>
 )
