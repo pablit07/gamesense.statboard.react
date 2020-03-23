@@ -8,7 +8,7 @@ class TeamCompareChart extends Chart {
     addChartLayer({svg, values, svg_width, svg_height, textColor}) {
 
         // var data = test_data;
-        var dataAll = this.props.values;
+        var data = this.props.values;
 
       
 
