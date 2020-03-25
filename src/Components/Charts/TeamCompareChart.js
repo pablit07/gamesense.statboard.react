@@ -96,7 +96,6 @@ class TeamCompareChart extends Chart {
         }
 
         function update(data){
-            console.log ("I am heeeeeeeeeeeeeeeeeere!");
             // get max and min score values for current data ... 
             var scoreMax = d3.max(data, d => d.thisScore);
             var scoreMin = d3.min(data, d => d.thisScore);
@@ -200,7 +199,7 @@ class TeamCompareChart extends Chart {
             .text("age group");
 
         //use allData to begin with
-        update(typeData);
+        update(locationData);
 
     } 
 }

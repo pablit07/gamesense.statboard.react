@@ -1,8 +1,8 @@
 import React, {Component, Fragment} from 'react';
 
 import TeamTestsPrScoreContainer from "./TeamTestsPrScoreContainer";
-import ComparisonContainer from "./ComparisonContainer";
 import TeamCompareChart from "../Components/Charts/TeamCompareChart";
+import RadioButton from "../Buttons/RadioButton";
 
 class TeamTestsView extends Component {
 
@@ -14,8 +14,9 @@ class TeamTestsView extends Component {
             <h4 style={style}>TeamTestView</h4>
 
             <TeamTestsPrScoreContainer socket={this.props.socket}>
-              
-              <p> -------- TeamCompareChart ----------</p>
+
+              <RadioButton />
+              <br />
               <TeamCompareChart svg_width={385} svg_height= {160}/>
           
             </TeamTestsPrScoreContainer>
