@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import Chart from "./Chart";
 import test_data from "./test_data";
 
+
 class TeamCompareChart extends Chart {
 
     addChartLayer({svg, values, svg_width, svg_height, textColor}) {

@@ -17,7 +17,7 @@ class RadioButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: "option1"
+      selectedOption: "type"
     };
   }
 
@@ -43,9 +43,9 @@ class RadioButton extends Component {
                 <label>
                   <input
                     type="radio"
-                    name="react-tips"
-                    value="option1"
-                    checked={this.state.selectedOption === "option1"}
+                    name="data-selector"
+                    value="location"
+                    checked={this.state.selectedOption === "location"}
                     onChange={this.handleOptionChange}
                     className="form-check-input"
                   />
@@ -56,9 +56,9 @@ class RadioButton extends Component {
                 <label>
                   <input
                     type="radio"
-                    name="react-tips"
-                    value="option2"
-                    checked={this.state.selectedOption === "option2"}
+                    name="data-selector"
+                    value="type"
+                    checked={this.state.selectedOption === "type"}
                     onChange={this.handleOptionChange}
                     className="form-check-input"
                   />
@@ -69,9 +69,9 @@ class RadioButton extends Component {
                 <label>
                   <input
                     type="radio"
-                    name="react-tips"
-                    value="option3"
-                    checked={this.state.selectedOption === "option3"}
+                    name="data-selector"
+                    value="total"
+                    checked={this.state.selectedOption === "total"}
                     onChange={this.handleOptionChange}
                     className="form-check-input"
                   />
