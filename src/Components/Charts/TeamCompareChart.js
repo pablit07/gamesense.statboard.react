@@ -125,12 +125,12 @@ class TeamCompareChart extends Chart {
             //     .exit()
             //     .data(d => [d])	
             
-            var bars = svg.selectAll(".last_name")
+            var bars = chart.selectAll(".last_name")
                 .data(data)
                 .enter()
                      .append("g")
                     .attr("class", "last_name")
-                    .attr("transform", `translate(${margin.left+1},-4)`);
+                    .attr("transform", `translate(${margin.left}, 0)`);
 
 
             //now actually give each rectangle the corresponding data
@@ -157,13 +157,13 @@ class TeamCompareChart extends Chart {
                     // TODO Add text to bars
 
                 // Add the X Axis
-                svg.append("g")
+                chart.append("g")
                     .attr("class", "xAxisTC")
                     .attr("transform", `translate(${margin.left},${height - margin.top - margin.bottom })`)
                     .call(xAxis);
                 
                 // Add the Y Axis
-                svg.append("g")
+                chart.append("g")
                     .attr("class", "yAxisTC")
                     .attr("transform", `translate(${margin.left}, 0)`)
                     .call(yAxis); 
@@ -171,7 +171,7 @@ class TeamCompareChart extends Chart {
                 // Average Line 
                 var scoreVal = xScale(325);
                 
-                var line = svg.append("g")
+                var line = chart.append("g")
                   .attr("transform", `translate(${margin.left}, 0)`)
 
                 line.append('line')
@@ -190,15 +190,12 @@ class TeamCompareChart extends Chart {
                    .attr("x", scoreVal + 10)
                   .attr("y", yScale.bandwidth()/2)
                   .text('Average');
-  
-
-
         } //end update
 
 
         //set up chart
-        var margin = {top: 30, right: 0, bottom: 20, left: 75},
-          width = 500 - margin.left - margin.right,
+        var margin = {top: 15, right: 5, bottom: 25, left: 30},
+          width = 575 - margin.left - margin.right,
           height = 575 - margin.top - margin.bottom,
           axisTicks = {qty: 11};    
 
@@ -218,33 +215,33 @@ class TeamCompareChart extends Chart {
 
         var xAxis = d3.axisBottom(xScale)
           .ticks(axisTicks.qty).tickSizeOuter(axisTicks.outerSize);    
-
-        svg
-          .attr("width", width)
-          .attr("height", height)
-          .append("g")
-              .attr("transform", `translate(${margin.left},${margin.top})`);
  
           
-        // Background for the chart
+        // solid background for the chart
         svg
           .append("rect")
             .attr("x", 0)
-            .attr("width", width)
+            .attr("width", width*1.05)
             .attr("y", 0) 
-            .attr("height", height)
+            .attr("height", height*1.05)
             .attr("fill", "#dee3e2")
-            .attr("opacity", 1.0);
+            .attr("opacity", .30);
 
-        //use allData to begin with
+        // chart group 'g'
+        var chart = svg
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);    
 
-        //add labels (if desired)
-        svg
-          .append("text")
-          .attr("transform", "translate(15," +  (height+margin.bottom)/2 + ") rotate(-90)")
-          .text("Player"); 
+        //add yAxis label (if desired)
+        // chart
+        //   .append("text")
+        //   .attr("transform", "translate(15," +  (height+margin.bottom)/2 + ") rotate(-90)")
+        //   .text("Player"); 
         
-          update(typeData);
+        //use allData to begin with
+        update(typeData);
     } 
 }
 export default TeamCompareChart;
