@@ -1,29 +1,28 @@
 svg {
-  font: 12px sans-serif;
+  font: 18px sans-serif;
   shape-rendering: crispEdges;
 }
 
-/* yAxis tick style */
-.yAxisTC line {
-  fill: path;
+/* Average Line & Label */
+.averageLine {
+  font-size: 18px;
+  /* stroke: #116979;   */
+  stroke: #505252;
+}
+
+.averageLabel {
+  fill: #034955;
+}
+
+.bar {
+  fill: #0db688;
   stroke: black;
-  stroke-width: 1;
-  shape-rendering: crispEdges;
 }
 
-/* yAxis line style */
-.yAxisTC path {
-  stroke-width: 1.1;
+.xAxisTC{
+
 }
 
-/* xAxis tick style */
-.xAxisTC line {
-    fill: path;
-    stroke: black;
-    stroke-width: 1.2;
-}
-
-/* xAxis line style */
-.xAxisTC path {
-  stroke-width: 1.1;
+.bar:hover {
+  fill: #0a8664;
 }
