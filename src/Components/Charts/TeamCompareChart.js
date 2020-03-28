@@ -4,7 +4,7 @@ import Chart from "./Chart";
 // import test_data from "./test_data";
 
 class TeamCompareChart extends Chart {
-  addChartLayer({ svg, values, svg_width, svg_height, textColor, quarsTotal, quarsType, quarsLocation}) {
+  addChartLayer({ svg, values, svg_width, svg_height, textColor, quarstotal, quarstype, quarslocation}) {
 
   // radio buttons will choose later ...
   // For testing, set 0, 1 or 2 ...
@@ -12,17 +12,16 @@ class TeamCompareChart extends Chart {
   var scoreTypes = ["location", "type", "total"];
   var scoreType = scoreTypes[selectedScore]; // 'location' for now
 
-  console.log("-------------quarsTotal---------------");
-  console.log(quarsTotal);
-  console.log("-------------quarsType---------------");
-  console.log(quarsType); 
-  console.log("-------------quarsLocation---------------");
-  console.log(quarsLocation);
+  console.log("-------------quarstotal---------------");
+  console.log(quarstotal);
+  console.log("-------------quarstype---------------");
+  console.log(quarstype); 
+  console.log("-------------quarslocation---------------");
+  console.log(quarslocation);
 
   var data = this.props.values;
   console.log("============== And the values are ... ===========");
   console.log(data);
-
 
   // ToDo: Put this in a function in a different file ...
   // split up data into {first_name: "", last_name: "", score: "<relevant_score>"}
@@ -30,28 +29,27 @@ class TeamCompareChart extends Chart {
   // var typeData = [];
   // var totalData = [];
 
-  var allData = data;
+  var allData = this.props.values;
+  
   // pop and store the "Team Average" - last element
+  var bummer = allData.pop();
+  console.log("----------- bummer teamAverages -------");
+  console.log(bummer); // works fine, `bummer` exists, is not undefined
+  // now try to get values from `bummer`
+      // var lastName =  bummer.last_name   //expect "Average" 
+      // console.log(lastName);  //ERROR TypeError: Cannot read property 'last_name' of undefined
+  console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+  console.log("----------- hard-coded teamAverages -------");
+  //So, until above is fixed, hard-code the teamAverages
+  var teamAverages = {first_name: "Team",
+  last_name: "Average",
+  first_glance_location_score: 341.11,
+  first_glance_type_score: 325,
+  first_glance_total_score: 776.94};
 
-  var allAverages = allData.pop();
+  console.log(teamAverages);
 
-  console.log(allAverages);
-  console.log ('---------------===============');
-
-  //console.log(allAverages["first_name"]);
-  // var totalAvg = allAverages.first_glance_total_score;
-  // var locationAvg = allAverages.first_glance_location_score;
-  // var typeAvg = allAverages.first_glance_type_score;
-
-  console.log("---------allAverages---------");
-  console.log(allAverages);
-  let avgScores = {};
-  for (let key in allAverages){
-    console.log(key);
-  }
-
-
-
+  
   var locationData = [];
   for (let i = 0; i < allData.length; i += 1) {
     let tmp = {};
@@ -192,6 +190,7 @@ class TeamCompareChart extends Chart {
 
     //set domain for the x axis
     xScale.domain([scoreMin * 0.95, scoreMax * 1.1]);
+    //xScale.domain([scoreMin * 0.95, 1000]);
 
     //set domain for y axis
     yScale.domain(data.map(d => d.last_name)); // Y-value labels: Player's name
