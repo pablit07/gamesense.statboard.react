@@ -199,12 +199,12 @@ class TeamCompareChart extends Chart {
     svg_width = svg_width || 625;
     svg_height = svg_height || 575;
     //set up chart
-    var margin = { top: 15, right: 5, bottom: 35, left: 40 },
+    var margin = { top: 15, right: 5, bottom: 35, left: 50 },
       width = svg_width - margin.left - margin.right,
-      height = svg_width - margin.top - margin.bottom,
+      height = svg_height - margin.top - margin.bottom,
       axisTicks = { qty: 11 };
 
-    var xScale = d3.scaleLinear().range([0, width]);
+    var xScale = d3.scaleLinear().range([0, width*.8]);
 
     var yScale = d3
       .scaleBand()
@@ -232,17 +232,18 @@ class TeamCompareChart extends Chart {
     // solid background for the chart
     svg
       .append("rect")
-      .attr("x", 0)
-      .attr("width", width * 1.05)
+      .attr("x", 10)
+      .attr("width", width)
       .attr("y", 0)
-      .attr("height", height * 1.05)
-      .attr("fill", "#dee3e2")
+      .attr("height", height)
+      // .attr("fill", "#dee3e2")
+      .attr("fill", "lightgray")
       .attr("opacity", 0.3);
 
     // chart group 'g'
     var chart = svg
-      .attr("width", width)
-      .attr("height", height * 1)
+      .attr("width", svg_width)
+      .attr("height", svg_height)
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 

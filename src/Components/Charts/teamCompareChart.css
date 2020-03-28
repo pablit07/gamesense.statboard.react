@@ -32,7 +32,7 @@ svg {
 }
 
 .yAxisTC {
-  font: 12px sans-serif;
+  font: 14px sans-serif;
 }
 
 .yAxisTC path,
@@ -40,5 +40,5 @@ svg {
   fill: none;
   stroke: darkslategrey;
   shape-rendering: crispEdges;
-  stroke-width: 3px;
+  stroke-width: 2px;
 }

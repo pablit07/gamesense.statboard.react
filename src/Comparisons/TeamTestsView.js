@@ -18,12 +18,12 @@ class TeamTestsView extends Component {
         <TeamTestsPrScoreContainer socket={this.props.socket}>
           <RadioButton />
           <br />
-          <TeamCompareChart svg_width={685} svg_height={460} />
+          <TeamCompareChart svg_width={685} svg_height={400} />
           <br />
         </TeamTestsPrScoreContainer>
 
         <ComparisonChartContainer socket={this.props.socket}>
-          <HorizontalQuartileChart svg_width={400} svg_height={80} />
+          <HorizontalQuartileChart svg_width={700} svg_height={100} />
         </ComparisonChartContainer>
       </Fragment>
     );
