@@ -41,11 +41,12 @@ class TeamCompareChart extends Chart {
   console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxx");
   console.log("----------- hard-coded teamAverages -------");
   //So, until above is fixed, hard-code the teamAverages
-  var teamAverages = {first_name: "Team",
-  last_name: "Average",
-  first_glance_location_score: 341.11,
-  first_glance_type_score: 325,
-  first_glance_total_score: 776.94};
+  var teamAverages = {
+    first_name: "Team",
+    last_name: "Average",
+    first_glance_location_score: 341.11,
+    first_glance_type_score: 325,
+    first_glance_total_score: 776.94 };
 
   console.log(teamAverages);
 
@@ -118,7 +119,7 @@ class TeamCompareChart extends Chart {
   var margin = { top: 15, right: 5, bottom: 35, left: 50 },
     width = svg_width - margin.left - margin.right,
     height = svg_height - margin.top - margin.bottom,
-    axisTicks = { qty: 11 };
+    axisTicks = { qty: 7 };
 
   var xScale = d3.scaleLinear().range([0, width*.8]);
 
@@ -167,11 +168,11 @@ class TeamCompareChart extends Chart {
 
   function changeData(value) {
     //function for toggling between data
-    // TODO - LAME!: get this from data!!
-    var averages = {locationAvg: 341.11, typeAvg: 325, totalAvg: 776.94};
-    var locationAvg = 341.11;
-    var typeAvg = 325;
-    var totalAvg =  776.94;
+    var locationAvg = teamAverages.first_glance_location_score;
+    var typeAvg = teamAverages.first_glance_type_score;
+    var totalAvg =  teamAverages.first_glance_total_score;
+    console.log('//////////////////////////////////////////')
+    console.log(locationAvg);
 
     if (value === "location") {
       update(locationData, locationAvg);//Lame hard code, should come from popped value
