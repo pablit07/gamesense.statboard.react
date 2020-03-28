@@ -3,26 +3,42 @@ svg {
   shape-rendering: crispEdges;
 }
 
-/* Average Line & Label */
-.averageLine {
-  font-size: 18px;
-  /* stroke: #116979;   */
-  stroke: #505252;
-}
-
+/* AverageLine Label */
 .averageLabel {
   fill: #034955;
 }
 
 .bar {
-  fill: #0db688;
+  fill: #d25c4d;
   stroke: black;
 }
 
-.xAxisTC{
-
-}
+.xAxisTC {}
 
 .bar:hover {
-  fill: #0a8664;
+  fill: #6fbf57;
+}
+
+.xAxisTC {
+  font: 14px sans-serif;
+}
+
+.xAxisTC path,
+.xAxisTC line {
+  fill: none;
+  stroke: darkslategrey;
+  shape-rendering: crispEdges;
+  stroke-width: 2px;
+}
+
+.yAxisTC {
+  font: 12px sans-serif;
+}
+
+.yAxisTC path,
+.yAxisTC line {
+  fill: none;
+  stroke: darkslategrey;
+  shape-rendering: crispEdges;
+  stroke-width: 3px;
 }
