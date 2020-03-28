@@ -228,9 +228,9 @@ class TeamCompareChart extends Chart {
       .attr("height", yScale.bandwidth())
       .attr("ry", "4")
       .style("fill", function(d) {
-          if (d.thisScore <= 290) {return qColors[0]}
-          else if (d.thisScore <= 320){return qColors[1]}
-          else if (d.thisScore <= 360){return qColors[2]}
+          if (d.thisScore <= quarstype.q1) {return qColors[0]}
+          else if (d.thisScore <= quarstype.median){return qColors[1]}
+          else if (d.thisScore <= quarstype.q3){return qColors[2]}
           else {return qColors[3]};
       })
 
