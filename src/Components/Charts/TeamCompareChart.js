@@ -130,8 +130,6 @@ class TeamCompareChart extends Chart {
 
   var gameSenseColors = ["#505252","#94a4a5","#ffffff","#70bf57","#0db688","#eae34c"];
 
-  var quartileColors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574"];
-
   var yAxis = d3.axisLeft(yScale).tickSizeOuter(axisTicks.outerSize);
 
   var xAxis = d3
@@ -142,13 +140,12 @@ class TeamCompareChart extends Chart {
   // solid background for the chart
   svg
     .append("rect")
-    .attr("x", 10)
-    .attr("width", width)
-    .attr("y", 0)
-    .attr("height", height)
-    // .attr("fill", "#dee3e2")
-    .attr("fill", "lightgray")
-    .attr("opacity", 0.3);
+      .attr("x", 10)
+      .attr("width", width)
+      .attr("y", 0)
+      .attr("height", height)
+      .attr("fill", "lightgray")
+      .attr("opacity", 0.3);
 
   // chart group 'g'
   var chart = svg
@@ -175,11 +172,11 @@ class TeamCompareChart extends Chart {
     console.log(locationAvg);
 
     if (value === "location") {
-      update(locationData, locationAvg);//Lame hard code, should come from popped value
+      update(locationData, locationAvg);// Avg is lame hard code, should come from popped value
     } else if (value === "type") {
-      update(typeData, typeAvg); //Lame hard code, should come from popped value
+      update(typeData, typeAvg); 
     } else {
-      update(totalData, totalAvg); //Lame hard code, should come from popped value
+      update(totalData, totalAvg); 
     }
   }
 
@@ -212,9 +209,10 @@ class TeamCompareChart extends Chart {
       .attr("class", "last_name")
       .attr("transform", `translate(${margin.left}, 0)`);
 
-    //now actually give each rectangle the corresponding data
-
+    //now give each rectangle the corresponding data and color
     /* Add score bars */
+    // Get the proper fillColor based on score in Quartile Range. 
+    var qColors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574"];
     bars
       .selectAll("rect")
       .data(d => [d])
@@ -229,9 +227,13 @@ class TeamCompareChart extends Chart {
       }) //return athe
       .attr("height", yScale.bandwidth())
       .attr("ry", "4")
+      .style("fill", function(d) {
+          if (d.thisScore <= 290) {return qColors[0]}
+          else if (d.thisScore <= 320){return qColors[1]}
+          else if (d.thisScore <= 360){return qColors[2]}
+          else {return qColors[3]};
+      })
 
-      // .style("fill", "#4285f4")
-      //.style("fill", "#de7119")
       .style("stroke", "black")
       .style("stroke-width", 0.7)
       .attr("opacity", 1.0);

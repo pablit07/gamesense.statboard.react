@@ -5,7 +5,7 @@ import TeamCompareChart from "../Components/Charts/TeamCompareChart";
 import RadioButton from "../Buttons/RadioButton";
 
 import HorizontalQuartileChart from "../Components/Charts/HorizontalQuartileChart";
-import LegendVertical from "../Components/Charts/LegendVertical";
+import LegendHoriz from "../Components/Charts/LegendHoriz";
 import ComparisonChartContainer from "./ComparisonContainer";
 
 class TeamTestsView extends Component {
@@ -18,6 +18,7 @@ class TeamTestsView extends Component {
         <TeamTestsPrScoreContainer socket={this.props.socket}>
           <RadioButton />
           <br />
+          <LegendHoriz />
           <TeamCompareChart svg_width={685} svg_height={400} />
           <br />
         </TeamTestsPrScoreContainer>

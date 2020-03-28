@@ -1,5 +1,5 @@
 svg {
-  font: 18px sans-serif;
+  font: 14px sans-serif;
   shape-rendering: crispEdges;
 }
 
@@ -9,7 +9,6 @@ svg {
 }
 
 .bar {
-  fill: #d25c4d;
   stroke: black;
 }
 
