@@ -274,8 +274,7 @@ class TeamCompareChart extends Chart {
       .attr("y2", height - margin.bottom - margin.top)
       .attr("opacity", 0)
       .transition(t)
-      .transition()
-        .delay(400)
+        .delay(650)
         .attr("x1", scoreVal)
         .attr("x2", scoreVal)
         .attr("opacity", 1);
