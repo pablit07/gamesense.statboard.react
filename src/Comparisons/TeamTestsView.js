@@ -21,7 +21,7 @@ class TeamTestsView extends Component {
 
             <TeamTestsPrScoreContainer socket={this.props.socket}>
               <RadioButtons
-                  options={ [{name:'Type', value:'type'}, {name:'Location', value:'location'}, {name:'Total', value:'total'}] }
+                  options={ [{name:'Type',value:'type'},{name:'Location',value:'location'},{name:'Total',value:'total'}] }
                   initSelectedOption={'total'} />
               <br />
               <LegendHoriz />

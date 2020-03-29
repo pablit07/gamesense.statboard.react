@@ -9,23 +9,23 @@ class TeamCompareChart extends Chart {
   svg_width = svg_width || 625;
   svg_height = svg_height || 575;
   //set up chart
-  var margin = { top: 15, right: 5, bottom: 35, left: 50 },
+  let margin = { top: 15, right: 5, bottom: 35, left: 50 },
     width = svg_width - margin.left - margin.right,
     height = svg_height - margin.top - margin.bottom,
     axisTicks = { qty: 7 };
 
-  var xScale = d3.scaleLinear().range([0, width*.8]);
+  let xScale = d3.scaleLinear().range([0, width*.8]);
 
-  var yScale = d3
+  let yScale = d3
     .scaleBand()
     .range([height - margin.top - margin.bottom, 0])
     .padding(.08);
 
-  var gameSenseColors = ["#505252","#94a4a5","#ffffff","#70bf57","#0db688","#eae34c"];
+  const gameSenseColors = ["#505252","#94a4a5","#ffffff","#70bf57","#0db688","#eae34c"];
 
-  var yAxis = d3.axisLeft(yScale).tickSizeOuter(axisTicks.outerSize);
+  let yAxis = d3.axisLeft(yScale).tickSizeOuter(axisTicks.outerSize);
 
-  var xAxis = d3
+  let xAxis = d3
     .axisBottom(xScale)
     .ticks(axisTicks.qty)
     .tickSizeOuter(axisTicks.outerSize);
@@ -41,7 +41,7 @@ class TeamCompareChart extends Chart {
       .attr("opacity", 0.3);
 
   // chart group 'g'
-  var chart = svg
+  let chart = svg
     .attr("width", svg_width)
     .attr("height", svg_height)
     .append("g")
@@ -57,8 +57,8 @@ class TeamCompareChart extends Chart {
 
     // Update chart with chosen data ////////////////////////////////////////////////////////
     // get max and min score values for current data ...
-    var scoreMax = d3.max(values, d => d.thisScore);
-    var scoreMin = d3.min(values, d => d.thisScore);
+    let scoreMax = d3.max(values, d => d.thisScore);
+    let scoreMin = d3.min(values, d => d.thisScore);
 
     //set domain for the x axis
     xScale.domain([scoreMin * 0.95, scoreMax * 1.1]);
@@ -71,7 +71,7 @@ class TeamCompareChart extends Chart {
 
 	 //select all bars on the graph, remove them, call .exit() to clear previous data set.
 	 //then add/enter the new data set
-    var bars = chart
+    let bars = chart
       .selectAll("last_name")
       .data(values)
       .enter()
@@ -81,7 +81,7 @@ class TeamCompareChart extends Chart {
  
     /* Add score bars */
     // these are the Quartile Range colors. 
-    var qColors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574"];
+    const qColors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574"];
 
     bars
       .selectAll(".bar")
@@ -132,9 +132,9 @@ class TeamCompareChart extends Chart {
       .call(yAxis);
 
     // Average Line
-    var scoreVal = xScale(average);
+    let scoreVal = xScale(average);
 
-    var line = chart
+    let line = chart
       .append("g")
       .attr("transform", `translate(${margin.left}, 0)`);
 

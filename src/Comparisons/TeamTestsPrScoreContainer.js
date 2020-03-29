@@ -13,14 +13,8 @@ export default class TeamTestsPrScoreContainer extends Container {
     }
 
     mapStateToProps(state) {
-        const scoreType = this.state.selectedScore;
+        const scoreType = state.selectedScore;
         const selectedPropName = `first_glance_${scoreType}_score`;
-
-        // ToDo: Put this in a function in a different file ...
-        // split up data into {first_name: "", last_name: "", score: "<relevant_score>"}
-        // var locationData = [];
-        // var typeData = [];
-        // var totalData = [];
 
         let allData = state.submissions ? [...state.submissions] : [];
 
