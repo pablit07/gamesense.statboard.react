@@ -191,6 +191,9 @@ class TeamCompareChart extends Chart {
     //set domain for y axis
     yScale.domain(data.map(d => d.last_name)); // Y-value labels: Player's name
 
+    const t = d3.transition().duration(500); 
+    // transition time 500 ms.
+
 	 //select all bars on the graph, remove them, call .exit() to clear previous data set. 
 	 //then add/enter the new data set
     var bars = chart
@@ -215,12 +218,15 @@ class TeamCompareChart extends Chart {
       .append("rect")
       .attr("class", "bar")
       .attr("x", 0)
-      .attr("width", d => xScale(d.thisScore))
+      .attr("width", d => 0)
       .attr("y", function(d) {
                    return yScale(d.last_name);
                   }) 
       .attr("height", yScale.bandwidth())
       .attr("ry", "4")
+      .transition(t)
+          .attr("width", d => xScale(d.thisScore))
+
       // set the proper fillColor based on score in Quartile Range. 
       .style("fill", function(d) {
           if (d.thisScore <= quartiles.q1) {return qColors[0]}
@@ -262,19 +268,31 @@ class TeamCompareChart extends Chart {
       .style("stroke", "#116979")
       .style("stroke-width", 8)
       .style("stroke-dasharray", "20, 3")
-      .attr("x1", scoreVal)
+      .attr("x1", 0)
       .attr("y1", 0)
-      .attr("x2", scoreVal)
-      .attr("y2", height - margin.bottom - margin.top);
+      .attr("x2", 0)
+      .attr("y2", height - margin.bottom - margin.top)
+      .attr("opacity", 0)
+      .transition(t)
+      .transition()
+        .delay(400)
+        .attr("x1", scoreVal)
+        .attr("x2", scoreVal)
+        .attr("opacity", 1);
 
     // Average Line Label
     line
       .append("text")
       .attr("class", "averageLabel")
       .attr("text-anchor", "none")
-      .attr("x", scoreVal + 10)
+      .attr("x", 10)
       .attr("y", yScale.bandwidth() / 2)
-      .text("Average "+ average + " (" + scoreType + " score)");
+      .text("Average "+ average + " (" + scoreType + " score)")
+      .attr("opacity", 0)
+      .transition(t)
+        .delay(400)
+        .attr("x", scoreVal + 10)
+        .attr("opacity", 1);
     } //end update    ///////////////////////////////////////////////////////////
   }
 }

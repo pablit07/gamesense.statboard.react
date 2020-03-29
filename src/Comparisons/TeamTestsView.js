@@ -34,7 +34,6 @@ class TeamTestsView extends Component {
               
             </ComparisonChartContainer>
             <br />
-            <h1>=======>       Yay! </h1>
 
         </Fragment>)
         
