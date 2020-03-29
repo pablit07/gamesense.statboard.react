@@ -23,7 +23,9 @@ class TeamCompareChart extends Chart {
 
   const gameSenseColors = ["#505252","#94a4a5","#ffffff","#70bf57","#0db688","#eae34c"];
 
-  let yAxis = d3.axisLeft(yScale).tickSizeOuter(axisTicks.outerSize);
+  let yAxis = d3.axisLeft(yScale)
+      .tickSizeOuter(axisTicks.outerSize)
+      .tickFormat((d, i) => values[i].last_name);
 
   let xAxis = d3
     .axisBottom(xScale)
@@ -64,7 +66,7 @@ class TeamCompareChart extends Chart {
     xScale.domain([scoreMin * 0.95, scoreMax * 1.1]);
 
     //set domain for y axis
-    yScale.domain(values.map(d => d.last_name)); // Y-value labels: Player's name
+    yScale.domain(d3.range(values.length)); // Y-value labels: Player's name
 
     const t = d3.transition().duration(500); 
     // transition time 500 ms.
@@ -94,9 +96,7 @@ class TeamCompareChart extends Chart {
       .attr("class", "bar")
       .attr("x", 0)
       .attr("width", d => 0)
-      .attr("y", function(d) {
-                   return yScale(d.last_name);
-                  }) 
+      .attr("y", d => yScale(d.index))
       .attr("height", yScale.bandwidth())
       .attr("ry", "4")
       .transition(t)
@@ -156,18 +156,31 @@ class TeamCompareChart extends Chart {
         .attr("opacity", 1);
 
     // Average Line Label
-    line
-      .append("text")
-      .attr("class", "averageLabel")
-      .attr("text-anchor", "none")
-      .attr("x", 10)
-      .attr("y", yScale.bandwidth() / 2)
-      .text("Average "+ average + " (" + scoreType + " score)")
-      .attr("opacity", 0)
-      .transition(t)
-        .delay(400)
-        .attr("x", scoreVal + 10)
-        .attr("opacity", 1);
-    } //end update    ///////////////////////////////////////////////////////////
+    if (values.length) {
+        line
+            .append("text")
+            .attr("class", "averageLabel")
+            .attr("text-anchor", "none")
+            .attr("x", 10)
+            .attr("y", yScale.bandwidth() / 2)
+            .text("Average " + average + " (" + scoreType + " score)")
+            .attr("opacity", 0)
+            .transition(t)
+            .delay(400)
+            .attr("x", scoreVal + 10)
+            .attr("opacity", 1);
+      } else {
+        line
+            .append("text")
+            .attr("class", "rt-noData")
+            .attr("y", (svg_height / 2) - 50)
+            .attr("x", (svg_width / 2) - 100)
+            .attr("dy", "1em")
+            .attr("fill", "rgba(0,0,0,0.5)")
+            .attr("style", "text-anchor: middle")
+            .text("No Data To Display")
+
+      }
+    }
 }
 export default TeamCompareChart;

@@ -21,7 +21,8 @@ export default class TeamTestsPrScoreContainer extends Container {
         // pop and store the "Team Average" - last element
         const average = allData.length ? allData.pop()[selectedPropName] : {};
 
-        allData = allData.map(r => Object.assign(r, {thisScore: r[selectedPropName]}));
+        // important - dont sort beyond this point! will mix up graph
+        allData = allData.map((r, i) => Object.assign(r, {thisScore: r[selectedPropName], index: i}));
 
         const quartiles = ({
                 total: {q1: 695, median: 765, q3: 845, max: 1400},
