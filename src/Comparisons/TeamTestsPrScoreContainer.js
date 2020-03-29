@@ -22,7 +22,7 @@ export default class TeamTestsPrScoreContainer extends Container {
         // var typeData = [];
         // var totalData = [];
 
-        let allData = state.submissions || [];
+        let allData = [...state.submissions] || [];
 
         // pop and store the "Team Average" - last element
         const average = allData.length ? allData.pop()[selectedPropName] : {};
