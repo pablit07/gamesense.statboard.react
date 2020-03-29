@@ -3,11 +3,11 @@ import * as d3 from 'd3';
 import Chart from "./Chart";
 
 class LegendHoriz extends Chart {
-    addChartLayer({svg, xPos, spacing, svg_width, textColor}) {
+    addChartLayer({svg, xPos, spacing, svg_width, textColor, textLabel}) {
 
         textColor = textColor || "black";
         var colors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574"];
-        var textLabel = ["Quartiles:"];
+        textLabel = [textLabel || "Quartiles:"];
         colors = colors.reverse();
 
         var width = svg_width || 680,
@@ -52,9 +52,9 @@ class LegendHoriz extends Chart {
             .text(function(d, i) {
                 switch (i) {
                     case 0: return "Lowest";
-                    case 1: return "Top 25%";
+                    case 1: return "Top 75%";
                     case 2: return "Top 50%";
-                    case 3: return "Top 75%";
+                    case 3: return "Top 25%";
                 }
             });
 

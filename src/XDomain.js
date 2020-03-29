@@ -14,6 +14,10 @@ import DrillDetailsContainer from "./DrillDetails/DrillDetailsContainer";
 import HorizontalQuartile from "./Components/Charts/HorizontalQuartileChart";
 import {Table} from "./Components/Table";
 import PassThruContainer from "./Comparisons/PassThruContainer";
+import TeamTestsPrScoreContainer from "./Comparisons/TeamTestsPrScoreContainer";
+import RadioButtons from "./Buttons/RadioButtons";
+import LegendHoriz from "./Components/Charts/LegendHoriz";
+import TeamCompareChart from "./Components/Charts/TeamCompareChart";
 
 
 const TimeSeriesPickList = ({dispatch}) => (<PickList
@@ -92,6 +96,33 @@ const HorizontalQuartileChart = ({q1, median, q3, max, userScore, textColor}) =>
 };
 
 
+const TeamTestsPrScoreWelcomeChart = ({username, app, token}) => {
+
+    const ChartHeader = props =>
+         (<div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
+            <h3>Team Test Scores</h3>
+            <PassThruContainer>
+                <LegendHoriz svg_width={490} textLabel={' '} />
+            </PassThruContainer>
+            <RadioButtons
+                handleSelect={props.handleSelect}
+                options={ [{name:'Type',value:'type'},{name:'Location',value:'location'},{name:'Total',value:'total'}] }
+                initSelectedOption={'total'} />
+        </div>);
+
+    return (<TeamTestsPrScoreContainer socket={createSocket(username, app, token)}>
+                <ChartHeader/>
+            <TeamCompareChart svg_width={785} svg_height={450}/>
+        </TeamTestsPrScoreContainer>);
+};
 
 
-export {React, render, CoachReport, DrillBreakdown, PlayerUseOverTimeWelcomeChart, HorizontalQuartileChart};
+export {
+    React,
+    render,
+    CoachReport,
+    DrillBreakdown,
+    PlayerUseOverTimeWelcomeChart,
+    HorizontalQuartileChart,
+    TeamTestsPrScoreWelcomeChart
+};

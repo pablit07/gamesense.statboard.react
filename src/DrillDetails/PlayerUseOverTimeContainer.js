@@ -45,7 +45,6 @@ export default class PlayerUseOverTimeContainer extends Container {
 
         state.submissions = state.submissions.slice(Math.max(state.submissions.length - 24, 0))
             .sort((l, r) => {
-                console.log(l, r)
                 if (l.year !== r.year) {
                     return l.year - r.year;
                 } else {

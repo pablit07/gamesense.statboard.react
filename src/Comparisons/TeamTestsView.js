@@ -7,6 +7,7 @@ import RadioButtons from "../Buttons/RadioButtons";
 import HorizontalQuartileChart from "../Components/Charts/HorizontalQuartileChart";
 import LegendHoriz from "../Components/Charts/LegendHoriz";
 import ComparisonChartContainer from "./ComparisonContainer";
+import PassThruContainer from "./PassThruContainer";
 
 class TeamTestsView extends Component {
 
@@ -20,13 +21,19 @@ class TeamTestsView extends Component {
             <h4 style={style}>TeamTestView</h4>
 
             <TeamTestsPrScoreContainer socket={this.props.socket}>
-              <RadioButtons
-                  options={ [{name:'Type',value:'type'},{name:'Location',value:'location'},{name:'Total',value:'total'}] }
-                  initSelectedOption={'total'} />
+                <div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
+                    <PassThruContainer>
+                      <LegendHoriz svg_width={590} />
+                    </PassThruContainer>
+                    <RadioButtons
+                        options={ [{name:'Type',value:'type'},{name:'Location',value:'location'},{name:'Total',value:'total'}] }
+                        initSelectedOption={'total'} />
+                </div>
               <br />
-              <LegendHoriz />
-              <TeamCompareChart svg_width={785} svg_height={450}/>   
+              <TeamCompareChart svg_width={785} svg_height={450}/>
             </TeamTestsPrScoreContainer>
+
+            <br />
 
             <ComparisonChartContainer socket={this.props.socket}>
               <HorizontalQuartileChart  svg_width={595} svg_height= {90}/>

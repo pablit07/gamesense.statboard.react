@@ -25,7 +25,7 @@ class TeamCompareChart extends Chart {
 
   let yAxis = d3.axisLeft(yScale)
       .tickSizeOuter(axisTicks.outerSize)
-      .tickFormat((d, i) => values[i].last_name);
+      .tickFormat((d, i) => values[i].display_name);
 
   let xAxis = d3
     .axisBottom(xScale)
