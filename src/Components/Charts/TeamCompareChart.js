@@ -275,6 +275,7 @@ class TeamCompareChart extends Chart {
       .attr("opacity", 0)
       .transition(t)
         .delay(650)
+        .ease(d3.easeBounce)
         .attr("x1", scoreVal)
         .attr("x2", scoreVal)
         .attr("opacity", 1);
