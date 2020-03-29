@@ -5,7 +5,7 @@ export default class TeamTestsPrScoreContainer extends Container {
     constructor(props) {
         super(props);
         this.state.submissions = [];
-        this.state.selectedScore = 2;
+        this.state.selectedScore = 'total';
     }
 
     getRoutingKey() {
@@ -13,10 +13,7 @@ export default class TeamTestsPrScoreContainer extends Container {
     }
 
     mapStateToProps(state) {
-        // radio buttons will choose later ...
-        // For testing, set 0, 1 or 2 ...
-        const scoreTypes = ["location", "type", "total"];
-        const scoreType = scoreTypes[this.state.selectedScore]; // 'location' for now
+        const scoreType = this.state.selectedScore;
         const selectedPropName = `first_glance_${scoreType}_score`;
 
         // ToDo: Put this in a function in a different file ...
@@ -28,7 +25,7 @@ export default class TeamTestsPrScoreContainer extends Container {
         let allData = state.submissions || [];
 
         // pop and store the "Team Average" - last element
-        const average = allData && allData.length ? allData.pop()[selectedPropName] : {};
+        const average = allData.length ? allData.pop()[selectedPropName] : {};
 
         allData = allData.map(r => Object.assign(r, {thisScore: r[selectedPropName]}));
 
@@ -43,7 +40,8 @@ export default class TeamTestsPrScoreContainer extends Container {
             scoreType,
             average,
             quartiles,
-            values: allData
+            values: allData,
+            handleSelect: v => this.setState({selectedScore: v})
         };
     }
 }

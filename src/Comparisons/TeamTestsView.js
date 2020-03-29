@@ -14,16 +14,15 @@ class TeamTestsView extends Component {
 
         let style = {marginLeft: '3.3rem'};
 
-        function handleSelect(v) {
-            alert('it worked: ' + v)
-        };
 
         return (<Fragment>
 
             <h4 style={style}>TeamTestView</h4>
 
             <TeamTestsPrScoreContainer socket={this.props.socket}>
-              <RadioButtons options={ [{name:'Type', value:'type'}, {name:'Location', value:'location'}, {name:'Total', value:'total'}] } initSelectedOption={'type'} handleSelect={handleSelect} />
+              <RadioButtons
+                  options={ [{name:'Type', value:'type'}, {name:'Location', value:'location'}, {name:'Total', value:'total'}] }
+                  initSelectedOption={'total'} />
               <br />
               <LegendHoriz />
               <TeamCompareChart svg_width={785} svg_height={450}/>   
