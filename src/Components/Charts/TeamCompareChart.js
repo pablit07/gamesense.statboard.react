@@ -3,114 +3,8 @@ import * as d3 from "d3";
 import Chart from "./Chart";
 
 class TeamCompareChart extends Chart {
-  addChartLayer({ svg, values, svg_width, svg_height, textColor, quarstotal, quarstype, quarslocation}) {
+  addChartLayer({ svg, values, svg_width, svg_height, textColor, quartiles, average, scoreType}) {
 
-  // radio buttons will choose later ...
-  // For testing, set 0, 1 or 2 ...
-  var selectedScore = 2 // this will be 0, 1, 2 as set by radio buttons
-  var scoreTypes = ["location", "type", "total"];
-  var scoreType = scoreTypes[selectedScore]; // 'location' for now
-
-  console.log("-------------quarstotal---------------");
-  console.log(quarstotal);
-  console.log("-------------quarstype---------------");
-  console.log(quarstype); 
-  console.log("-------------quarslocation---------------");
-  console.log(quarslocation);
-
-  var data = this.props.values;
-  console.log("============== And the values are ... ===========");
-  console.log(data);
-
-  // ToDo: Put this in a function in a different file ...
-  // split up data into {first_name: "", last_name: "", score: "<relevant_score>"}
-  // var locationData = [];
-  // var typeData = [];
-  // var totalData = [];
-
-  var allData = this.props.values;
-  
-  // pop and store the "Team Average" - last element
-  var bummer = allData.pop();
-  console.log("----------- bummer teamAverages -------");
-  console.log(bummer); // works fine, `bummer` exists, is not undefined
-  // now try to get values from `bummer`
-      // var lastName =  bummer.last_name   //expect "Average" 
-      // console.log(lastName);  //ERROR TypeError: Cannot read property 'last_name' of undefined
-  console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-  console.log("----------- hard-coded teamAverages -------");
-  //So, until above is fixed, hard-code the teamAverages
-  var teamAverages = {
-    first_name: "Team",
-    last_name: "Average",
-    first_glance_location_score: 341.11,
-    first_glance_type_score: 325,
-    first_glance_total_score: 776.94 };
-
-  console.log(teamAverages);
-
-  
-  var locationData = [];
-  for (let i = 0; i < allData.length; i += 1) {
-    let tmp = {};
-    for (let key in allData[i]) {
-      if (key === "last_name") {
-        tmp.first_name = allData[i].first_name;
-      }
-      if (key === "first_name") {
-        tmp.last_name = allData[i].last_name;
-      }
-      if (key === "first_glance_location_score") {
-        tmp.thisScore = allData[i].first_glance_location_score;
-      }
-    }
-    locationData.push(tmp);
-  }
-
-  var typeData = [];
-  for (let i = 0; i < allData.length; i += 1) {
-    let tmp = {};
-    for (let key in allData[i]) {
-      if (key === "first_name") {
-        tmp.first_name = allData[i].first_name;
-      }
-      if (key === "last_name") {
-        tmp.last_name = allData[i].last_name;
-        if (allData[i].last_name === "") {
-          tmp.last_name = "unknown";
-        }
-      }
-      if (key === "first_glance_type_score") {
-        tmp.thisScore = allData[i].first_glance_type_score;
-      }
-    }
-    typeData.push(tmp);
-  }
-
-  var totalData = [];
-  for (let i = 0; i < allData.length; i += 1) {
-    let tmp = {};
-    for (let key in allData[i]) {
-      if (key === "first_name") {
-        tmp.first_name = allData[i].first_name;
-      }
-      if (key === "last_name") {
-        tmp.last_name = allData[i].last_name;
-      }
-      if (key === "first_glance_total_score") {
-        tmp.thisScore = allData[i].first_glance_total_score;
-      }
-    }
-    totalData.push(tmp);
-  }
-
-  console.log("---------locationData---------");
-  console.log(locationData);
-  console.log("--------typeData----------");
-  console.log(typeData);
-  console.log("---------totalData---------");
-  console.log(totalData);
-  console.log("------------------");
 
   svg_width = svg_width || 625;
   svg_height = svg_height || 575;
@@ -159,46 +53,27 @@ class TeamCompareChart extends Chart {
   //   .attr("transform", "translate(15," +  (height+margin.bottom)/2 + ") rotate(-90)")
   //   .text("Player");
 
-  // update with proper data ...
-  changeData(scoreType);
 
-  function changeData(value) {
-    //function for toggling between data
-    var locationAvg = teamAverages.first_glance_location_score;
-    var typeAvg = teamAverages.first_glance_type_score;
-    var totalAvg =  teamAverages.first_glance_total_score;
-    console.log('//////////////////////////////////////////')
-    console.log(locationAvg);
 
-    if (value === "location") {
-      update(locationData, locationAvg, quarslocation);// Avg is lame hard code, should come from popped value
-    } else if (value === "type") {
-      update(typeData, typeAvg, quarstype); 
-    } else {
-      update(totalData, totalAvg, quarstotal); 
-    }
-  }
-
-  // Update chart with chosen data ////////////////////////////////////////////////////////
-  function update(data, average, quartiles) {
+    // Update chart with chosen data ////////////////////////////////////////////////////////
     // get max and min score values for current data ...
-    var scoreMax = d3.max(data, d => d.thisScore);
-    var scoreMin = d3.min(data, d => d.thisScore);
+    var scoreMax = d3.max(values, d => d.thisScore);
+    var scoreMin = d3.min(values, d => d.thisScore);
 
     //set domain for the x axis
     xScale.domain([scoreMin * 0.95, scoreMax * 1.1]);
 
     //set domain for y axis
-    yScale.domain(data.map(d => d.last_name)); // Y-value labels: Player's name
+    yScale.domain(values.map(d => d.last_name)); // Y-value labels: Player's name
 
     const t = d3.transition().duration(500); 
     // transition time 500 ms.
 
-	 //select all bars on the graph, remove them, call .exit() to clear previous data set. 
+	 //select all bars on the graph, remove them, call .exit() to clear previous data set.
 	 //then add/enter the new data set
     var bars = chart
       .selectAll("last_name")
-      .data(data)
+      .data(values)
       .enter()
       .append("g")
       .attr("class", "last_name")
@@ -213,7 +88,7 @@ class TeamCompareChart extends Chart {
           .remove()
           .exit()
           .data(d => [d])
-    //now give each rectangle the corresponding data and color      
+    //now give each rectangle the corresponding data and color
       .enter()
       .append("rect")
       .attr("class", "bar")
@@ -294,6 +169,5 @@ class TeamCompareChart extends Chart {
         .attr("x", scoreVal + 10)
         .attr("opacity", 1);
     } //end update    ///////////////////////////////////////////////////////////
-  }
 }
 export default TeamCompareChart;
