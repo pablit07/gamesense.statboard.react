@@ -8,7 +8,7 @@ class TeamCompareChart extends Chart {
 
   // radio buttons will choose later ...
   // For testing, set 0, 1 or 2 ...
-  var selectedScore = 1 // this will be 0, 1, 2 as set by radio buttons
+  var selectedScore = 2 // this will be 0, 1, 2 as set by radio buttons
   var scoreTypes = ["location", "type", "total"];
   var scoreType = scoreTypes[selectedScore]; // 'location' for now
 
@@ -172,16 +172,16 @@ class TeamCompareChart extends Chart {
     console.log(locationAvg);
 
     if (value === "location") {
-      update(locationData, locationAvg);// Avg is lame hard code, should come from popped value
+      update(locationData, locationAvg, quarslocation);// Avg is lame hard code, should come from popped value
     } else if (value === "type") {
-      update(typeData, typeAvg); 
+      update(typeData, typeAvg, quarstype); 
     } else {
-      update(totalData, totalAvg); 
+      update(totalData, totalAvg, quarstotal); 
     }
   }
 
   // Update chart with chosen data ////////////////////////////////////////////////////////
-  function update(data, average) {
+  function update(data, average, quartiles) {
     // get max and min score values for current data ...
     var scoreMax = d3.max(data, d => d.thisScore);
     var scoreMin = d3.min(data, d => d.thisScore);
@@ -228,9 +228,9 @@ class TeamCompareChart extends Chart {
       .attr("height", yScale.bandwidth())
       .attr("ry", "4")
       .style("fill", function(d) {
-          if (d.thisScore <= quarstype.q1) {return qColors[0]}
-          else if (d.thisScore <= quarstype.median){return qColors[1]}
-          else if (d.thisScore <= quarstype.q3){return qColors[2]}
+          if (d.thisScore <= quartiles.q1) {return qColors[0]}
+          else if (d.thisScore <= quartiles.median){return qColors[1]}
+          else if (d.thisScore <= quartiles.q3){return qColors[2]}
           else {return qColors[3]};
       })
 

@@ -1,16 +1,3 @@
-/* 5 props to this component. 
-  - label -> label text, 
-  - value -> setting the value of the input element ??
-  - id -> unique ID
-  - isSelected -> boolean value; controls which radio button should be selected
-  - changed props -> function to fire every time radio button is changed
-
-The changed props is a function. This function will fire every time the radio button is changed.
-In vanilla JS this would be the callback function we pass to the addEventListener.
-The event we’re listening for here is the onChange. Assign the props.changed
- to onChange event.
-*/
-
 import React, { useState } from "react";
 
 const RadioButtons = ({options, initSelectedOption, handleSelect, inputName = null}) => {
