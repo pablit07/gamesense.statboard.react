@@ -187,19 +187,12 @@ class TeamCompareChart extends Chart {
 
     //set domain for the x axis
     xScale.domain([scoreMin * 0.95, scoreMax * 1.1]);
-    //xScale.domain([scoreMin * 0.95, 1000]);
 
     //set domain for y axis
     yScale.domain(data.map(d => d.last_name)); // Y-value labels: Player's name
 
-    //select all bars on the graph, take them out, and exit the previous data set.
-    //then can add/enter the new data set
-
-    //var bars = svg.selectAll(".bar")
-    //     .remove()
-    //     .exit()
-    //     .data(d => [d])
-
+	 //select all bars on the graph, remove them, call .exit() to clear previous data set. 
+	 //then add/enter the new data set
     var bars = chart
       .selectAll("last_name")
       .data(data)
@@ -207,32 +200,34 @@ class TeamCompareChart extends Chart {
       .append("g")
       .attr("class", "last_name")
       .attr("transform", `translate(${margin.left}, 0)`);
-
-    //now give each rectangle the corresponding data and color
+ 
     /* Add score bars */
-    // Get the proper fillColor based on score in Quartile Range. 
+    // these are the Quartile Range colors. 
     var qColors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574"];
+
     bars
-      .selectAll("rect")
-      .data(d => [d])
+      .selectAll(".bar")
+          .remove()
+          .exit()
+          .data(d => [d])
+    //now give each rectangle the corresponding data and color      
       .enter()
       .append("rect")
       .attr("class", "bar")
       .attr("x", 0)
       .attr("width", d => xScale(d.thisScore))
-
       .attr("y", function(d) {
-        return yScale(d.last_name);
-      }) //return athe
+                   return yScale(d.last_name);
+                  }) 
       .attr("height", yScale.bandwidth())
       .attr("ry", "4")
+      // set the proper fillColor based on score in Quartile Range. 
       .style("fill", function(d) {
           if (d.thisScore <= quartiles.q1) {return qColors[0]}
           else if (d.thisScore <= quartiles.median){return qColors[1]}
           else if (d.thisScore <= quartiles.q3){return qColors[2]}
           else {return qColors[3]};
       })
-
       .style("stroke", "black")
       .style("stroke-width", 0.7)
       .attr("opacity", 1.0);
