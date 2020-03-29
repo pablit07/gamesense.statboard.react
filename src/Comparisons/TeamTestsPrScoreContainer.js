@@ -24,7 +24,7 @@ export default class TeamTestsPrScoreContainer extends Container {
         allData = allData.map(r => Object.assign(r, {thisScore: r[selectedPropName]}));
 
         const quartiles = ({
-                total: {q1: 695, median: 765, q3: 845, max: 1400, userScore: 832},
+                total: {q1: 695, median: 765, q3: 845, max: 1400},
                 type: {q1: 290, median: 320, q3: 360, max: 560},
                 location: {q1: 310, median: 340, q3: 390, max: 560}
             })[scoreType];
