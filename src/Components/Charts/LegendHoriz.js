@@ -7,6 +7,7 @@ class LegendHoriz extends Chart {
 
         textColor = textColor || "black";
         var colors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574"];
+        var textLabel = ["Quartiles:"];
         colors = colors.reverse();
 
         var width = svg_width || 680,
@@ -56,6 +57,20 @@ class LegendHoriz extends Chart {
                     case 3: return "Top 75%";
                 }
             });
+
+        var label = legendSvg.selectAll("label")
+            .data(textLabel)
+            .enter()
+            label.append("text")
+            .attr("class", "legend")
+            .attr('fill', textColor)
+            .attr("x", -14)
+            .attr("y", 13)
+            .attr("dy", ".35em")
+            .style("text-anchor", "end")
+            .style("font-weight",600)
+            .style("font-size", "16px")
+            .text(textLabel)
 
     }
 }

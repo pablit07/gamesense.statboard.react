@@ -7,7 +7,7 @@ class TeamCompareChart extends Chart {
 
   // radio buttons will choose later ...
   // For testing, set 0, 1 or 2 ...
-  var selectedScore = 0 // this will be 0, 1, 2 as set by radio buttons
+  var selectedScore = 2 // this will be 0, 1, 2 as set by radio buttons
   var scoreTypes = ["location", "type", "total"];
   var scoreType = scoreTypes[selectedScore]; // 'location' for now
 
