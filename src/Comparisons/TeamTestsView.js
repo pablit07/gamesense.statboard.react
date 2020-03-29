@@ -23,14 +23,21 @@ class TeamTestsView extends Component {
             <h4 style={style}>TeamTestView</h4>
 
             <TeamTestsPrScoreContainer socket={this.props.socket}>
-
               <RadioButtons options={ [{name:'Type', value:'type'}, {name:'Location', value:'location'}, {name:'Total', value:'total'}] } initSelectedOption={'type'} handleSelect={handleSelect} />
               <br />
-              <TeamCompareChart svg_width={385} svg_height={160}/>
-          
+              <LegendHoriz />
+              <TeamCompareChart svg_width={785} svg_height={450}/>   
             </TeamTestsPrScoreContainer>
 
+            <ComparisonChartContainer socket={this.props.socket}>
+              <HorizontalQuartileChart  svg_width={595} svg_height= {90}/>
+              
+            </ComparisonChartContainer>
+            <br />
+            <h1>=======>       Yay! </h1>
+
         </Fragment>)
+        
     }
 }
 
