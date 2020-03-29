@@ -1,0 +1,61 @@
+import React, { Component, Fragment } from "react";
+
+import TeamTestsPrScoreContainer from "./TeamTestsPrScoreContainer";
+import TeamCompareChart from "../Components/Charts/TeamCompareChart";
+import RadioButtons from "../Buttons/RadioButtons";
+
+<<<<<<< HEAD
+import HorizontalQuartileChart from "../Components/Charts/HorizontalQuartileChart";
+import LegendHoriz from "../Components/Charts/LegendHoriz";
+import ComparisonChartContainer from "./ComparisonContainer";
+
+class TeamTestsView extends Component {
+  render() {
+    let style = { marginLeft: "3.3rem" };
+    return (
+      <Fragment>
+        <h4 style={style}>TeamTestView</h4>
+
+        <TeamTestsPrScoreContainer socket={this.props.socket}>
+          <RadioButton />
+          <br />
+          <LegendHoriz />
+          <TeamCompareChart svg_width={685} svg_height={400} />
+          <br />
+        </TeamTestsPrScoreContainer>
+
+        <ComparisonChartContainer socket={this.props.socket}>
+          <HorizontalQuartileChart svg_width={700} svg_height={100} />
+        </ComparisonChartContainer>
+      </Fragment>
+    );
+  }
+=======
+class TeamTestsView extends Component {
+
+    render() {
+
+        let style = {marginLeft: '3.3rem'};
+
+        function handleSelect(v) {
+            alert('it worked: ' + v)
+        };
+
+        return (<Fragment>
+
+            <h4 style={style}>TeamTestView</h4>
+
+            <TeamTestsPrScoreContainer socket={this.props.socket}>
+
+              <RadioButtons options={ [{name:'Type', value:'type'}, {name:'Location', value:'location'}, {name:'Total', value:'total'}] } initSelectedOption={'type'} handleSelect={handleSelect} />
+              <br />
+              <TeamCompareChart svg_width={385} svg_height={160}/>
+          
+            </TeamTestsPrScoreContainer>
+
+        </Fragment>)
+    }
+>>>>>>> 1250626268a347a0cf873e632372790398647ff0
+}
+
+export default TeamTestsView;
