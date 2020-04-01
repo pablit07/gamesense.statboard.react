@@ -83,14 +83,8 @@ class TeamCompareChart extends Chart {
  
     /* Add score bars */
     // these are the Quartile Range colors. 
-    //const qColors = ["#d50300", "#f55925", "#f2b447", "#49b809"];
-    var qColors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
+    const qColors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
 
-    // "#f2b447". "#d25c4d", "#b33040"
-    
-    //Alternative more saturated colors
-    // const qColors = ["#d50300", "#ffa500", "#f7ed01", "#98ca30"];
-   
     bars
       .selectAll(".bar")
           .remove()
