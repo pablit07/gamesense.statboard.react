@@ -1,15 +1,11 @@
 svg {
-  font: 14px sans-serif;
+  font: 15px sans-serif;
   shape-rendering: crispEdges;
 }
 
 /* AverageLine Label */
 .averageLabel {
   fill: #034955;
-}
-
-.bar {
-  stroke: black;
 }
 
 .xAxisTC {}
@@ -19,7 +15,7 @@ svg {
 }
 
 .xAxisTC {
-  font: 14px sans-serif;
+  font: 12px sans-serif;
 }
 
 .xAxisTC path,
@@ -27,11 +23,11 @@ svg {
   fill: none;
   stroke: darkslategrey;
   shape-rendering: crispEdges;
-  stroke-width: 2px;
+  stroke-width: 1px;
 }
 
 .yAxisTC {
-  font: 14px sans-serif;
+  font: 12px sans-serif;
 }
 
 .yAxisTC path,
@@ -39,5 +35,5 @@ svg {
   fill: none;
   stroke: darkslategrey;
   shape-rendering: crispEdges;
-  stroke-width: 2px;
+  stroke-width: 1px;
 }

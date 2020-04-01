@@ -42,8 +42,7 @@ class HorizontalQuartileChart extends Chart {
                 q3: q3-median,
                 max: max-q3 }
         ];
-
-        var colors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574"];
+        var colors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
         const t = d3.transition().duration(1000);
 /////////////
 // Adopted from: https://bl.ocks.org/d3indepth/30a7091e97b03eeba2a6a3ca1067ca92

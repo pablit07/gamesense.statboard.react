@@ -6,7 +6,8 @@ class LegendHoriz extends Chart {
     addChartLayer({svg, xPos, spacing, svg_width, textColor, textLabel}) {
 
         textColor = textColor || "black";
-        var colors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574"];
+
+        var colors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
         textLabel = [textLabel || "Quartiles:"];
         colors = colors.reverse();
 

@@ -19,7 +19,7 @@ class TeamCompareChart extends Chart {
   let yScale = d3
     .scaleBand()
     .range([height - margin.top - margin.bottom, 0])
-    .padding(.08);
+    .padding(.1);
 
   const gameSenseColors = ["#505252","#94a4a5","#ffffff","#70bf57","#0db688","#eae34c"];
 
@@ -40,7 +40,7 @@ class TeamCompareChart extends Chart {
       .attr("y", 0)
       .attr("height", height)
       .attr("fill", "lightgray")
-      .attr("opacity", 0.3);
+      .attr("opacity", 0.1);
 
   // chart group 'g'
   let chart = svg
@@ -83,8 +83,14 @@ class TeamCompareChart extends Chart {
  
     /* Add score bars */
     // these are the Quartile Range colors. 
-    const qColors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574"];
+    //const qColors = ["#d50300", "#f55925", "#f2b447", "#49b809"];
+    var qColors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
 
+    // "#f2b447". "#d25c4d", "#b33040"
+    
+    //Alternative more saturated colors
+    // const qColors = ["#d50300", "#ffa500", "#f7ed01", "#98ca30"];
+   
     bars
       .selectAll(".bar")
           .remove()
@@ -98,7 +104,7 @@ class TeamCompareChart extends Chart {
       .attr("width", d => 0)
       .attr("y", d => yScale(d.index))
       .attr("height", yScale.bandwidth())
-      .attr("ry", "4")
+      //  .attr("ry", "2")
       .transition(t)
           .attr("width", d => xScale(d.thisScore))
 
@@ -109,8 +115,8 @@ class TeamCompareChart extends Chart {
           else if (d.thisScore <= quartiles.q3){return qColors[2]}
           else {return qColors[3]};
       })
-      .style("stroke", "black")
-      .style("stroke-width", 0.7)
+      // .style("stroke", "black")
+      // .style("stroke-width", 1)
       .attr("opacity", 1.0);
     // TODO Add text to bars
 
@@ -162,7 +168,7 @@ class TeamCompareChart extends Chart {
             .attr("class", "averageLabel")
             .attr("text-anchor", "none")
             .attr("x", 10)
-            .attr("y", yScale.bandwidth() / 2)
+            .attr("y", yScale.bandwidth() / 1.35)
             .text("Average " + average + " (" + scoreType + " score)")
             .attr("opacity", 0)
             .transition(t)
