@@ -26,11 +26,12 @@ class TeamTestsView extends Component {
                       <LegendHoriz svg_width={590} />
                     </PassThruContainer>
                     <RadioButtons
+                        handleSelect={this.props.handleSelect}
                         options={ [{name:'Type',value:'type'},{name:'Location',value:'location'},{name:'Total',value:'total'}] }
                         initSelectedOption={'total'} />
                 </div>
               <br />
-              <TeamCompareChart svg_width={785} svg_height={450}/>
+              <TeamCompareChart svg_width={700} svg_height={400}/>
             </TeamTestsPrScoreContainer>
 
             <br />

@@ -3,15 +3,30 @@ svg {
   shape-rendering: crispEdges;
 }
 
+text {
+  font-size: 12px;
+  fill: #fff;
+}
+
 /* AverageLine Label */
 .averageLabel {
-  fill: #034955;
+  fill: #fff;
+  color: white;
+}
+
+path {
+  stroke: gray;
+}
+
+line {
+  stroke: gray;
 }
 
 .xAxisTC {}
 
 .bar:hover {
   fill: #6fbf57;
+  stroke: gray;
 }
 
 .xAxisTC {

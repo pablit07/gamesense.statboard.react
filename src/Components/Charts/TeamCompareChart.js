@@ -9,7 +9,7 @@ class TeamCompareChart extends Chart {
   svg_width = svg_width || 625;
   svg_height = svg_height || 575;
   //set up chart
-  let margin = { top: 15, right: 5, bottom: 35, left: 50 },
+  let margin = { top: 30, right: 5, bottom: 35, left: 50},
     width = svg_width - margin.left - margin.right,
     height = svg_height - margin.top - margin.bottom,
     axisTicks = { qty: 7 };
@@ -19,7 +19,7 @@ class TeamCompareChart extends Chart {
   let yScale = d3
     .scaleBand()
     .range([height - margin.top - margin.bottom, 0])
-    .padding(.1);
+    .padding(.2);
 
   const gameSenseColors = ["#505252","#94a4a5","#ffffff","#70bf57","#0db688","#eae34c"];
 
@@ -39,8 +39,9 @@ class TeamCompareChart extends Chart {
       .attr("width", width)
       .attr("y", 0)
       .attr("height", height)
-      .attr("fill", "lightgray")
-      .attr("opacity", 0.1);
+      // .attr("fill", "lightgray")
+      .attr("fill", "#2f4a6d")
+      .attr("opacity", 1);
 
   // chart group 'g'
   let chart = svg
@@ -107,11 +108,12 @@ class TeamCompareChart extends Chart {
           if (d.thisScore <= quartiles.q1) {return qColors[0]}
           else if (d.thisScore <= quartiles.median){return qColors[1]}
           else if (d.thisScore <= quartiles.q3){return qColors[2]}
-          else {return qColors[3]};
+          else {return qColors[3]}
       })
       // .style("stroke", "black")
       // .style("stroke-width", 1)
       .attr("opacity", 1.0);
+
     // TODO Add text to bars
 
     // Add the X Axis
@@ -133,20 +135,22 @@ class TeamCompareChart extends Chart {
 
     // Average Line
     let scoreVal = xScale(average);
-
+    let pushUpAveLine = 18;
     let line = chart
       .append("g")
-      .attr("transform", `translate(${margin.left}, 0)`);
+      .attr("transform", `translate(${margin.left}, -${pushUpAveLine})`);
 
-    line
+    
+      line
       .append("line")
       .style("stroke", "#116979")
-      .style("stroke-width", 8)
-      .style("stroke-dasharray", "20, 3")
+      .style("stroke-width", 6)
+      .style("stroke-dasharray", "22, 4")
+      .style("stroke","#c6e9f0")
       .attr("x1", 0)
       .attr("y1", 0)
       .attr("x2", 0)
-      .attr("y2", height - margin.bottom - margin.top)
+      .attr("y2", height - margin.bottom - margin.top + pushUpAveLine)
       .attr("opacity", 0)
       .transition(t)
         .delay(650)
@@ -162,13 +166,15 @@ class TeamCompareChart extends Chart {
             .attr("class", "averageLabel")
             .attr("text-anchor", "none")
             .attr("x", 10)
-            .attr("y", yScale.bandwidth() / 1.35)
+            .attr("y", yScale.bandwidth() * .5)
             .text("Average " + average + " (" + scoreType + " score)")
+            .style("font-size",  "15px")
+            .style("fill", "#c6e9f0")
             .attr("opacity", 0)
             .transition(t)
-            .delay(400)
-            .attr("x", scoreVal + 10)
-            .attr("opacity", 1);
+              .delay(400)
+              .attr("x", scoreVal + 10)
+              .attr("opacity", 1);
       } else {
         line
             .append("text")
