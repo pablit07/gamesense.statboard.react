@@ -44,7 +44,7 @@ class TeamCompareChart extends Chart {
       .attr("opacity", 1);
 
   // chart group 'g'
-  let chart = svg
+  const chart = svg
     .attr("width", svg_width)
     .attr("height", svg_height)
     .append("g")
@@ -56,8 +56,7 @@ class TeamCompareChart extends Chart {
   //   .attr("transform", "translate(15," +  (height+margin.bottom)/2 + ") rotate(-90)")
   //   .text("Player");
 
-
-
+  
     // Update chart with chosen data ////////////////////////////////////////////////////////
     // get max and min score values for current data ...
     let scoreMax = d3.max(values, d => d.thisScore);
@@ -112,25 +111,6 @@ class TeamCompareChart extends Chart {
       // .style("stroke-width", 1)
       .attr("opacity", 1.0);
 
-    // TODO Add text to bars
-
-    // Add the X Axis
-    chart
-      .append("g")
-      .attr("class", "xAxisTC")
-      .attr(
-        "transform",
-        `translate(${margin.left},${height - margin.top - margin.bottom})`
-      )
-      .call(xAxis);
-
-    // Add the Y Axis
-    chart
-      .append("g")
-      .attr("class", "yAxisTC")
-      .attr("transform", `translate(${margin.left}, 0)`)
-      .call(yAxis);
-
     // Average Line
     let scoreVal = xScale(average);
     let pushUpAveLine = 18;
@@ -141,10 +121,9 @@ class TeamCompareChart extends Chart {
     
       line
       .append("line")
-      .style("stroke", "#116979")
       .style("stroke-width", 6)
       .style("stroke-dasharray", "22, 4")
-      .style("stroke","#c6e9f0")
+      .style("stroke","#1c94aa")
       .attr("x1", 0)
       .attr("y1", 0)
       .attr("x2", 0)
@@ -167,7 +146,8 @@ class TeamCompareChart extends Chart {
             .attr("y", yScale.bandwidth() * .5)
             .text("Average " + average + " (" + scoreType + " score)")
             .style("font-size",  "15px")
-            .style("fill", "#c6e9f0")
+            // .style("fill", "#c6e9f0")
+            .style("fill", "#fff")
             .attr("opacity", 0)
             .transition(t)
               .delay(400)
@@ -183,8 +163,63 @@ class TeamCompareChart extends Chart {
             .attr("fill", "rgba(0,0,0,0.5)")
             .attr("style", "text-anchor: middle")
             .text("No Data To Display")
+      }  
 
-      }
+    // Add score labels to bars
+    chart
+    .append("g")
+    .attr("class", "labels")
+
+    let labels = chart
+      .selectAll("labels")
+      .data(values)
+      .enter()
+        .append("g")
+        .attr("class", "last_name")
+        .attr("transform", `translate(${margin.left}, 0)`);
+
+    labels
+      .selectAll("label")
+          .remove()
+          .exit()
+          .data(values)
+    //now give each 'bar' a rectangle the corresponding data and color
+      .enter()
+        .append("text")
+        .text("SNOT")
+        .text(d => d.thisScore)
+    
+        .attr("y", function(d,i){
+          return (yScale(i) + (yScale.bandwidth() / 2)+2);
+        })
+         .attr("x",  xScale(693))
+        .attr("font-family" , "sans-serif")
+        .attr("font-size" , "10px")
+        .attr("fill" , "white")
+        .attr("text-anchor", "right")
+        .attr("opacity", 0)
+        .transition()
+         .duration(1000)
+         .delay(1200)
+          .attr("x", d => xScale(d.thisScore+3))
+          .attr("opacity", 1);
+
+    // Add the X Axis
+    chart
+      .append("g")
+      .attr("class", "xAxisTC")
+      .attr(
+        "transform",
+        `translate(${margin.left},${height - margin.top - margin.bottom})`
+      )
+      .call(xAxis);
+
+    // Add the Y Axis
+    chart
+      .append("g")
+      .attr("class", "yAxisTC")
+      .attr("transform", `translate(${margin.left}, 0)`)
+      .call(yAxis);
     }
 }
 export default TeamCompareChart;

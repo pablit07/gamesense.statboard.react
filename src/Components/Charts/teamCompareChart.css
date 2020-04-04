@@ -1,6 +1,6 @@
 svg {
   font: 15px sans-serif;
-  shape-rendering: crispEdges;
+  shape-rendering: auto;
 }
 
 /* AverageLine Label */
