@@ -69,8 +69,10 @@ class TeamCompareChart extends Chart {
     //set domain for y axis
     yScale.domain(d3.range(values.length)); // Y-value labels: Player's name
 
-    const t = d3.transition().duration(500); 
-    // transition time 500 ms.
+    const t = d3.transition().duration(500);     // transition time 500 ms.
+
+    // these are the Quartile Range colors. 
+    const qColors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
 
 	 //select all bars on the graph, remove them, call .exit() to clear previous data set.
 	 //then add/enter the new data set
@@ -78,30 +80,26 @@ class TeamCompareChart extends Chart {
       .selectAll("last_name")
       .data(values)
       .enter()
-      .append("g")
-      .attr("class", "last_name")
-      .attr("transform", `translate(${margin.left}, 0)`);
+        .append("g")
+        .attr("class", "last_name")
+        .attr("transform", `translate(${margin.left}, 0)`);
  
     /* Add score bars */
-    // these are the Quartile Range colors. 
-    const qColors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
-
     bars
       .selectAll(".bar")
           .remove()
           .exit()
           .data(d => [d])
-    //now give each rectangle the corresponding data and color
+    //now give each 'bar' a rectangle the corresponding data and color
       .enter()
       .append("rect")
-      .attr("class", "bar")
-      .attr("x", 0)
-      .attr("width", d => 0)
-      .attr("y", d => yScale(d.index))
-      .attr("height", yScale.bandwidth())
-      //  .attr("ry", "2")
-      .transition(t)
-          .attr("width", d => xScale(d.thisScore))
+        .attr("class", "bar")
+        .attr("x", 0)
+        .attr("width", d => 0)
+        .attr("y", d => yScale(d.index))
+        .attr("height", yScale.bandwidth())
+        .transition(t)
+            .attr("width", d => xScale(d.thisScore)) 
 
       // set the proper fillColor based on score in Quartile Range. 
       .style("fill", function(d) {
