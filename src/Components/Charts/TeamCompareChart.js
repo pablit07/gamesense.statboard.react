@@ -5,14 +5,13 @@ import Chart from "./Chart";
 class TeamCompareChart extends Chart {
   addChartLayer({ svg, values, svg_width, svg_height, textColor, quartiles, average, scoreType}) {
 
-
   svg_width = svg_width || 625;
   svg_height = svg_height || 575;
   //set up chart
   let margin = { top: 30, right: 5, bottom: 35, left: 50},
     width = svg_width - margin.left - margin.right,
     height = svg_height - margin.top - margin.bottom,
-    axisTicks = { qty: 7 };
+    axisTicks = {qty: 7, outerSize: 0};
 
   let xScale = d3.scaleLinear().range([0, width*.8]);
 
@@ -25,6 +24,7 @@ class TeamCompareChart extends Chart {
 
   let yAxis = d3.axisLeft(yScale)
       .tickSizeOuter(axisTicks.outerSize)
+      .tickSizeInner(2)
       .tickFormat((d, i) => values[i].display_name);
 
   let xAxis = d3
