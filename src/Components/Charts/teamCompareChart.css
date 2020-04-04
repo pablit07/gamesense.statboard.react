@@ -24,7 +24,6 @@ line {
 
 .xAxisTC path,
 .xAxisTC line {
-  /* stroke: rgb(137, 141, 141); */
   shape-rendering: crispEdges;
   stroke-width: 1px;
 }
