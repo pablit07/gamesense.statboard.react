@@ -8,6 +8,7 @@ import HorizontalQuartileChart from "../Components/Charts/HorizontalQuartileChar
 import LegendHoriz from "../Components/Charts/LegendHoriz";
 import ComparisonChartContainer from "./ComparisonContainer";
 import PassThruContainer from "./PassThruContainer";
+import LocVsTypeTeamChart from "../Components/Charts/LocVsTypeTeamChart";
 
 class TeamTestsView extends Component {
 
@@ -15,12 +16,13 @@ class TeamTestsView extends Component {
 
         let style = {marginLeft: '3.3rem'};
 
-
         return (<Fragment>
-
-            <h4 style={style}>TeamTestView</h4>
-
+            <p style={style}>TeamTestView.js</p>
+          
             <TeamTestsPrScoreContainer socket={this.props.socket}>
+                <LocVsTypeTeamChart svg_width={700} svg_height={500}/>
+                <br />
+
                 <div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
                     <PassThruContainer>
                       <LegendHoriz svg_width={590} />
@@ -33,14 +35,6 @@ class TeamTestsView extends Component {
               <br />
               <TeamCompareChart svg_width={700} svg_height={400}/>
             </TeamTestsPrScoreContainer>
-
-            <br />
-
-            <ComparisonChartContainer socket={this.props.socket}>
-              <HorizontalQuartileChart  svg_width={595} svg_height= {90}/>
-              
-            </ComparisonChartContainer>
-            <br />
 
         </Fragment>)
         
