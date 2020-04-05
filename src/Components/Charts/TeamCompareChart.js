@@ -8,12 +8,12 @@ class TeamCompareChart extends Chart {
   svg_width = svg_width || 625;
   svg_height = svg_height || 575;
   //set up chart
-  let margin = { top: 30, right: 5, bottom: 35, left: 50},
+  let margin = { left: 45, right: 5, top: 30, bottom: 35, },
     width = svg_width - margin.left - margin.right,
     height = svg_height - margin.top - margin.bottom,
     axisTicks = {qty: 7, outerSize: 0};
 
-  let xScale = d3.scaleLinear().range([0, width*.8]);
+  let xScale = d3.scaleLinear().range([0, width*.85]);
 
   let yScale = d3
     .scaleBand()
@@ -36,7 +36,7 @@ class TeamCompareChart extends Chart {
   svg
     .append("rect")
       .attr("x", 10)
-      .attr("width", width )
+      .attr("width", svg_width )
       .attr("y", 0)
       .attr("height", height)
       // .attr("fill", "lightgray")
@@ -57,7 +57,7 @@ class TeamCompareChart extends Chart {
     let scoreMin = d3.min(values, d => d.thisScore);
 
     //set domain for the x axis
-    xScale.domain([scoreMin * 0.95, scoreMax * 1.1]);
+    xScale.domain([scoreMin * 0.95, scoreMax * 1.05]);
 
     //set domain for y axis
     yScale.domain(d3.range(values.length)); // Y-value labels: Player's name
@@ -221,11 +221,8 @@ class TeamCompareChart extends Chart {
     //add xAxis label for Score Type
     chart
       .append("text")
-      // .attr("transform", "translate(" + ((svg_width/2 -margin.left)) + "," + (height - margin.bottom) + ")")
       .attr("transform", "translate(" + svg_width*.35 + "," + (height - margin.bottom) + ")")
-      // .text("Total Score")
       .text( " " + scoreType + " score")
-      // .text(" + scoreType + " + score)"
       .style("font-size",  "12px")
       .style("fill", "#fff");
 
