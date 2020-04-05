@@ -36,7 +36,7 @@ class TeamCompareChart extends Chart {
   svg
     .append("rect")
       .attr("x", 10)
-      .attr("width", width)
+      .attr("width",   width )
       .attr("y", 0)
       .attr("height", height)
       // .attr("fill", "lightgray")
@@ -50,13 +50,7 @@ class TeamCompareChart extends Chart {
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  //add yAxis label (if desired)
-  // chart
-  //   .append("text")
-  //   .attr("transform", "translate(15," +  (height+margin.bottom)/2 + ") rotate(-90)")
-  //   .text("Player");
 
-  
     // Update chart with chosen data ////////////////////////////////////////////////////////
     // get max and min score values for current data ...
     let scoreMax = d3.max(values, d => d.thisScore);
@@ -146,7 +140,6 @@ class TeamCompareChart extends Chart {
             .attr("y", yScale.bandwidth() * .5)
             .text("Average " + average + " (" + scoreType + " score)")
             .style("font-size",  "15px")
-            // .style("fill", "#c6e9f0")
             .style("fill", "#fff")
             .attr("opacity", 0)
             .transition(t)
@@ -220,6 +213,26 @@ class TeamCompareChart extends Chart {
       .attr("class", "yAxisTC")
       .attr("transform", `translate(${margin.left}, 0)`)
       .call(yAxis);
+
+    //add yAxis label (if desired)
+    // chart
+    //   .append("text")
+    //   .attr("transform", "translate(15," +  (height+margin.bottom)/2 + ") rotate(-90)")
+    //   .text("Player");
+
+    //add xAxis label for Score Type
+    chart
+      .append("text")
+      // .attr("transform", "translate(" + ((svg_width/2 -margin.left)) + "," + (height - margin.bottom) + ")")
+      .attr("transform", "translate(" + svg_width*.35 + "," + (height - margin.bottom) + ")")
+      // .text("Total Score")
+      .text( " " + scoreType + " score")
+      // .text(" + scoreType + " + score)"
+      .style("font-size",  "12px")
+      .style("fill", "#fff");
+console.log("--------------------------------------------------------------");
+console.log(width/2);
+
     }
 }
 export default TeamCompareChart;

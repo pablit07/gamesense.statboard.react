@@ -17,10 +17,10 @@ class TeamTestsView extends Component {
         let style = {marginLeft: '3.3rem'};
 
         return (<Fragment>
-            <p style={style}>TeamTestView.js</p>
-          
+          <p style={style}>-- Page rendered from: TeamTestView.js --</p>
+          <p style={style}>Location VS. Type Score - Team Comparison Chart</p>
             <TeamTestsPrScoreContainer socket={this.props.socket}>
-                <LocVsTypeTeamChart svg_width={700} svg_height={500}/>
+                {/* <LocVsTypeTeamChart svg_width={700} svg_height={500}/> */}
                 <br />
 
                 <div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
