@@ -36,7 +36,7 @@ class TeamCompareChart extends Chart {
   svg
     .append("rect")
       .attr("x", 10)
-      .attr("width",   width )
+      .attr("width", width )
       .attr("y", 0)
       .attr("height", height)
       // .attr("fill", "lightgray")
@@ -230,8 +230,6 @@ class TeamCompareChart extends Chart {
       // .text(" + scoreType + " + score)"
       .style("font-size",  "12px")
       .style("fill", "#fff");
-console.log("--------------------------------------------------------------");
-console.log(width/2);
 
     }
 }
