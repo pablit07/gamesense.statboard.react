@@ -16,26 +16,28 @@ class TeamTestsView extends Component {
 
         let style = {marginLeft: '3.3rem'};
 
-        return (<Fragment>
-          <p style={style}>-- Page rendered from: TeamTestView.js --</p>
-          <p style={style}>Location VS. Type Score - Team Comparison Chart</p>
-            <TeamTestsPrScoreContainer socket={this.props.socket}>
-                {/* <LocVsTypeTeamChart svg_width={700} svg_height={500}/> */}
-                <br />
-
-                <div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
+        const ChartHeader = props =>
+                (<div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
+                    {/* <h3>Team Test Scores</h3> */}
                     <PassThruContainer>
-                      <LegendHoriz svg_width={590} />
+                        <LegendHoriz svg_width={490} textLabel={' '} />
                     </PassThruContainer>
                     <RadioButtons
-                        handleSelect={this.props.handleSelect}
+                        handleSelect={props.handleSelect}
                         options={ [{name:'Type',value:'type'},{name:'Location',value:'location'},{name:'Total',value:'total'}] }
                         initSelectedOption={'total'} />
-                </div>
-              <br />
+                </div>);
+
+        return (<Fragment>
+          <p style={style}>-- Page rendered from: TeamTestView.js --</p>
+          <p style={style}>TeamCompareChart - Compare Type, Location and Total Scores</p>
+          <div>                
+            <TeamTestsPrScoreContainer socket={this.props.socket}>
+                {/* <LocVsTypeTeamChart svg_width={700} svg_height={500}/> */}
+                <ChartHeader/>
               <TeamCompareChart svg_width={700} svg_height={400}/>
             </TeamTestsPrScoreContainer>
-
+          </div>
         </Fragment>)
         
     }

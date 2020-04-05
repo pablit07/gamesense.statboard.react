@@ -125,7 +125,7 @@ class TeamCompareChart extends Chart {
       .attr("opacity", 0)
       .transition(t)
         .delay(650)
-        .ease(d3.easeBounce)
+        // .ease(d3.easeBounce)
         .attr("x1", scoreVal)
         .attr("x2", scoreVal)
         .attr("opacity", 1);
@@ -179,13 +179,11 @@ class TeamCompareChart extends Chart {
     //now give each 'bar' a rectangle the corresponding data and color
       .enter()
         .append("text")
-        .text("SNOT")
         .text(d => d.thisScore)
-    
         .attr("y", function(d,i){
           return (yScale(i) + (yScale.bandwidth() / 2)+2);
         })
-         .attr("x",  xScale(693))
+         .attr("x",  xScale(average))
         .attr("font-family" , "sans-serif")
         .attr("font-size" , "10px")
         .attr("fill" , "white")
