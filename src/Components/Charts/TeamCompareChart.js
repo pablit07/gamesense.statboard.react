@@ -176,7 +176,6 @@ class TeamCompareChart extends Chart {
           .remove()
           .exit()
           .data(values)
-    //now give each 'bar' a rectangle the corresponding data and color
       .enter()
         .append("text")
         .text(d => d.thisScore)

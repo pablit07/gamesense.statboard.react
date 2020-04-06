@@ -22,10 +22,6 @@ class LocVsTypeTeamChart extends Chart {
 
   const gameSenseColors = ["#505252","#94a4a5","#ffffff","#70bf57","#0db688","#eae34c"];
 
-  // let yAxis = d3.axisLeft(yScale)
-  //     .tickSizeOuter(axisTicks.outerSize)
-  //     .tickSizeInner(2)
-  //     .tickFormat((d, i) => values[i].display_name);
 
   let xAxis = d3
     .axisBottom(xScale)
@@ -64,10 +60,10 @@ class LocVsTypeTeamChart extends Chart {
     let scoreMinT = d3.min(values, d => d.first_glance_type_score);
 
     //set domain for the x axis
-    xScale.domain([scoreMinT * 0.95, scoreMaxT * 1.1]);
+    xScale.domain([scoreMinL * 0.95, scoreMaxT * 1.1]);
 
     //set domain for y axis
-    yScale.domain([scoreMinL * 0.95, scoreMaxL * 1.1]);
+    yScale.domain([scoreMinT * 0.95, scoreMaxL * 1.1]);
 
     // these are the Quartile Range colors. 
     const qColors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
@@ -93,7 +89,7 @@ class LocVsTypeTeamChart extends Chart {
     //add yAxis label (if desired)
     chart
       .append("text")
-      .attr("transform", "translate(0," +  (height+margin.bottom)/2 + ") rotate(-90)")
+      .attr("transform", "translate(-2," +  (height+margin.bottom)/2 + ") rotate(-90)")
       .text("Type Score")
       .style("font-size",  "12px")
       .style("fill", "#fff");   
@@ -105,6 +101,22 @@ class LocVsTypeTeamChart extends Chart {
       .text( "Location Score")
       .style("font-size",  "12px")
       .style("fill", "#fff");  
-    }
+  
+
+    chart.append('g')
+    .selectAll("dot")
+    .data(values)
+    .enter()
+    .append("circle")
+      .attr("cx", d => xScale(d.first_glance_location_score))
+      .attr("cy", d => height - yScale(d.first_glance_type_score))
+
+      // .attr("height", d => this.state.height - y(d[pt])  - 50)
+      // .attr("height", d => this.state.height - y(d[pt])  - 50)
+
+      .attr("r", 10)
+      .style("fill", "#69b3a2")
+
+  }  
 }
 export default LocVsTypeTeamChart;
