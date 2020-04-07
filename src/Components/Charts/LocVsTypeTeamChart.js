@@ -56,14 +56,18 @@ class LocVsTypeTeamChart extends Chart {
     let scoreMaxL = d3.max(values, d => d.first_glance_location_score);
     let scoreMinL = d3.min(values, d => d.first_glance_location_score);
 
+    console.log(scoreMaxL);
+    console.log("---------------------------------------");
+
     let scoreMaxT = d3.max(values, d => d.first_glance_type_score);
     let scoreMinT = d3.min(values, d => d.first_glance_type_score);
 
     //set domain for the x axis
-    xScale.domain([scoreMinL * 0.95, scoreMaxT * 1.1]);
+    xScale.domain([scoreMinL * 0.95, scoreMaxL ]);
 
     //set domain for y axis
-    yScale.domain([scoreMinT * 0.95, scoreMaxL * 1.1]);
+    // yScale.domain([scoreMaxT, scoreMinT * 0.95  ]);
+    yScale.domain([scoreMinT, scoreMaxT * 0.95  ]);
 
     // these are the Quartile Range colors. 
     const qColors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
@@ -102,14 +106,17 @@ class LocVsTypeTeamChart extends Chart {
       .style("font-size",  "12px")
       .style("fill", "#fff");  
   
+    // Add the dots ...
+    chart
+      .append('g')
+      .selectAll("dot")
+      .data(values)
+      .enter()
+      .append("circle")
+        .attr("cx", d => xScale(d.first_glance_location_score))
+        .attr("cy", d => height  - yScale(d.first_glance_type_score))
+        .attr("stroke", "black")
 
-    chart.append('g')
-    .selectAll("dot")
-    .data(values)
-    .enter()
-    .append("circle")
-      .attr("cx", d => xScale(d.first_glance_location_score))
-      .attr("cy", d => height - yScale(d.first_glance_type_score))
 
       // .attr("height", d => this.state.height - y(d[pt])  - 50)
       // .attr("height", d => this.state.height - y(d[pt])  - 50)
