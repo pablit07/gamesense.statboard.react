@@ -24,6 +24,9 @@ class LocVsTypeTeamChart extends Chart {
     let yScale = d3.scaleLinear()
         .range([height*.85, 0]);
 
+    let yDataScale = d3.scaleLinear()
+        .range([0, height*.85]);    
+
     let xAxis = d3
       .axisBottom(xScale)
       .ticks(axisTicks.qty)
@@ -47,16 +50,27 @@ class LocVsTypeTeamChart extends Chart {
 
     let scoreMaxT = d3.max(values, d => d.first_glance_type_score);
     let scoreMinT = d3.min(values, d => d.first_glance_type_score);
+    
+    console.log("--------- scoreMinL -----")
+    console.log(scoreMinL);
+    console.log("--------- scoreMaxL -----")
+    console.log(scoreMaxL);
+    console.log("--------- scoreMinT -----")
+    console.log(scoreMinT);
+    console.log("--------- scoreMaxT -----")
+    console.log(scoreMaxT);
 
 
     // these are the Quartile Range colors. 
     const qColors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
 
       //set domain for the x axis
-      xScale.domain([scoreMinL * 0.95, scoreMaxL ]);
+      xScale.domain([scoreMinL, scoreMaxL]);
 
       //set domain for y axis
-      yScale.domain([scoreMinT, scoreMaxT * 0.85  ]);
+      yScale.domain([scoreMinT, scoreMaxT]);
+
+      yDataScale.domain([scoreMaxT, scoreMinT]);
 
     // solid background for the chart
     chart
@@ -72,9 +86,7 @@ class LocVsTypeTeamChart extends Chart {
         .attr("height", height)
         // .attr("fill", "lightgray")
         .attr("fill", "#2f4a6d")
-        .attr("opacity", 1);  
-
-
+        .attr("opacity", 0.2);  
     
     // Add the X Axis
     chart
@@ -123,12 +135,16 @@ class LocVsTypeTeamChart extends Chart {
   
     chart
         .append("circle")
-        .attr("cx", xScale(220))
-        .attr("cy", height-yScale(200))
-        .attr("r", 5)
-        .style("fill", "red")
-        .attr("stroke", "black")
-        .attr("transform", `translate(${margin.left},${margin.top})`); 
+        .attr("transform", `translate(${margin.left},${margin.top})`) 
+          // .attr("cx", yAxisMargin + xScale(240  ))
+          // .attr("cy", height-yScale(180))
+
+          .attr("cx", 150 )
+          .attr("cy", 150)
+          .attr("r", 15)
+          .style("fill", "red")
+          .attr("stroke", "black");
+          
 
     // Add the dots ...
     chart
@@ -142,9 +158,6 @@ class LocVsTypeTeamChart extends Chart {
           .attr("r", 10)
           .style("fill", "#69b3a2")
           .attr("stroke", "black");
-
-  
-    
 
   }  
 }
