@@ -11,11 +11,11 @@ class LocVsTypeTeamChart extends Chart {
 
     //// Chart Placement variables ...
     const scaleFactor = .85  // 0-.9, percentage of SVG to make chart size
-    const yAxisMargin = 60 // # of pixels to push axes right 
+    const yAxisMargin = 55 // # of pixels to push axes right 
     const xAxisMargin = 20 // # of pixels to push axes down
     ////
      
-    const margin = { top: 15, right: 5, bottom: 15, left: 35}; // margins for colored background inside svg
+    const margin = { top: 15, right: 5, bottom: 10, left: 35}; // margins for colored background inside svg
     // let width = svg_width - margin.left - margin.right,
     //     height = svg_height - margin.top - margin.bottom;
     let width = svg_width * scaleFactor,
@@ -53,6 +53,8 @@ class LocVsTypeTeamChart extends Chart {
 
     // solid background for the full svg ...
     chart
+    .style("font", "14px")
+    .style("color", "#fff")
     .append("g")
       .attr(
         "transform",
@@ -64,9 +66,8 @@ class LocVsTypeTeamChart extends Chart {
         .attr("y", 0)
         .attr("height", height)
         .attr("fill", "#2f4a6d")
-        .attr("opacity", 0.35);
+        .attr("opacity", 1);
 
-    // line 18
       // add X axis
       let xScale = d3.scaleLinear()
         .range([0, width * scaleFactor])
@@ -79,7 +80,7 @@ class LocVsTypeTeamChart extends Chart {
         .call(d3.axisBottom(xScale));
         // .ticks(axisTicks.qty)
         // .tickSizeOuter(axisTicks.outerSize);
-    // line 26           
+         
       // Add Y axis
       let yScale = d3.scaleLinear()
         .domain([scoreMinT, scoreMaxT])
@@ -92,8 +93,7 @@ class LocVsTypeTeamChart extends Chart {
         .call(d3.axisLeft(yScale));
         // .ticks(axisTicks.qty)
         // .tickSizeOuter(axisTicks.outerSize); 
-    // line 32
-    // line 33
+
     // Add the dots ...
     chart
     .append('g')
@@ -103,64 +103,32 @@ class LocVsTypeTeamChart extends Chart {
       .append("circle")
         .attr("cx", d => yAxisMargin + xScale(d.first_glance_location_score))
         .attr("cy", d => xAxisMargin + yScale(d.first_glance_type_score))
-        .attr("r", 10)
+        .attr("r", 8)
         .style("fill", "#69b3a2")
         .attr("stroke", "black");
 
-    
-    // // Add the X Axis
-    // chart
-    //     .style("font", "12px")
-    //     .style("color", "#fff")
-    //   .append("g")  
-    //     .attr(
-    //       "transform",
-    //       `translate(${yAxisMargin}, ${height - margin.top})`
-    //     )
-    //     .call(xAxis);
-        
-    // // Add the Y Axis
-    // chart
-    //     .style("font", "12px")
-    //     .style("color", "#fff")
-    //     .append("g")
-    //     .attr(
-    //       "transform",
-    //       `translate(${yAxisMargin}, ${margin.bottom})`
-    //     )
-    //       .call(yAxis);
+    //add yAxis label
+    chart
+      .append("text")
+        .attr(
+          "transform",
+          `translate(${margin.left -15}, ${(height/2) +25 } ) rotate(-90)`
+        ) 
+        .text("Type Score")
+        .style("font-size",  "14px")
+        .style("fill", "#fff");   
 
-    // //add yAxis label
-    // chart
-    //   .append("text")
-    //     .attr(
-    //       "transform",
-    //       `translate(${margin.left -5}, ${(height/2) +25 } ) rotate(-90)`
-    //     ) 
-    //     .text("Type Score")
-    //     .style("font-size",  "14px")
-    //     .style("fill", "#fff");   
-
-    // //add xAxis label for Score Type
-    // chart
-    //   .append("text")
-    //     .attr("transform", "translate(" + svg_width*.45 + "," + (height - 10) + ")")
-    //     .text( "Location Score")
-    //     .style("font-size",  "12px")
-    //     .style("fill", "#fff");  
-  
-    // chart
-    //     .append("circle")
-    //     .attr("transform", `translate(${margin.left},${margin.top})`) 
-    //       // .attr("cx", yAxisMargin + xScale(240  ))
-    //       // .attr("cy", height-yScale(180))
-
-    //       .attr("cx", 150 )
-    //       .attr("cy", 150)
-    //       .attr("r", 15)
-    //       .style("fill", "red")
-    //       .attr("stroke", "black");
-          
+    //add xAxis label for Score Type
+    chart
+      .append("text")
+        //  .attr("transform", "translate(" + width*.45 + "," + (height - 10) + ")")
+        .attr(
+          "transform",
+          `translate(${width * .45}, ${(height - 10) } )`
+        ) 
+        .text( "Location Score")
+        .style("font-size",  "14px")
+        .style("fill", "#fff");          
   }  
 }
 export default LocVsTypeTeamChart;
