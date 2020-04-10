@@ -66,7 +66,7 @@ class LocVsTypeTeamChart extends Chart {
         .attr("y", 0)
         .attr("height", height)
         .attr("fill", "#2f4a6d")
-        .attr("opacity", 1);
+        .attr("opacity", 0.0);
 
       // add X axis
       let xScale = d3.scaleLinear()
