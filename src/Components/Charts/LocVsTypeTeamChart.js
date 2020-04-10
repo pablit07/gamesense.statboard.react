@@ -8,18 +8,28 @@ class LocVsTypeTeamChart extends Chart {
 
     svg_width = svg_width || 625;  //700
     svg_height = svg_height || 575;  //500
+    
+    // draw the svg border for reference
+    var svgBorder = svg.append("rect")
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("height", svg_height)
+      .attr("width", svg_width)
+      .style("stroke", "green")
+      .style("fill", "none")
+      .style("stroke-dasharray", "10, 4");
+      // .style("stroke-width", 2);
 
     //// Chart Placement variables ...
-    const scaleFactor = .85  // 0-.9, percentage of SVG to make chart size
-    const yAxisMargin = 55 // # of pixels to push axes right 
-    const xAxisMargin = 20 // # of pixels to push axes down
-    ////
-     
-    const margin = { top: 15, right: 5, bottom: 10, left: 35}; // margins for colored background inside svg
-    // let width = svg_width - margin.left - margin.right,
-    //     height = svg_height - margin.top - margin.bottom;
-    let width = svg_width * scaleFactor,
-        height = svg_height * scaleFactor;
+    const scaleFactor = .95// 0-.95, percentage of SVG to make chart size
+    const margin = { top: 15, 
+                     left: 35, 
+                     right: 5, 
+                     bottom: 10 
+                    }; // margins for chart inside svg
+
+    let width = (svg_width - margin.left - margin.right) *.95 * scaleFactor,
+        height = (svg_height - margin.top - margin.bottom) * .95 * scaleFactor;
 
       
     let axisTicks = {qty: 7, outerSize: 2};
@@ -75,7 +85,7 @@ class LocVsTypeTeamChart extends Chart {
       chart.append("g")
         .attr(
           "transform", 
-          `translate(${yAxisMargin}, ${(height * scaleFactor) + xAxisMargin})`
+          `translate(${margin.left}, ${(height * scaleFactor) + margin.top})`
         ) 
         .call(d3.axisBottom(xScale));
         // .ticks(axisTicks.qty)
@@ -88,14 +98,14 @@ class LocVsTypeTeamChart extends Chart {
       chart.append("g")
         .attr(
           "transform", 
-          `translate(${yAxisMargin}, ${xAxisMargin})`
+          `translate(${margin.left}, ${margin.top})`
         )  
         .call(d3.axisLeft(yScale));
      
     // Add reference lines
-    //  let locationMid = yAxisMargin + xScale(scoreMinL + ((scoreMinL + scoreMaxL)/2));
-     let locationMid = yAxisMargin + xScale((scoreMinL + scoreMaxL)/2);
-     let typeMid = xAxisMargin + yScale((scoreMinT + scoreMaxT)/2);
+    //  let locationMid = margin.left + xScale(scoreMinL + ((scoreMinL + scoreMaxL)/2));
+     let locationMid = margin.left + xScale((scoreMinL + scoreMaxL)/2);
+     let typeMid = margin.top + yScale((scoreMinT + scoreMaxT)/2);
 
      //Vertical  mid line
      let lineMidLoc = chart
@@ -107,7 +117,7 @@ class LocVsTypeTeamChart extends Chart {
          .style("stroke", "4")
          .style("stroke","#cbd2d2")
          .attr("x1", locationMid)
-         .attr("y1", 0)
+         .attr("y1", margin.top)
          .attr("x2", locationMid)
          .attr("y2", height - margin.bottom - margin.top)
          .attr("opacity", .8);
@@ -134,8 +144,8 @@ class LocVsTypeTeamChart extends Chart {
       .data(values)
       .enter()
       .append("circle")
-        .attr("cx", d => yAxisMargin + xScale(d.first_glance_location_score))
-        .attr("cy", d => xAxisMargin + yScale(d.first_glance_type_score))
+        .attr("cx", d => margin.left + xScale(d.first_glance_location_score))
+        .attr("cy", d => margin.top + yScale(d.first_glance_type_score))
         .attr("r", 8)
         .style("fill", "#69b3a2")
         .attr("stroke", "#000");
