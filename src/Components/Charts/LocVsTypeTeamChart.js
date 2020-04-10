@@ -10,9 +10,11 @@ class LocVsTypeTeamChart extends Chart {
     svg_width = svg_width || 600;  
 
     // set the dimensions and margins of the graph
-    var margin = {top: 15, right: 15, bottom: 50, left: 50},
-    width = svg_width - margin.left - margin.right,
-    height = svg_height - margin.top - margin.bottom;
+   const margin = {top: 15, right: 15, bottom: 50, left: 55},
+         width = svg_width - margin.left - margin.right,
+         height = svg_height - margin.top - margin.bottom;
+
+  const axisTicks = {qty: 12, outerSize: 2};      
 
       
     // draw the svg border for reference
@@ -23,10 +25,9 @@ class LocVsTypeTeamChart extends Chart {
       .attr("width", svg_width)
       .style("stroke", "green")
       .style("fill", "none")
-      // .style("stroke-width", 2)
-      .style("stroke-dasharray", "10, 4");
+      .style("stroke-width", 1)
+      // .style("stroke-dasharray", "10, 4"); 
       
-
     console.log("--------- svg_width -----")
     console.log(svg_width );
     console.log("--------- svg_height -----")
@@ -36,9 +37,6 @@ class LocVsTypeTeamChart extends Chart {
     console.log(width );
     console.log("--------- height -----")
     console.log(height);
-    
-      
-    let axisTicks = {qty: 7, outerSize: 2};
 
     // get max and min score values for current data ...
     let scoreMaxL = d3.max(values, d => d.first_glance_location_score);
@@ -84,6 +82,15 @@ class LocVsTypeTeamChart extends Chart {
         .range([height, 0]);
       chart.append("g") 
         .call(d3.axisLeft(yScale));
+
+      function make_x_gridlines() {
+        return d3.axisBottom(xScale)
+          .ticks(axisTicks.qty)
+      }
+      function make_y_gridlines() {
+        return d3.axisLeft(yScale)
+          .ticks(axisTicks.qty)
+      }
      
     // Add reference lines
     //  let locationMid = margin.left + xScale(scoreMinL + ((scoreMinL + scoreMaxL)/2));
@@ -105,6 +112,27 @@ class LocVsTypeTeamChart extends Chart {
          .attr("y2", height)
          .attr("opacity", .8);
 
+      // Add vertical grid lines
+      chart
+        .append("g")
+          .attr("class","grid")
+          .attr("transform","translate(0," + height + ")")
+          .style("stroke-dasharray",("3,3"))
+          .call(make_x_gridlines()
+                .tickSize(-height)
+                .tickFormat("")
+            )
+      // Add horizontal grid lines
+
+      chart
+        .append ("g")
+          .attr("class","grid")
+          .style("stroke-dasharray",("3,3"))
+          .call(make_y_gridlines()
+                .tickSize(-width)
+                .tickFormat("")
+            )   
+
       //Horizontal mid line
       let lineMidType = chart
          .append("g")
@@ -120,9 +148,7 @@ class LocVsTypeTeamChart extends Chart {
            .attr("y2", typeMid)
            .attr("opacity", .8);
 
-    
-
-      // Add the dots ...
+      // Add the Type/Location data dots ...
       chart
       .append('g')
         .selectAll("dot")
@@ -133,7 +159,9 @@ class LocVsTypeTeamChart extends Chart {
           .attr("cy", d => yScale(d.first_glance_type_score))
           .attr("r", 6)
           .style("fill", "#69b3a2")
-          .attr("stroke", "#000");           
+          .attr("stroke", "#000")
+          .attr("stroke-width", .5)
+          .attr("opacity", .925);           
 
     //add yAxis label
     chart
