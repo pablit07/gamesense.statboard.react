@@ -54,7 +54,7 @@ class LocVsTypeTeamChart extends Chart {
     // solid background for the full svg ...
     chart
     .style("font", "14px")
-    .style("color", "#fff")
+    .style("color", "#00000")
     .append("g")
       .attr(
         "transform",
@@ -91,8 +91,41 @@ class LocVsTypeTeamChart extends Chart {
           `translate(${yAxisMargin}, ${xAxisMargin})`
         )  
         .call(d3.axisLeft(yScale));
-        // .ticks(axisTicks.qty)
-        // .tickSizeOuter(axisTicks.outerSize); 
+     
+    // Add reference lines
+    //  let locationMid = yAxisMargin + xScale(scoreMinL + ((scoreMinL + scoreMaxL)/2));
+     let locationMid = yAxisMargin + xScale((scoreMinL + scoreMaxL)/2);
+     let typeMid = xAxisMargin + yScale((scoreMinT + scoreMaxT)/2);
+
+     //Vertical  mid line
+     let lineMidLoc = chart
+       .append("g")
+     lineMidLoc
+       .append("line")
+         .style("stroke-width", 4)
+         // .style("stroke-dasharray", "22, 4")
+         .style("stroke", "4")
+         .style("stroke","#cbd2d2")
+         .attr("x1", locationMid)
+         .attr("y1", 0)
+         .attr("x2", locationMid)
+         .attr("y2", height - margin.bottom - margin.top)
+         .attr("opacity", .8);
+
+      //Horizontal mid line
+      let lineMidType = chart
+         .append("g")
+        lineMidType
+         .append("line")
+           .style("stroke-width", 4)
+           // .style("stroke-dasharray", "22, 4")
+           .style("stroke", "4")
+           .style("stroke","#cbd2d2")
+           .attr("x1", margin.left)
+           .attr("y1", typeMid)
+           .attr("x2", width)
+           .attr("y2", typeMid)
+           .attr("opacity", .8);     
 
     // Add the dots ...
     chart
@@ -105,7 +138,8 @@ class LocVsTypeTeamChart extends Chart {
         .attr("cy", d => xAxisMargin + yScale(d.first_glance_type_score))
         .attr("r", 8)
         .style("fill", "#69b3a2")
-        .attr("stroke", "black");
+        .attr("stroke", "#000");
+
 
     //add yAxis label
     chart
@@ -116,7 +150,7 @@ class LocVsTypeTeamChart extends Chart {
         ) 
         .text("Type Score")
         .style("font-size",  "14px")
-        .style("fill", "#fff");   
+        .style("fill", "#000");   
 
     //add xAxis label for Score Type
     chart
@@ -128,7 +162,7 @@ class LocVsTypeTeamChart extends Chart {
         ) 
         .text( "Location Score")
         .style("font-size",  "14px")
-        .style("fill", "#fff");          
+        .style("fill", "#000");          
   }  
 }
 export default LocVsTypeTeamChart;
