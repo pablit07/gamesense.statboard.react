@@ -3,39 +3,24 @@ svg {
   shape-rendering: auto;
 }
 
-/* AverageLine Label */
-.averageLabel {
-  fill: #fff;
-  color: white;
-}
-
-path {
-  stroke: gray;
-}
-
-line {
-  stroke: gray;
-}
 
 .xAxisTC {
   font: 12px sans-serif;
-  color: #fff;
+  color: black;
 }
 
 .xAxisTC path,
 .xAxisTC line {
-  shape-rendering: crispEdges;
   stroke-width: 1px;
 }
 
 .yAxisTC {
   font: 12px sans-serif;
-  color: #fff;
+  color: black;
 }
 
 .yAxisTC path,
 .yAxisTC line {
-  stroke: rgb(137, 141, 141);
-  shape-rendering: crispEdges;
+  stroke: black;
   stroke-width: 1px;
 }
