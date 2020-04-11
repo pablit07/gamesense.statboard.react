@@ -2,10 +2,9 @@ import * as d3 from "d3";
 import Chart from "./Chart";
 
 class LocVsTypeChart extends Chart {
-  addChartLayer({svg, values, svg_width, svg_height}) {
-    console.log("=============values ========================q==========");
+  addChartLayer({svg, values, typAvg, locAvg, svg_width, svg_height}) {
+    console.log("============= values ==================================");
     console.log(values);
-      
     svg_height = svg_height || 400;
     svg_width = svg_width || 600;  
 
@@ -85,6 +84,9 @@ class LocVsTypeChart extends Chart {
       chart.append("g") 
         .call(d3.axisLeft(yScale));
 
+      let tAvg = yScale(typAvg);   // first_glance_type_score: 325  
+      let lAvg = xScale(locAvg);  // first_glance_location_score: 330
+
       function make_x_gridlines() {
         return d3.axisBottom(xScale)
           .ticks(axisTicks.qty)
@@ -148,7 +150,84 @@ class LocVsTypeChart extends Chart {
            .attr("y1", typeMid)
            .attr("x2", width)
            .attr("y2", typeMid)
-           .attr("opacity", .8);
+           .attr("opacity", .8)
+
+      //Horizontal (type score) Average line
+      let lineAvgType = chart
+         .append("g")
+        lineAvgType
+         .append("line")
+           .style("stroke-width", 2)
+           .style("stroke-dasharray", "14, 4")
+           .style("stroke","#1c94aa")
+           .style("stroke", "4")
+           .attr("x1", 0)
+           .attr("y1", tAvg)
+           .attr("x2", width)
+           .attr("y2", tAvg)
+           .attr("opacity", .8)
+
+     let  typeAvgLabel = chart
+           .append("text")
+      if (values.length) {
+        typeAvgLabel  
+           .attr("class", "locAvgLabel")
+           .attr("text-anchor", "none")
+           .attr("x", 5)
+           .attr("y", tAvg-2)
+           .text("Average " + typAvg + " (Type Score)")
+           .style("font-size",  "10px")
+           .style("fill", "#1c94aa");
+        } else {
+          typeAvgLabel
+             .append("text")
+             .attr("class", "rt-noData")
+             .attr("y", (height / 2) - 50)
+             .attr("x", (width / 2) - 100)
+             .attr("dy", "1em")
+             .attr("fill", "rgba(0,0,0,0.5)")
+             .attr("style", "text-anchor: middle")
+             .text("No Data To Display")
+       }
+
+      //Vertical (location score) Average line
+      let lineAvgLoc = chart
+      .append("g")
+      lineAvgLoc
+      .append("line")
+        .style("stroke-width", 2)
+        .style("stroke-dasharray", "14, 4")
+        .style("stroke","#1c94aa")
+        .style("stroke", "4")
+        .attr("x1", lAvg)
+        .attr("y1", height)
+        .attr("x2", lAvg)
+        .attr("y2", -4)
+        .attr("opacity", .8)
+
+      let  locAvgLabel = chart
+        .append("text")
+      if (values.length) {
+      locAvgLabel  
+        .attr("class", "locAvgLabel")
+        .attr("text-anchor", "right")
+        .attr("x", lAvg)
+        .attr("y", -8)
+        .text("Average " + locAvg + " (Location Score)")
+        .style("font-size",  "10px")
+        .style("fill", "#1c94aa");
+      } else {
+        locAvgLabel
+          .append("text")
+          .attr("class", "rt-noData")
+          .attr("y", (height / 2) - 50)
+          .attr("x", (width / 2) - 100)
+          .attr("dy", "1em")
+          .attr("fill", "rgba(0,0,0,0.5)")
+          .attr("style", "text-anchor: middle")
+          .text("No Data To Display")
+      }
+
 
       // Add the Type/Location data dots ...
       chart
