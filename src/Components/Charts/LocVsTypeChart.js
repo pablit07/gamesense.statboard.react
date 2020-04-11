@@ -9,8 +9,8 @@ class LocVsTypeChart extends Chart {
     svg_width = svg_width || 600;  
 
   // set the dimensions and margins of the graph
-  //  const margin = {top: 15, right: 15, bottom: 50, left: 55},
-   const margin = {top: 90, right: 130, bottom: 100, left: 110},
+   const margin = {top: 15, right: 15, bottom: 50, left: 55},
+  //  const margin = {top: 90, right: 130, bottom: 100, left: 110},
          width = svg_width - margin.left - margin.right,
          height = svg_height - margin.top - margin.bottom;
 
@@ -87,6 +87,7 @@ class LocVsTypeChart extends Chart {
         .range([0, width]); 
         
       let xAxis = d3
+        // .attr({'stroke-width': '10px'})
         .axisBottom(xScale)
         .tickSizeOuter(axisTicks.outerSize)
         .tickSizeInner(2);  
@@ -148,8 +149,6 @@ class LocVsTypeChart extends Chart {
         lineMidType
          .append("line")
            .style("stroke-width", 4)
-           // .style("stroke-dasharray", "22, 4")
-           .style("stroke", "4")
            .style("stroke","#cbd2d2")
            .attr("x1", 0)
            .attr("y1", typeMid)
@@ -165,7 +164,6 @@ class LocVsTypeChart extends Chart {
            .style("stroke-width", 2)
            .style("stroke-dasharray", "14, 4")
            .style("stroke","#1c94aa")
-           .style("stroke", "4")
            .attr("x1", 0)
            .attr("y1", tAvg)
            .attr("x2", width)
@@ -181,7 +179,7 @@ class LocVsTypeChart extends Chart {
            .attr("x", 5)
            .attr("y", tAvg-2)
            .text("Average " + typAvg + " (Type Score)")
-           .style("font-size",  "10px")
+           .style("font-size",  "8px")
            .style("fill", "#1c94aa");
         } else {
           typeAvgLabel
@@ -203,24 +201,33 @@ class LocVsTypeChart extends Chart {
         .style("stroke-width", 2)
         .style("stroke-dasharray", "14, 4")
         .style("stroke","#1c94aa")
-        .style("stroke", "4")
         .attr("x1", lAvg)
         .attr("y1", height)
         .attr("x2", lAvg)
-        .attr("y2", -4)
+        .attr("y2", 0)
         .attr("opacity", .8)
 
-      let  locAvgLabel = chart
-        .append("text")
+      let  locAvgLabel = chart 
       if (values.length) {
-      locAvgLabel  
-        .attr("class", "locAvgLabel")
-        .attr("text-anchor", "right")
-        .attr("x", lAvg)
-        .attr("y", -8)
-        .text("Average " + locAvg + " (Location Score)")
-        .style("font-size",  "10px")
-        .style("fill", "#1c94aa");
+        locAvgLabel  
+          .append("text")
+          .attr(
+            "transform",
+            `rotate(90)`
+          ) 
+
+          .attr("class", "locAvgLabel")
+          .attr("text-anchor", "none")
+          .attr("x", 4)
+          .attr("y", (-lAvg -4)) 
+          // `translate(0, ${height})`
+          .attr(
+            "transform",
+            `rotate(90)`
+          ) 
+          .text("Average " + locAvg + " (Location Score)")
+          .style("font-size",  "8px")
+          .style("fill", "#1c94aa");
       } else {
         locAvgLabel
           .append("text")
@@ -236,19 +243,48 @@ class LocVsTypeChart extends Chart {
       // Now add yAxis   
       chart
         .append("g") 
-        .call(yAxis);
+        .call(yAxis)
+        .selectAll("line,path")
+            .style("stroke", "black")
+            .style('stroke-width','.5');
 
       // and add xAxis   
       chart
         .append("g")
+        .attr("class", "x axis")
         .attr(
           "transform", 
           `translate(0, ${height})`
         ) 
-        .call(xAxis); 
+        .call(xAxis)
+        .selectAll("line,path")
+            .style("stroke", "black")
+            .style('stroke-width','.5'); 
 
-      //  ToDo: Add top and right perimeter lines 
+      //  Add top and right perimeter lines 
+      let topLine = chart
+         .append("g")
+      topLine
+         .append("line")
+           .style("stroke-width", .5)
+           .style("stroke","black")
+           .attr("x1", 0)
+           .attr("y1", yScale(scoreMaxT+dataPad))
+           .attr("x2", width)
+           .attr("y2", yScale(scoreMaxT+dataPad))
+           .attr("opacity", .8)
 
+      let rightLine = chart
+        .append("g")
+      rightLine
+      .append("line")
+        .style("stroke-width", .5)
+        .style("stroke","black")
+        .attr("x1", xScale(scoreMaxL+dataPad))
+        .attr("y1", height)
+        .attr("x2", xScale(scoreMaxL+dataPad))
+        .attr("y2", 0)
+      
       // Add the Type/Location data dots ...
       chart
       .append('g')
