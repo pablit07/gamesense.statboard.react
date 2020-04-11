@@ -18,7 +18,9 @@ class LocVsTypeTeamChart extends Chart {
 
       
     // draw the svg border for reference
-    var svgBorder = svg.append("rect")
+    let svgBorder = svg.append("rect")
+        .append("g")
+    svgBorder
       .attr("x", 0)
       .attr("y", 0)
       .attr("height", svg_height)
@@ -161,7 +163,20 @@ class LocVsTypeTeamChart extends Chart {
           .style("fill", "#69b3a2")
           .attr("stroke", "#000")
           .attr("stroke-width", .5)
-          .attr("opacity", .925);           
+          .attr("opacity", .925);   
+          
+      // Add the Player's name to the dot ... 
+      chart.selectAll("player")
+        .data(values)
+        .enter()
+          .append("text")
+          .attr("x", d => xScale(d.first_glance_location_score))
+          .attr("y", d => yScale(d.first_glance_type_score)-7)
+          .text(d => d.display_name)
+
+          .style("font-size",  "8px")
+          .style("text-anchor", "middle")
+          .style("fill", "#000"); 
 
     //add yAxis label
     chart
