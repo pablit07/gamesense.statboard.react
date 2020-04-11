@@ -8,13 +8,14 @@ class LocVsTypeChart extends Chart {
     svg_height = svg_height || 400;
     svg_width = svg_width || 600;  
 
-    // set the dimensions and margins of the graph
+  // set the dimensions and margins of the graph
   //  const margin = {top: 15, right: 15, bottom: 50, left: 55},
    const margin = {top: 90, right: 130, bottom: 100, left: 110},
          width = svg_width - margin.left - margin.right,
          height = svg_height - margin.top - margin.bottom;
 
-  const axisTicks = {qty: 12, outerSize: 0};      
+  const axisTicks = {qty: 12, outerSize: 0};  
+  const dataPad = 35;   // amount to pad to min/max beyond actual data for charting   
 
       //draw the svg border for reference
       const svgBorder = svg     // line 8
@@ -72,7 +73,7 @@ class LocVsTypeChart extends Chart {
          
       // define X and Y axes. call them near end
       let yScale = d3.scaleLinear()
-        .domain([scoreMinT, scoreMaxT])
+        .domain([scoreMinT-dataPad, scoreMaxT+dataPad])
         .range([height, 0]);
 
       let yAxis = d3
@@ -82,7 +83,7 @@ class LocVsTypeChart extends Chart {
 
       // add X axis
       let xScale = d3.scaleLinear()
-        .domain([scoreMinL, scoreMaxL])
+        .domain([scoreMinL-dataPad, scoreMaxL+dataPad])
         .range([0, width]); 
         
       let xAxis = d3
@@ -245,6 +246,8 @@ class LocVsTypeChart extends Chart {
           `translate(0, ${height})`
         ) 
         .call(xAxis); 
+
+      //  ToDo: Add top and right perimeter lines 
 
       // Add the Type/Location data dots ...
       chart
