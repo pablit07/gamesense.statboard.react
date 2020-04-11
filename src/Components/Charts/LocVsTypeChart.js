@@ -9,25 +9,29 @@ class LocVsTypeChart extends Chart {
     svg_width = svg_width || 600;  
 
     // set the dimensions and margins of the graph
-   const margin = {top: 15, right: 15, bottom: 50, left: 55},
+  //  const margin = {top: 15, right: 15, bottom: 50, left: 55},
+   const margin = {top: 90, right: 130, bottom: 100, left: 110},
          width = svg_width - margin.left - margin.right,
          height = svg_height - margin.top - margin.bottom;
 
-  const axisTicks = {qty: 12, outerSize: 2};      
+  const axisTicks = {qty: 12, outerSize: 0};      
 
-      
-    // draw the svg border for reference
-    let svgBorder = svg.append("rect")
-        .append("g")
-    svgBorder
-      .attr("x", 0)
-      .attr("y", 0)
-      .attr("height", svg_height)
-      .attr("width", svg_width)
-      .style("stroke", "green")
-      .style("fill", "none")
-      .style("stroke-width", 1)
-      // .style("stroke-dasharray", "10, 4"); 
+      //draw the svg border for reference
+      const svgBorder = svg     // line 8
+        .attr("width", svg_width)
+        .attr("height", svg_height)
+        .append("g");
+      svgBorder
+      .append("rect")         
+          .attr("x", 0)
+          .attr("y", 0)
+          .attr("height", svg_height)
+          .attr("width", svg_width)
+          .style("stroke", "green")
+          .style("fill", "none")
+          .style("opacity", 1 )
+          .style("stroke-width", 3)
+          .style("stroke-dasharray", "10, 4");  
       
     console.log("--------- svg_width -----")
     console.log(svg_width );
@@ -64,25 +68,27 @@ class LocVsTypeChart extends Chart {
       .attr("height", svg_height)
       .append("g")
       .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
-
-      // add X axis
-      let xScale = d3.scaleLinear()
-        .range([0, width])
-        .domain([scoreMinL, scoreMaxL]); 
-      chart.append("g")
-        .attr(
-          "transform", 
-          `translate(0, ${height})`
-        ) 
-        .call(d3.axisBottom(xScale));
+            "translate(" + margin.left + "," + margin.top + ")");  
          
-      // Add Y axis
+      // define X and Y axes. call them near end
       let yScale = d3.scaleLinear()
         .domain([scoreMinT, scoreMaxT])
         .range([height, 0]);
-      chart.append("g") 
-        .call(d3.axisLeft(yScale));
+
+      let yAxis = d3
+        .axisLeft(yScale)
+        .tickSizeOuter(axisTicks.outerSize)
+        .tickSizeInner(2); 
+
+      // add X axis
+      let xScale = d3.scaleLinear()
+        .domain([scoreMinL, scoreMaxL])
+        .range([0, width]); 
+        
+      let xAxis = d3
+        .axisBottom(xScale)
+        .tickSizeOuter(axisTicks.outerSize)
+        .tickSizeInner(2);  
 
       let tAvg = yScale(typAvg);   // first_glance_type_score: 325  
       let lAvg = xScale(locAvg);  // first_glance_location_score: 330
@@ -97,7 +103,6 @@ class LocVsTypeChart extends Chart {
       }
      
     // Add reference lines
-    //  let locationMid = margin.left + xScale(scoreMinL + ((scoreMinL + scoreMaxL)/2));
      let locationMid = xScale((scoreMinL + scoreMaxL)/2);
      let typeMid = yScale((scoreMinT + scoreMaxT)/2);
 
@@ -127,7 +132,6 @@ class LocVsTypeChart extends Chart {
                 .tickFormat("")
             )
       // Add horizontal grid lines
-
       chart
         .append ("g")
           .attr("class","grid")
@@ -135,7 +139,7 @@ class LocVsTypeChart extends Chart {
           .call(make_y_gridlines()
                 .tickSize(-width)
                 .tickFormat("")
-            )   
+            )  
 
       //Horizontal mid line
       let lineMidType = chart
@@ -228,6 +232,19 @@ class LocVsTypeChart extends Chart {
           .text("No Data To Display")
       }
 
+      // Now add yAxis   
+      chart
+        .append("g") 
+        .call(yAxis);
+
+      // and add xAxis   
+      chart
+        .append("g")
+        .attr(
+          "transform", 
+          `translate(0, ${height})`
+        ) 
+        .call(xAxis); 
 
       // Add the Type/Location data dots ...
       chart
@@ -280,7 +297,8 @@ class LocVsTypeChart extends Chart {
         .text( "Location Score")
         .style("font-size",  "14px")
         .style("text-anchor", "middle")
-        .style("fill", "#000");          
+        .style("fill", "#000");       
+        
   }  
 }
 export default LocVsTypeChart;
