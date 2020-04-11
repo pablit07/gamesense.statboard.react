@@ -112,7 +112,6 @@ class TeamCompareChart extends Chart {
       .append("g")
       .attr("transform", `translate(${margin.left}, -${pushUpAveLine})`);
 
-    
       line
       .append("line")
       .style("stroke-width", 6)

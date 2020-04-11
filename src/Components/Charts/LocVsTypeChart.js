@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import Chart from "./Chart";
 
-class LocVsTypeTeamChart extends Chart {
+class LocVsTypeChart extends Chart {
   addChartLayer({svg, values, svg_width, svg_height}) {
     console.log("=============values ========================q==========");
     console.log(values);
@@ -204,4 +204,4 @@ class LocVsTypeTeamChart extends Chart {
         .style("fill", "#000");          
   }  
 }
-export default LocVsTypeTeamChart;
+export default LocVsTypeChart;

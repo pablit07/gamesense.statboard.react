@@ -8,7 +8,7 @@ import HorizontalQuartileChart from "../Components/Charts/HorizontalQuartileChar
 import LegendHoriz from "../Components/Charts/LegendHoriz";
 import ComparisonChartContainer from "./ComparisonContainer";
 import PassThruContainer from "./PassThruContainer";
-import LocVsTypeTeamChart from "../Components/Charts/LocVsTypeTeamChart";
+import LocVsTypeChart from "../Components/Charts/LocVsTypeChart";
 
 class TeamTestsView extends Component {
 
@@ -33,7 +33,7 @@ class TeamTestsView extends Component {
           <p style={style}>TeamCompareChart - Compare Type, Location and Total Scores</p> */}
           <div>                
             <TeamTestsPrScoreContainer socket={this.props.socket}>
-                <LocVsTypeTeamChart svg_height={400} svg_width={600} />
+                <LocVsTypeChart svg_height={400} svg_width={600} />
                 <ChartHeader/>
               <TeamCompareChart svg_width={700} svg_height={400}/>
             </TeamTestsPrScoreContainer>
