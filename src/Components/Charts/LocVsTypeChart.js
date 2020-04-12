@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import Chart from "./Chart";
 
 class LocVsTypeChart extends Chart {
-  addChartLayer({svg, values, typAvg, locAvg, svg_width, svg_height}) {
+  addChartLayer({svg, values, typAvg, locAvg, svg_width, svg_height, hide_svg_border}) {
     console.log("============= values ==================================");
     console.log(values);
     svg_height = svg_height || 400;
@@ -17,32 +17,25 @@ class LocVsTypeChart extends Chart {
   const axisTicks = {qty: 12, outerSize: 0};  
   const dataPad = 35;   // amount to pad to min/max beyond actual data for charting   
 
-      //draw the svg border for reference
-      const svgBorder = svg     // line 8
-        .attr("width", svg_width)
+    //draw the svg border for reference
+    const svgBorder = svg     // line 8
+      .attr("width", svg_width)
+      .attr("height", svg_height)
+      .append("g");
+    svgBorder
+    .append("rect")         
+        .attr("x", 0)
+        .attr("y", 0)
         .attr("height", svg_height)
-        .append("g");
-      svgBorder
-      .append("rect")         
-          .attr("x", 0)
-          .attr("y", 0)
-          .attr("height", svg_height)
-          .attr("width", svg_width)
-          .style("stroke", "green")
-          .style("fill", "none")
-          .style("opacity", 1 )
-          .style("stroke-width", 3)
-          .style("stroke-dasharray", "10, 4");  
-      
-    console.log("--------- svg_width -----")
-    console.log(svg_width );
-    console.log("--------- svg_height -----")
-    console.log(svg_height);
-
-    console.log("--------- width -----")
-    console.log(width );
-    console.log("--------- height -----")
-    console.log(height);
+        .attr("width", svg_width)
+        .style("stroke", "green")
+        .style("fill", "none")
+        .style("opacity", 1 )
+        .style("stroke-width", 1)
+        // .style("stroke-dasharray", "10, 4")
+      if (hide_svg_border) {
+        svgBorder.style("opacity", 0 )     
+      }
 
     // get max and min score values for current data ...
     let scoreMaxL = d3.max(values, d => d.first_glance_location_score);
@@ -182,7 +175,11 @@ class LocVsTypeChart extends Chart {
            .attr("y1", tAvg)
            .attr("x2", width)
            .attr("y2", tAvg)
-           .attr("opacity", .8)
+           .attr("opacity", 0)
+           .transition()
+              .duration(700)
+              .attr("opacity", .8)
+              
 
      let  typeAvgLabel = chart
            .append("text")
@@ -219,7 +216,10 @@ class LocVsTypeChart extends Chart {
         .attr("y1", height)
         .attr("x2", lAvg)
         .attr("y2", 0)
-        .attr("opacity", .8)
+        .attr("opacity", 0)
+        .transition()
+           .duration(700)
+           .attr("opacity", .8)
 
       let  locAvgLabel = chart 
       if (values.length) {

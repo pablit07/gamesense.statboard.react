@@ -33,7 +33,7 @@ class TeamTestsView extends Component {
           <p style={style}>TeamCompareChart - Compare Type, Location and Total Scores</p> */}
           <div>                
             <TeamTestsPrScoreContainer socket={this.props.socket}>
-                <LocVsTypeChart svg_height={400} svg_width={600} />
+                <LocVsTypeChart svg_height={400} svg_width={600} hide_svg_border={false}/>
                 <ChartHeader/>
               <TeamCompareChart svg_width={700} svg_height={400}/>
             </TeamTestsPrScoreContainer>
