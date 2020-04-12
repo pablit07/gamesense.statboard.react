@@ -315,7 +315,6 @@ class LocVsTypeChart extends Chart {
           .attr("x", d => xScale(d.first_glance_location_score))
           .attr("y", d => yScale(d.first_glance_type_score)-7)
           .text(d => d.display_name)
-
           .style("font-size",  "8px")
           .style("text-anchor", "middle")
           .style("fill", "#000"); 

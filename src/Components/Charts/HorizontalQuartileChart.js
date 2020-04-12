@@ -127,7 +127,7 @@ class HorizontalQuartileChart extends Chart {
 
         g.append("text")
             .text(scoreVal)
-            // .attr("font-size", 12)
+            .style("font-size",  "12px")
             .attr("fill", textColor)
             .attr("opacity", 0)
             .attr("y",(y.bandwidth() + 10 ))
@@ -137,6 +137,7 @@ class HorizontalQuartileChart extends Chart {
 
         g.append("text")        
             .text("Your Score")
+            .style("font-size",  "12px")
             .attr("fill", textColor)
             .attr("opacity", 0)
             .attr("y",(y.bandwidth() + 20 ))
