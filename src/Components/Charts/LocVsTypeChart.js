@@ -58,9 +58,25 @@ class LocVsTypeChart extends Chart {
     console.log("--------- scoreMinT -----")
     console.log(scoreMinT);
     console.log("--------- scoreMaxT -----")
-    console.log(scoreMaxT);  
-    
+    console.log(scoreMaxT); 
 
+    let tooltip = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
+
+    // create the tooltip
+    tooltip 
+       .attr("class", "tooltip")
+        .style("position", "absolute")
+        .style("text-align", "center")
+        .style("width", "75px")
+        .style("height", "28px")
+        .style("padding", "2px")
+        .style("font", "8px sans-serif")
+        .style("background", "lightsteelblue")
+        .style("border", "0px")
+        .style("border-radius", "6px")
+        .style("pointer-events", "none");
  ///////////////////////////////////////////////////////////////
 
     // chart group 'g'
@@ -71,7 +87,7 @@ class LocVsTypeChart extends Chart {
       .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");  
          
-      // define X and Y axes. call them near end
+      // Define X and Y axes, call them near end.
       let yScale = d3.scaleLinear()
         .domain([scoreMinT-dataPad, scoreMaxT+dataPad])
         .range([height, 0]);
@@ -114,8 +130,6 @@ class LocVsTypeChart extends Chart {
      lineMidLoc
        .append("line")
          .style("stroke-width", 4)
-         // .style("stroke-dasharray", "22, 4")
-         .style("stroke", "4")
          .style("stroke","#cbd2d2")
          .attr("x1", locationMid)
          .attr("y1", 0)
@@ -285,20 +299,35 @@ class LocVsTypeChart extends Chart {
         .attr("x2", xScale(scoreMaxL+dataPad))
         .attr("y2", 0)
       
-      // Add the Type/Location data dots ...
+      // Add the Type/Location dots with tooltips ...
       chart
       .append('g')
         .selectAll("dot")
         .data(values)
         .enter()
-        .append("circle")
-          .attr("cx", d => xScale(d.first_glance_location_score))
-          .attr("cy", d => yScale(d.first_glance_type_score))
-          .attr("r", 6)
-          .style("fill", "#69b3a2")
-          .attr("stroke", "#000")
-          .attr("stroke-width", .5)
-          .attr("opacity", .925);   
+          .append("circle")
+            .attr("cx", d => xScale(d.first_glance_location_score))
+            .attr("cy", d => yScale(d.first_glance_type_score))
+            .attr("r", 6)
+            .style("fill", "#69b3a2")
+            .attr("stroke", "#000")
+            .attr("stroke-width", .5)
+            .attr("opacity", .925)
+            .on("mouseover", function(d) {
+              tooltip.transition()
+                .duration(100)
+                .style("opacity", .9);
+              tooltip.html((d.display_name) + "<br/> Type score: " + d.first_glance_type_score + "<br/> Location score: " + d.first_glance_location_score)
+              // div.html(formatTime(d.date) + "<br/>" + d.close)
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+              })
+            .on("mouseout", function(d) {
+              tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+              });
+       
           
       // Add the Player's name to the dot ... 
       chart.selectAll("player")
