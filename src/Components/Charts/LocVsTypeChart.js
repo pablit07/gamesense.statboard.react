@@ -2,11 +2,13 @@ import * as d3 from "d3";
 import Chart from "./Chart";
 
 class LocVsTypeChart extends Chart {
-  addChartLayer({svg, values, typAvg, locAvg, svg_width, svg_height, hide_svg_border}) {
+  addChartLayer({svg, values, typAvg, locAvg, svg_width, svg_height, svg_border_opacity}) {
     console.log("============= values ==================================");
     console.log(values);
+
     svg_height = svg_height || 400;
     svg_width = svg_width || 600;  
+    svg_border_opacity = svg_border_opacity || 0;
 
   // set the dimensions and margins of the graph
    const margin = {top: 15, right: 15, bottom: 50, left: 55},
@@ -30,12 +32,9 @@ class LocVsTypeChart extends Chart {
         .attr("width", svg_width)
         .style("stroke", "green")
         .style("fill", "none")
-        .style("opacity", 1 )
         .style("stroke-width", 1)
-        // .style("stroke-dasharray", "10, 4")
-      if (hide_svg_border) {
-        svgBorder.style("opacity", 0 )     
-      }
+        .style("opacity", svg_border_opacity )
+
 
     // get max and min score values for current data ...
     let scoreMaxL = d3.max(values, d => d.first_glance_location_score);
@@ -43,15 +42,6 @@ class LocVsTypeChart extends Chart {
 
     let scoreMaxT = d3.max(values, d => d.first_glance_type_score);
     let scoreMinT = d3.min(values, d => d.first_glance_type_score);
-    
-    console.log("--------- scoreMinL -----")
-    console.log(scoreMinL);
-    console.log("--------- scoreMaxL -----")
-    console.log(scoreMaxL);
-    console.log("--------- scoreMinT -----")
-    console.log(scoreMinT);
-    console.log("--------- scoreMaxT -----")
-    console.log(scoreMaxT); 
 
     let tooltip = d3.select("body").append("div")
       .attr("class", "tooltip")
@@ -175,11 +165,7 @@ class LocVsTypeChart extends Chart {
            .attr("y1", tAvg)
            .attr("x2", width)
            .attr("y2", tAvg)
-           .attr("opacity", 0)
-           .transition()
-              .duration(700)
-              .attr("opacity", .8)
-              
+           .attr("opacity", .8)
 
      let  typeAvgLabel = chart
            .append("text")
@@ -216,25 +202,16 @@ class LocVsTypeChart extends Chart {
         .attr("y1", height)
         .attr("x2", lAvg)
         .attr("y2", 0)
-        .attr("opacity", 0)
-        .transition()
-           .duration(700)
-           .attr("opacity", .8)
+        .attr("opacity", .8)
 
       let  locAvgLabel = chart 
       if (values.length) {
         locAvgLabel  
           .append("text")
-          .attr(
-            "transform",
-            `rotate(90)`
-          ) 
-
           .attr("class", "locAvgLabel")
           .attr("text-anchor", "none")
           .attr("x", 4)
           .attr("y", (-lAvg -4)) 
-          // `translate(0, ${height})`
           .attr(
             "transform",
             `rotate(90)`
