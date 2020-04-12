@@ -4,7 +4,7 @@ class LegendVertical extends Chart {
     addChartLayer({svg, yPos, svg_height, textColor}) {
 
         textColor = textColor || "black";
-        var colors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574"];
+        var colors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
 
         var height = svg_height || 90;  // This must match the height of the Horizontal Chart it is next to.
         var width = 90;
@@ -28,7 +28,6 @@ class LegendVertical extends Chart {
               // loop thru each color, each time translate and add a rect + its text
               .attr("transform", function(d, i) { return "translate(10,0" + (i * 19) + ")"; }); 
 
-
         legend.append("rect")
             .attr("x", 0)
             .attr("y", 0)
@@ -39,7 +38,7 @@ class LegendVertical extends Chart {
         legend.append("text")
             .attr('fill', textColor)
             .attr("x", 22)
-            .attr("y", 14)
+            .attr("y", 9)
             .attr("dy", ".35em")
             .style("text-anchor", "start")
             .text(function(d, i) {

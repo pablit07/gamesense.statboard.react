@@ -10,9 +10,7 @@ class HorizontalQuartileChart extends Chart {
         let {q1, median, q3, max, userScore} = values;
 
         // Setup svg using d3's margin convention
-
         var margin = {top: 25, right: 25, bottom: 5, left: 30};
-
 
         var height = svg_height - margin.top - margin.bottom,
             width = svg_width - margin.left - margin.right;
@@ -32,7 +30,6 @@ class HorizontalQuartileChart extends Chart {
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-;
 
 // data converted to use d3 stack chart.
         var data = [
@@ -123,9 +120,10 @@ class HorizontalQuartileChart extends Chart {
             .style("stroke", "black")
             .style("stroke-width", 1.5)
             .transition(t)
-            .attr("cx", scoreScale(scoreVal)) // End position => score;
-            .attr("opacity", .6)
-            .attr("fill", "#6ec057")
+              .delay(350)
+              .attr("cx", scoreScale(scoreVal)) // End position => score;
+              .attr("opacity", .6)
+              .attr("fill", "#515252")
 
         g.append("text")
             .text(scoreVal)

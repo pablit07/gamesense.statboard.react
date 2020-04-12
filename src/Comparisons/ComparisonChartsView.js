@@ -39,7 +39,7 @@ class ComparisonChartsView extends Component {
                     xPos moves the Legend items left (neg) and right (pos) in its own svg. 
                     spacing is the width between the Legend elements (90 default)*/}
                 <HorizontalQuartileChart  svg_width={595} svg_height= {90}/><br/>
-                <LegendHoriz  xPos={-115} svg_width={595} spacing={65}/>
+                <LegendHoriz  xPos={-25} svg_width={595} spacing={85}/>
             < hr/>               
                 <HorizontalQuartileChart svg_width={350} svg_height= {200} textColor={"red"}/>
                 <LegendVertical  yPos={25}               svg_height= {200}/>

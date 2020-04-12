@@ -9,6 +9,7 @@ class LocVsTypeChart extends Chart {
     svg_height = svg_height || 400;
     svg_width = svg_width || 600;  
     svg_border_opacity = svg_border_opacity || 0;
+    svg_border_opacity =0;
 
   // set the dimensions and margins of the graph
    const margin = {top: 15, right: 15, bottom: 50, left: 55},
