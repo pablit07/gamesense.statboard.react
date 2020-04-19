@@ -28,6 +28,9 @@ const Home = () => (
         <li>
           <Link to='/teamcomparecharts'>Team Comparisons (Charts)</Link>
         </li>
+        <li>
+          <Link to='/responsivechart'>Drill Usage - Hooks Responsive Chart</Link>
+        </li>
       </ul>
   </div>
 )
