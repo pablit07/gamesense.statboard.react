@@ -9,6 +9,7 @@ import LegendHoriz from "../Components/Charts/LegendHoriz";
 import ComparisonChartContainer from "./ComparisonContainer";
 import PassThruContainer from "./PassThruContainer";
 import LocVsTypeChart from "../Components/Charts/LocVsTypeChart";
+import PlayerDrills from "../Components/Charts/PlayerDrills";
 
 class TeamTestsView extends Component {
 
@@ -18,10 +19,11 @@ class TeamTestsView extends Component {
 
         const ChartHeader = props =>
                 (<div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
-                    {/* <h3>Team Test Scores</h3> */}
+                    <h3>Player Drills Completed</h3>
+                    {/* <h3>Team Test Scores</h3>
                     <PassThruContainer>
                         <LegendHoriz svg_width={490} textLabel={' '} />
-                    </PassThruContainer>
+                    </PassThruContainer> */}
                     <RadioButtons
                         handleSelect={props.handleSelect}
                         options={ [{name:'Type',value:'type'},{name:'Location',value:'location'},{name:'Total',value:'total'}] }
@@ -33,9 +35,10 @@ class TeamTestsView extends Component {
           <p style={style}>TeamCompareChart - Compare Type, Location and Total Scores</p> */}
           <div>                
             <TeamTestsPrScoreContainer socket={this.props.socket}>
-                <LocVsTypeChart svg_height={400} svg_width={600} svg_border_opacity={0.5}/>
+                {/* <LocVsTypeChart svg_height={400} svg_width={600} svg_border_opacity={0.5}/> */}
                 <ChartHeader/>
-              <TeamCompareChart svg_width={700} svg_height={400}/>
+              {/* <TeamCompareChart svg_width={700} svg_height={400}/> */}
+              <PlayerDrills svg_width={700} svg_height={400}/>
             </TeamTestsPrScoreContainer>
           </div>
         </Fragment>)
