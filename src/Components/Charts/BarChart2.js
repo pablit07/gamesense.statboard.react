@@ -1,7 +1,18 @@
 import React, { useRef, useEffect, useState } from "react";
 import { select, axisBottom, axisLeft, scaleLinear, scaleBand } from "d3";
 import ResizeObserver from "resize-observer-polyfill";
-import "./barChart2.css";
+// import "./barChart2.css";
+
+// styles 
+const svgStyle = {
+  background: '#eee',
+  overflow: 'visible',
+  display: 'block',
+  width: '100%',
+  height: '350px',
+  padding: '0 10px',
+  // justifyContent: 'left'
+};
 
 // A custom React Hook for ResizeObserver here ...
 // https://codepen.io/dgca/pen/WoJoNB
@@ -99,7 +110,7 @@ function BarChart({ data }) {
 
   return (
     <div ref={wrapperRef} style={{ marginBottom: "2rem" }}>
-      <svg ref={svgRef}>
+      <svg ref={svgRef} style={svgStyle}>
         <g className="x-axis" />
         <g className="y-axis" />
       </svg>

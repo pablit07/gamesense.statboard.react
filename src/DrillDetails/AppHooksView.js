@@ -3,7 +3,7 @@ import BarChart2 from "../Components/Charts/BarChart2";
 import PlayerUseOverTimeContainer from "./PlayerUseOverTimeContainer";
 
 function AppHooks() {
-  const [data, setData] = useState([25, 30, 45, 60, 10, 65, 75]);
+  const [data, setData] = useState([45,105,90, 40,66,135,65, 120, 38, 85, 75, 77]);
   
 
   return (
