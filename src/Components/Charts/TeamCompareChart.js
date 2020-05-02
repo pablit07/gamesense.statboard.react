@@ -11,26 +11,27 @@ class TeamCompareChart extends Chart {
   let margin = { left: 45, right: 5, top: 30, bottom: 35, },
     width = svg_width - margin.left - margin.right,
     height = svg_height - margin.top - margin.bottom,
-    axisTicks = {qty: 7, outerSize: 0};
+    axisTicks = {qty: 7, outerSize: 2};
 
   let xScale = d3.scaleLinear().range([0, width*.85]);
 
   let yScale = d3
     .scaleBand()
     .range([height - margin.top - margin.bottom, 0])
-    .padding(.2);
+    .padding(.125);
 
   const gameSenseColors = ["#505252","#94a4a5","#ffffff","#70bf57","#0db688","#eae34c"];
 
-  let yAxis = d3.axisLeft(yScale)
+  let yAxis = d3
+      .axisLeft(yScale)
       .tickSizeOuter(axisTicks.outerSize)
       .tickSizeInner(2)
       .tickFormat((d, i) => values[i].display_name);
 
   let xAxis = d3
     .axisBottom(xScale)
-    .ticks(axisTicks.qty)
-    .tickSizeOuter(axisTicks.outerSize);
+    .tickSizeOuter(axisTicks.outerSize)
+    .ticks(axisTicks.qty);
 
   // solid background for the chart
   svg
@@ -39,9 +40,8 @@ class TeamCompareChart extends Chart {
       .attr("width", svg_width )
       .attr("y", 0)
       .attr("height", height)
-      // .attr("fill", "lightgray")
-      .attr("fill", "#2f4a6d")
-      .attr("opacity", 1);
+      .attr("fill", "white")
+      .attr("opacity", .05);
 
   // chart group 'g'
   const chart = svg
@@ -112,7 +112,6 @@ class TeamCompareChart extends Chart {
       .append("g")
       .attr("transform", `translate(${margin.left}, -${pushUpAveLine})`);
 
-    
       line
       .append("line")
       .style("stroke-width", 6)
@@ -140,7 +139,7 @@ class TeamCompareChart extends Chart {
             .attr("y", yScale.bandwidth() * .5)
             .text("Average " + average + " (" + scoreType + " score)")
             .style("font-size",  "15px")
-            .style("fill", "#fff")
+            .style("fill", "#115a68")
             .attr("opacity", 0)
             .transition(t)
               .delay(400)
@@ -185,7 +184,7 @@ class TeamCompareChart extends Chart {
          .attr("x",  xScale(average))
         .attr("font-family" , "sans-serif")
         .attr("font-size" , "10px")
-        .attr("fill" , "white")
+        .attr("fill" , "black")
         .attr("text-anchor", "right")
         .attr("opacity", 0)
         .transition()
@@ -214,17 +213,16 @@ class TeamCompareChart extends Chart {
     //add yAxis label (if desired)
     // chart
     //   .append("text")
-    //   .attr("transform", "translate(15," +  (height+margin.bottom)/2 + ") rotate(-90)")
+    //   .attr("transform", "translate(-20," +  (height+margin.bottom)/2 + ") rotate(-90)")
     //   .text("Player");
 
     //add xAxis label for Score Type
     chart
       .append("text")
-      .attr("transform", "translate(" + svg_width*.35 + "," + (height - margin.bottom) + ")")
+      .attr("transform", "translate(" + svg_width*.4 + "," + (height - margin.bottom) + ")")
       .text( " " + scoreType + " score")
       .style("font-size",  "12px")
-      .style("fill", "#fff");
-
+      .style("fill", "black");
     }
 }
 export default TeamCompareChart;
