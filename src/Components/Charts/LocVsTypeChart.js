@@ -18,7 +18,7 @@ class LocVsTypeChart extends Chart {
          height = svg_height - margin.top - margin.bottom;
 
   const axisTicks = {qty: 12, outerSize: 0};  
-  const dataPad = 35;   // amount to pad to min/max beyond actual data for charting   
+  const dataPad = 10;   // amount to pad to min/max beyond actual data for charting   
 
     //draw the svg border for reference
     const svgBorder = svg     // line 8
@@ -40,6 +40,8 @@ class LocVsTypeChart extends Chart {
     // get max and min score values for current data ...
     let scoreMaxL = d3.max(values, d => d.first_glance_location_score);
     let scoreMinL = d3.min(values, d => d.first_glance_location_score);
+  console.log("----------------- scoreMinL --> " + scoreMinL);
+  console.log("----------------- scoreMaxL --> " + scoreMaxL);
 
     let scoreMaxT = d3.max(values, d => d.first_glance_type_score);
     let scoreMinT = d3.min(values, d => d.first_glance_type_score);
@@ -108,18 +110,50 @@ class LocVsTypeChart extends Chart {
      let locationMid = xScale((scoreMinL + scoreMaxL)/2);
      let typeMid = yScale((scoreMinT + scoreMaxT)/2);
 
+
+     let locOneThird = xScale( (scoreMaxL - scoreMinL)*(1/3)   + scoreMinL);
+     let locTwoThirds = xScale((scoreMaxL - scoreMinL)*(2/3) + scoreMinL);
+     
      //Vertical  mid line
-     let lineMidLoc = chart
-       .append("g")
-     lineMidLoc
-       .append("line")
-         .style("stroke-width", 4)
-         .style("stroke","#cbd2d2")
-         .attr("x1", locationMid)
-         .attr("y1", 0)
-         .attr("x2", locationMid)
-         .attr("y2", height)
-         .attr("opacity", .8);
+    //  let lineMidLoc = chart
+    //    .append("g")
+    //  lineMidLoc
+    //    .append("line")
+    //      .style("stroke-width", 4)
+    //      .style("stroke","lightgray")
+    //      .attr("x1", locationMid)
+    //      .attr("y1", 0)
+    //      .attr("x2", locationMid)
+    //      .attr("y2", height)
+    //      .attr("opacity", .8);
+
+      //Vertical  1/3  line
+      let lineOneThird = chart
+        .append("g")
+      lineOneThird
+      .append("line")
+        .style("stroke-width", 6)
+        .style("stroke","lightgray")
+        .attr("x1", locOneThird)
+        .attr("y1", 0)
+        .attr("x2", locOneThird)
+        .attr("y2", height)
+        .attr("opacity", .8);
+      
+        //Vertical 2/3 line
+      let lineTwoThirds = chart
+        .append("g")     
+      lineTwoThirds
+           .append("line")
+             .style("stroke-width", 6)
+             .style("stroke","lightgray")
+             .attr("x1", locTwoThirds)
+             .attr("y1", 0)
+             .attr("x2", locTwoThirds)
+             .attr("y2", height)
+             .attr("opacity", .8);
+
+
 
       // Add vertical grid lines
       chart
@@ -141,13 +175,13 @@ class LocVsTypeChart extends Chart {
                 .tickFormat("")
             )  
 
-      //Horizontal mid line
+      //Horizontal Mid lines
       let lineMidType = chart
          .append("g")
         lineMidType
          .append("line")
-           .style("stroke-width", 4)
-           .style("stroke","#cbd2d2")
+           .style("stroke-width", 6)
+           .style("stroke","lightgray")  //#cbd2d2
            .attr("x1", 0)
            .attr("y1", typeMid)
            .attr("x2", width)
@@ -176,7 +210,7 @@ class LocVsTypeChart extends Chart {
            .attr("text-anchor", "none")
            .attr("x", 5)
            .attr("y", tAvg-2)
-           .text("Average " + typAvg + " (Type Score)")
+           .text("Team Average " + typAvg + " (Pitch Type)")
            .style("font-size",  "8px")
            .style("fill", "#1c94aa");
         } else {
@@ -217,7 +251,7 @@ class LocVsTypeChart extends Chart {
             "transform",
             `rotate(90)`
           ) 
-          .text("Average " + locAvg + " (Location Score)")
+          .text("Team Average " + locAvg + " (Pitch Location)")
           .style("font-size",  "8px")
           .style("fill", "#1c94aa");
       } else {
@@ -326,7 +360,7 @@ class LocVsTypeChart extends Chart {
           "transform",
           `translate(-35, ${(height/2) } ) rotate(-90)`
         ) 
-        .text("Type Score")
+        .text("Pitch Type score")
         .style("font-size",  "14px")
         .style("text-anchor", "middle")
         .style("fill", "#000");   
@@ -339,7 +373,7 @@ class LocVsTypeChart extends Chart {
           "transform",
           `translate(${width/2}, ${(height + 35) } )`
         ) 
-        .text( "Location Score")
+        .text( "Pitch Location score")
         .style("font-size",  "14px")
         .style("text-anchor", "middle")
         .style("fill", "#000");       

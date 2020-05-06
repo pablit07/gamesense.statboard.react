@@ -91,13 +91,8 @@ class PlayerDrills extends Chart {
             .attr("y", d => yScale(d.thisScore))
             
 
-      // set the proper fillColor based on score in Quartile Range. 
-      .style("fill", function(d) {
-          if (d.thisScore <= quartiles.q1) {return qColors[0]}
-          else if (d.thisScore <= quartiles.median){return qColors[1]}
-          else if (d.thisScore <= quartiles.q3){return qColors[2]}
-          else {return qColors[3]}
-      })
+      // fill color for bar prelim ... 
+      .style("fill", "70bf57" )
       .attr("opacity", 1.0);
 
     // Average Line
@@ -108,9 +103,9 @@ class PlayerDrills extends Chart {
 
       line
       .append("line")
-      .style("stroke-width", 6)
+      .style("stroke-width", 1)
       .style("stroke-dasharray", "22, 4")
-      .style("stroke","#1c94aa")
+      .style("stroke","black")
       .attr("x1", 0)
       .attr("y1", scoreVal)
       .attr("y2", scoreVal)
@@ -129,9 +124,9 @@ class PlayerDrills extends Chart {
             .attr("text-anchor", "none")
             .attr("y", scoreVal - 10)
             .attr("x", width * .3)
-            .text("Average " + average + " (" + scoreType + " score)")
+            .text("Average Drills Completed: " + average + "")
             .style("font-size",  "15px")
-            .style("fill", "#115a68")
+            .style("fill", "clack")
             .attr("opacity", 0)
             .transition(t)
               // .delay(700)
@@ -169,6 +164,7 @@ class PlayerDrills extends Chart {
           .data(values)
       .enter()
         .append("text")
+        .style("font-size",  "14px")
         .text(d => d.thisScore)
         .attr("x", function(d,i){
           return (xScale(i) + (xScale.bandwidth() / 2)+2);
@@ -210,6 +206,15 @@ class PlayerDrills extends Chart {
       .text( " Player")
       .style("font-size",  "12px")
       .style("fill", "black");
+
+   //add Period Label
+    chart
+        .append("text")
+        .attr("transform", `translate(${svg_width*.5}, ${30})`)
+        .text( "Week of April 6 - 12, 2020")
+        .style("font-size",  "18px")
+        .style("fill", "black");  
     }
+    
 }
 export default PlayerDrills;
