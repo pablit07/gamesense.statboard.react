@@ -41,10 +41,10 @@ class TeamTestsView extends Component {
           <div> 
           <PlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
               {/* <ChartHeader/> */}
-                <BarChart/>
+                {/* <BarChart/> */}
             </PlayerUseOverTimeContainer>               
             <TeamTestsPrScoreContainer socket={this.props.socket}>
-                <LocVsTypeChart svg_height={300} svg_width={450} svg_border_opacity={0.5}/>
+                <LocVsTypeChart svg_height={500} svg_width={500} svg_border_opacity={0.5}/>
                 <ChartHeader/>
               <TeamCompareChart svg_width={700} svg_height={400}/>
               <PlayerDrills svg_width={700} svg_height={400}/>

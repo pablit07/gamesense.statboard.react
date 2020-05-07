@@ -113,6 +113,9 @@ class LocVsTypeChart extends Chart {
 
      let locOneThird = xScale( (scoreMaxL - scoreMinL)*(1/3)   + scoreMinL);
      let locTwoThirds = xScale((scoreMaxL - scoreMinL)*(2/3) + scoreMinL);
+
+     let typeOneThird = yScale( (scoreMaxT - scoreMinT)*(1/3)   + scoreMinT);
+     let typeTwoThirds = yScale((scoreMaxT - scoreMinT)*(2/3) + scoreMinT);
      
      //Vertical  mid line
     //  let lineMidLoc = chart
@@ -127,10 +130,50 @@ class LocVsTypeChart extends Chart {
     //      .attr("y2", height)
     //      .attr("opacity", .8);
 
+    // //Horizontal Mid line
+    //   let lineMidType = chart
+    //     .append("g")
+    //   lineMidType
+    //     .append("line")
+    //       .style("stroke-width", 6)
+    //       .style("stroke","lightgray")  //#cbd2d2
+    //       .attr("x1", 0)
+    //       .attr("y1", typeMid)
+    //       .attr("x2", width)
+    //       .attr("y2", typeMid)
+    //       .attr("opacity", .8)
+
+    //Horizontal 1/3 line
+    let typeOneThirdLine = chart
+      .append("g")
+      typeOneThirdLine
+      .append("line")
+        .style("stroke-width", 6)
+        .style("stroke","lightgray")  //#cbd2d2
+        .attr("x1", 0)
+        .attr("y1", typeOneThird)
+        .attr("x2", width)
+        .attr("y2", typeOneThird)
+        .attr("opacity", .8)
+
+    //Horizontal 2/3 line
+    let typeTwoThirdsLine = chart
+      .append("g")
+      typeTwoThirdsLine
+      .append("line")
+        .style("stroke-width", 6)
+        .style("stroke","lightgray")  //#cbd2d2
+        .attr("x1", 0)
+        .attr("y1", typeTwoThirds)
+        .attr("x2", width)
+        .attr("y2", typeTwoThirds)
+        .attr("opacity", .8)
+
+//////////////////////////////////////////////
       //Vertical  1/3  line
-      let lineOneThird = chart
-        .append("g")
-      lineOneThird
+    let locOneThirdLine = chart
+       .append("g")
+    locOneThirdLine
       .append("line")
         .style("stroke-width", 6)
         .style("stroke","lightgray")
@@ -141,9 +184,9 @@ class LocVsTypeChart extends Chart {
         .attr("opacity", .8);
       
         //Vertical 2/3 line
-      let lineTwoThirds = chart
+      let locTwoThirdsLine = chart
         .append("g")     
-      lineTwoThirds
+      locTwoThirdsLine
            .append("line")
              .style("stroke-width", 6)
              .style("stroke","lightgray")
@@ -152,7 +195,6 @@ class LocVsTypeChart extends Chart {
              .attr("x2", locTwoThirds)
              .attr("y2", height)
              .attr("opacity", .8);
-
 
 
       // Add vertical grid lines
@@ -174,19 +216,6 @@ class LocVsTypeChart extends Chart {
                 .tickSize(-width)
                 .tickFormat("")
             )  
-
-      //Horizontal Mid lines
-      let lineMidType = chart
-         .append("g")
-        lineMidType
-         .append("line")
-           .style("stroke-width", 6)
-           .style("stroke","lightgray")  //#cbd2d2
-           .attr("x1", 0)
-           .attr("y1", typeMid)
-           .attr("x2", width)
-           .attr("y2", typeMid)
-           .attr("opacity", .8)
 
       //Horizontal (type score) Average line
       let lineAvgType = chart
