@@ -263,8 +263,8 @@ class LocVsTypeChart extends Chart {
            .attr("text-anchor", "none")
            .attr("x", 5)
            .attr("y", tAvg-2)
-           .text("Team Average " + typAvg + " (Pitch Type)")
-           .style("font-size",  "8px")
+           .text("Team Average - " + typAvg + " (Type)")
+           .style("font-size",  "10px")
            .style("fill", "#1c94aa");
         } else {
           typeAvgLabel
@@ -304,8 +304,8 @@ class LocVsTypeChart extends Chart {
             "transform",
             `rotate(90)`
           ) 
-          .text("Team Average " + locAvg + " (Pitch Location)")
-          .style("font-size",  "8px")
+          .text("Team Average - " + locAvg + " (Location)")
+          .style("font-size",  "10px")
           .style("fill", "#1c94aa");
       } else {
         locAvgLabel
