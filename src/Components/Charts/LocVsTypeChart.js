@@ -18,7 +18,7 @@ class LocVsTypeChart extends Chart {
          height = svg_height - margin.top - margin.bottom;
 
   const axisTicks = {qty: 11, outerSize: 0, innerSize: 2};   
-  const dataPad = 0;   // Bumped this up for @Dave // amount to pad to min/max beyond actual data for charting   
+  const dataPad = 20;   // Bumped this up for @Dave // amount to pad to min/max beyond actual data for charting   
 
     //draw the svg border for reference
     const svgBorder = svg     // line 8
