@@ -18,7 +18,7 @@ class LocVsTypeChart extends Chart {
          height = svg_height - margin.top - margin.bottom;
 
   const axisTicks = {qty: 12, outerSize: 0};  
-  const dataPad = 10;   // amount to pad to min/max beyond actual data for charting   
+  const dataPad = 25;   // Bumped this up for @Dave // amount to pad to min/max beyond actual data for charting   
 
     //draw the svg border for reference
     const svgBorder = svg     // line 8
@@ -40,11 +40,16 @@ class LocVsTypeChart extends Chart {
     // get max and min score values for current data ...
     let scoreMaxL = d3.max(values, d => d.first_glance_location_score);
     let scoreMinL = d3.min(values, d => d.first_glance_location_score);
-  console.log("----------------- scoreMinL --> " + scoreMinL);
-  console.log("----------------- scoreMaxL --> " + scoreMaxL);
 
     let scoreMaxT = d3.max(values, d => d.first_glance_type_score);
     let scoreMinT = d3.min(values, d => d.first_glance_type_score);
+
+    // let allScoresMax = Math.max(scoreMaxL, scoreMaxT);
+    let allScoresMax = 560;  // Decided to go with the highest possible score for Max
+    let allScoresMin = Math.min(scoreMinL, scoreMinT);
+
+    console.log("----------------------->allScoresMax " + allScoresMax);
+    console.log("----------------------->allScoresMin " + allScoresMin);
 
     let tooltip = d3.select("body").append("div")
       .attr("class", "tooltip")
@@ -72,50 +77,67 @@ class LocVsTypeChart extends Chart {
       .append("g")
       .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");  
+
+      // make a unified X, Y scale ... 
+      let uniScaleY = d3.scaleLinear()
+      .domain([allScoresMin-dataPad, allScoresMax+dataPad])
+      .range([height, 0]);
+
+      let uniScaleX = d3.scaleLinear()
+      .domain([allScoresMin-dataPad, allScoresMax+dataPad])
+      .range([0, width]);
+
          
       // Define X and Y axes, call them near end.
       let yScale = d3.scaleLinear()
-        .domain([scoreMinT-dataPad, scoreMaxT+dataPad])
+        .domain([allScoresMin-dataPad, allScoresMax+dataPad])
         .range([height, 0]);
 
       let yAxis = d3
-        .axisLeft(yScale)
+        .axisLeft(uniScaleY)
         .tickSizeOuter(axisTicks.outerSize)
         .tickSizeInner(2); 
 
       // add X axis
       let xScale = d3.scaleLinear()
-        .domain([scoreMinL-dataPad, scoreMaxL+dataPad])
+        .domain([allScoresMin-dataPad, allScoresMax+dataPad])
         .range([0, width]); 
         
       let xAxis = d3
         // .attr({'stroke-width': '10px'})
-        .axisBottom(xScale)
+        .axisBottom(uniScaleX)
         .tickSizeOuter(axisTicks.outerSize)
         .tickSizeInner(2);  
 
-      let tAvg = yScale(typAvg);   // first_glance_type_score: 325  
-      let lAvg = xScale(locAvg);  // first_glance_location_score: 330
+      let tAvg = uniScaleY(typAvg);   // first_glance_type_score: 325  
+      let lAvg = uniScaleX(locAvg);  // first_glance_location_score: 330
 
       function make_x_gridlines() {
-        return d3.axisBottom(xScale)
+        return d3.axisBottom(uniScaleX)
           .ticks(axisTicks.qty)
       }
       function make_y_gridlines() {
-        return d3.axisLeft(yScale)
+        return d3.axisLeft(uniScaleY)
           .ticks(axisTicks.qty)
       }
      
     // Add reference lines
-     let locationMid = xScale((scoreMinL + scoreMaxL)/2);
-     let typeMid = yScale((scoreMinT + scoreMaxT)/2);
+     let locationMid = uniScaleX((scoreMinL + scoreMaxL)/2);
+     let typeMid = uniScaleY((scoreMinT + scoreMaxT)/2);
 
 
-     let locOneThird = xScale( (scoreMaxL - scoreMinL)*(1/3)   + scoreMinL);
-     let locTwoThirds = xScale((scoreMaxL - scoreMinL)*(2/3) + scoreMinL);
+     let locOneThird = uniScaleX( (allScoresMax - allScoresMin)*(1/3)   + allScoresMin);
+     let locTwoThirds = uniScaleX((allScoresMax - allScoresMin)*(2/3) + allScoresMin);
 
-     let typeOneThird = yScale( (scoreMaxT - scoreMinT)*(1/3)   + scoreMinT);
-     let typeTwoThirds = yScale((scoreMaxT - scoreMinT)*(2/3) + scoreMinT);
+     let typeOneThird = uniScaleY( (allScoresMax - allScoresMin)*(1/3)   + allScoresMin);
+     let typeTwoThirds = uniScaleY((allScoresMax - allScoresMin)*(2/3) + scoreMinT);
+     
+
+     console.log("----------------------->locOneThird " + locOneThird);
+     console.log("----------------------->locTwoThirds " + locTwoThirds);
+     console.log("----------------------->typeOneThird " + typeOneThird);
+     console.log("----------------------->typeTwoThirds " + typeTwoThirds);
+     
      
      //Vertical  mid line
     //  let lineMidLoc = chart
@@ -154,7 +176,7 @@ class LocVsTypeChart extends Chart {
         .attr("y1", typeOneThird)
         .attr("x2", width)
         .attr("y2", typeOneThird)
-        .attr("opacity", .8)
+        .attr("opacity", .4)
 
     //Horizontal 2/3 line
     let typeTwoThirdsLine = chart
@@ -167,7 +189,7 @@ class LocVsTypeChart extends Chart {
         .attr("y1", typeTwoThirds)
         .attr("x2", width)
         .attr("y2", typeTwoThirds)
-        .attr("opacity", .8)
+        .attr("opacity", .4)
 
 //////////////////////////////////////////////
       //Vertical  1/3  line
@@ -181,7 +203,7 @@ class LocVsTypeChart extends Chart {
         .attr("y1", 0)
         .attr("x2", locOneThird)
         .attr("y2", height)
-        .attr("opacity", .8);
+        .attr("opacity", .4);
       
         //Vertical 2/3 line
       let locTwoThirdsLine = chart
@@ -194,7 +216,7 @@ class LocVsTypeChart extends Chart {
              .attr("y1", 0)
              .attr("x2", locTwoThirds)
              .attr("y2", height)
-             .attr("opacity", .8);
+             .attr("opacity", .4);
 
 
       // Add vertical grid lines
@@ -324,9 +346,9 @@ class LocVsTypeChart extends Chart {
            .style("stroke-width", .5)
            .style("stroke","black")
            .attr("x1", 0)
-           .attr("y1", yScale(scoreMaxT+dataPad))
+           .attr("y1", uniScaleY(allScoresMax+dataPad))
            .attr("x2", width)
-           .attr("y2", yScale(scoreMaxT+dataPad))
+           .attr("y2", uniScaleY(allScoresMax+dataPad))
            .attr("opacity", .8)
 
       let rightLine = chart
@@ -335,9 +357,9 @@ class LocVsTypeChart extends Chart {
       .append("line")
         .style("stroke-width", .5)
         .style("stroke","black")
-        .attr("x1", xScale(scoreMaxL+dataPad))
+        .attr("x1", uniScaleX(allScoresMax+dataPad))
         .attr("y1", height)
-        .attr("x2", xScale(scoreMaxL+dataPad))
+        .attr("x2", uniScaleX(allScoresMax+dataPad))
         .attr("y2", 0)
       
       // Add the Type/Location dots with tooltips ...
@@ -347,8 +369,8 @@ class LocVsTypeChart extends Chart {
         .data(values)
         .enter()
           .append("circle")
-            .attr("cx", d => xScale(d.first_glance_location_score))
-            .attr("cy", d => yScale(d.first_glance_type_score))
+            .attr("cx", d => uniScaleX(d.first_glance_location_score))
+            .attr("cy", d => uniScaleY(d.first_glance_type_score))
             .attr("r", 6)
             .style("fill", "#69b3a2")
             .attr("stroke", "#000")
@@ -375,8 +397,8 @@ class LocVsTypeChart extends Chart {
         .data(values)
         .enter()
           .append("text")
-          .attr("x", d => xScale(d.first_glance_location_score))
-          .attr("y", d => yScale(d.first_glance_type_score)-7)
+          .attr("x", d => uniScaleX(d.first_glance_location_score))
+          .attr("y", d => uniScaleY(d.first_glance_type_score)-7)
           .text(d => d.display_name)
           .style("font-size",  "8px")
           .style("text-anchor", "middle")
@@ -389,7 +411,7 @@ class LocVsTypeChart extends Chart {
           "transform",
           `translate(-35, ${(height/2) } ) rotate(-90)`
         ) 
-        .text("Pitch Type score")
+        .text("Pitch Type")
         .style("font-size",  "14px")
         .style("text-anchor", "middle")
         .style("fill", "#000");   
@@ -402,7 +424,7 @@ class LocVsTypeChart extends Chart {
           "transform",
           `translate(${width/2}, ${(height + 35) } )`
         ) 
-        .text( "Pitch Location score")
+        .text( "Location")
         .style("font-size",  "14px")
         .style("text-anchor", "middle")
         .style("fill", "#000");       

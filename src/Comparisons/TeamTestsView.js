@@ -37,7 +37,7 @@ class TeamTestsView extends Component {
 
         return (<Fragment>
           <p style={style}>-- Page rendered from: TeamTestView.js --</p>
-          <h2 style={style}>Pitch Type vs. Location - Team</h2>
+          <h2 style={style}>Pitch Recognition Analysis</h2>
           <div> 
           <PlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
               {/* <ChartHeader/> */}
