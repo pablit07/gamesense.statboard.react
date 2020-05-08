@@ -17,8 +17,8 @@ class LocVsTypeChart extends Chart {
          width = svg_width - margin.left - margin.right,
          height = svg_height - margin.top - margin.bottom;
 
-  const axisTicks = {qty: 17, outerSize: 0, innerSize: 2};  
-  const dataPad = 20;   // Bumped this up for @Dave // amount to pad to min/max beyond actual data for charting   
+  const axisTicks = {qty: 11, outerSize: 0, innerSize: 2};   
+  const dataPad = 0;   // Bumped this up for @Dave // amount to pad to min/max beyond actual data for charting   
 
     //draw the svg border for reference
     const svgBorder = svg     // line 8
@@ -47,9 +47,6 @@ class LocVsTypeChart extends Chart {
     // let allScoresMax = Math.max(scoreMaxL, scoreMaxT);
     let allScoresMax = 560;  // Decided to go with the highest possible score for Max
     let allScoresMin = Math.min(scoreMinL, scoreMinT);
-
-    console.log("----------------------->allScoresMax " + allScoresMax);
-    console.log("----------------------->allScoresMin " + allScoresMin);
 
     let tooltip = d3.select("body").append("div")
       .attr("class", "tooltip")
@@ -116,25 +113,34 @@ class LocVsTypeChart extends Chart {
 
       function make_x_gridlines() {
         return d3.axisBottom(uniScaleX)
-          .ticks(axisTicks.qty)
+          .ticks(axisTicks.qty * 2)
       }
       function make_y_gridlines() {
         return d3.axisLeft(uniScaleY)
-          .ticks(axisTicks.qty)
+          .ticks(axisTicks.qty * 2)
       }
      
-    // Add reference lines
+      // Add reference lines
      let locationMid = uniScaleX((scoreMinL + scoreMaxL)/2);
      let typeMid = uniScaleY((scoreMinT + scoreMaxT)/2);
 
 
-     let locOneThird = uniScaleX( (allScoresMax - allScoresMin)*(1/3)   + allScoresMin);
-     let locTwoThirds = uniScaleX((allScoresMax - allScoresMin)*(2/3) + allScoresMin);
-
-     let typeOneThird = uniScaleY( (allScoresMax - allScoresMin)*(1/3)   + allScoresMin);
-     let typeTwoThirds = uniScaleY((allScoresMax - allScoresMin)*(2/3) + scoreMinT);
      
+    //  let locOneThird = uniScaleX((allScoresMax - allScoresMin)*(1/3)   + allScoresMin);
+    //  let locTwoThirds = uniScaleX((allScoresMax - allScoresMin)*(2/3) + allScoresMin);
+    //  let typeOneThird = uniScaleY( (allScoresMax - allScoresMin)*(1/3)   + allScoresMin);
+    //  let typeTwoThirds = uniScaleY((allScoresMax - allScoresMin)*(2/3) + allScoresMin);
 
+    ///////////////////
+     // rebuild the 9-box overlay with equal size squares per Dave
+     let locOneThird = uniScaleX( (((allScoresMax+dataPad)-(allScoresMin-dataPad)) * (1/3)) + (allScoresMin-dataPad) );
+     let locTwoThirds = uniScaleX( (((allScoresMax+dataPad)-(allScoresMin-dataPad)) * (2/3)) + (allScoresMin-dataPad) );
+     let typeOneThird = uniScaleY( (((allScoresMax+dataPad)-(allScoresMin-dataPad)) * (1/3)) + (allScoresMin-dataPad) );
+     let typeTwoThirds = uniScaleY( (((allScoresMax+dataPad)-(allScoresMin-dataPad)) * (2/3)) + (allScoresMin-dataPad) );
+
+     console.log("----------------------->dataPad " + dataPad);
+     console.log("----------------------->allScoresMax " + allScoresMax);
+     console.log("----------------------->allScoresMin " + allScoresMin);
      console.log("----------------------->locOneThird " + locOneThird);
      console.log("----------------------->locTwoThirds " + locTwoThirds);
      console.log("----------------------->typeOneThird " + typeOneThird);
