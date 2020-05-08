@@ -17,8 +17,8 @@ class LocVsTypeChart extends Chart {
          width = svg_width - margin.left - margin.right,
          height = svg_height - margin.top - margin.bottom;
 
-  const axisTicks = {qty: 12, outerSize: 0};  
-  const dataPad = 25;   // Bumped this up for @Dave // amount to pad to min/max beyond actual data for charting   
+  const axisTicks = {qty: 17, outerSize: 0, innerSize: 2};  
+  const dataPad = 20;   // Bumped this up for @Dave // amount to pad to min/max beyond actual data for charting   
 
     //draw the svg border for reference
     const svgBorder = svg     // line 8
@@ -96,7 +96,8 @@ class LocVsTypeChart extends Chart {
       let yAxis = d3
         .axisLeft(uniScaleY)
         .tickSizeOuter(axisTicks.outerSize)
-        .tickSizeInner(2); 
+        .tickSizeInner(axisTicks.innerSize)
+        .ticks(axisTicks.qty); 
 
       // add X axis
       let xScale = d3.scaleLinear()
@@ -107,7 +108,8 @@ class LocVsTypeChart extends Chart {
         // .attr({'stroke-width': '10px'})
         .axisBottom(uniScaleX)
         .tickSizeOuter(axisTicks.outerSize)
-        .tickSizeInner(2);  
+        .tickSizeInner(axisTicks.innerSize)
+        .ticks(axisTicks.qty);  
 
       let tAvg = uniScaleY(typAvg);   // first_glance_type_score: 325  
       let lAvg = uniScaleX(locAvg);  // first_glance_location_score: 330
@@ -411,7 +413,7 @@ class LocVsTypeChart extends Chart {
           "transform",
           `translate(-35, ${(height/2) } ) rotate(-90)`
         ) 
-        .text("Pitch Type")
+        .text("Type")
         .style("font-size",  "14px")
         .style("text-anchor", "middle")
         .style("fill", "#000");   
