@@ -111,7 +111,7 @@ class BarChart extends Axes2dChart {
               //  Transition up!
               .transition(t)
                   .attrTween('width', widthTween)
-                  // .delay((d, i) => { return i * 50; })
+                  .delay((d, i) => { return i * 50; })
                   .attr("height", d => this.state.height - yScale(d[pt])  - 50)
                   .attr("y", d => yScale(d[pt]));
     }
