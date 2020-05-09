@@ -29,11 +29,11 @@ class TeamTestsView extends Component {
                 </div>);
 
         return (<Fragment>
-          {/* <p style={style}>-- Page rendered from: TeamTestView.js --</p>
-          <p style={style}>TeamCompareChart - Compare Type, Location and Total Scores</p> */}
+          <p style={style}>-- Page rendered from: TeamTestView.js --</p>
+          <h2 style={style}>Pitch Recognition Analysis</h2>
           <div>                
             <TeamTestsPrScoreContainer socket={this.props.socket}>
-                <LocVsTypeChart svg_height={400} svg_width={600} svg_border_opacity={0.5}/>
+                <LocVsTypeChart svg_height={500} svg_width={500} svg_border_opacity={0.5}/>
                 <ChartHeader/>
               <TeamCompareChart svg_width={700} svg_height={400}/>
             </TeamTestsPrScoreContainer>
