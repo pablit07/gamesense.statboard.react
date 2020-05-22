@@ -6,13 +6,15 @@ import Axes2dChart from "./Axes2dChart";
 
 
 class BarChart extends Axes2dChart {
-    addChartLayer(svg, rows, x, y, pt, color) {
+    addChartLayer(svg, rows, xScale, yScale, pt, color) {
         // ignore blank rows
-        rows = rows.filter(x => !!x[pt] && x[pt] !== '-');
+        // rows = rows.filter(xScale => !!xScale[pt] && xScale[pt] !== '-');
+        console.log("--------------- rows ----------------");
+        console.log(rows);
 
         const rects = svg.selectAll("rect")
-
-        let barWidth = ((this.state.width * 0.9) / x.range().length);
+        
+        let barWidth = ((this.state.width * 0.9) / xScale.range().length);
 
         // Gradient Colors
         // Create the svg:defs element and the main gradient definition.
@@ -33,8 +35,8 @@ class BarChart extends Axes2dChart {
 
         const widthTween = (d) => {
             // define interpolation for the tween
-            // d3.interpoplate returns a function we call 'i'
-            //let i = d3.interpolate(0, x.bandwidth());
+            // d3.interpolate returns a function we'll call 'i'
+            // let i = d3.interpolate(0, x.bandwidth());
             let i = d3.interpolate(0, Math.max(barWidth, 1));
 
             // return a function which takes in a time ticker 't'
@@ -56,7 +58,9 @@ class BarChart extends Axes2dChart {
 
         var mouseover = function(d) {
             d3.select(this)
-                .style("stroke-width", "2px")
+                .style("stroke-width", "1.5px")
+                .style("stroke", "#1c94aa")
+                .attr("ry", 1)
 
             tooltip
                 .style("opacity", 1)
@@ -73,13 +77,12 @@ class BarChart extends Axes2dChart {
 
         var mouseleave = function(d) {
             d3.select(this)
-                .style("stroke", "black")
-                .style("stroke-width", "1px")
+                .style("stroke", "none")
+                .attr("ry", 0)
             tooltip
                 .style("visibility", "hidden")
         }
-
-
+        
         // Define the transition once here, and use it for all transitions
         // so the same duration is used on all animations.
         const t = d3.transition().duration(500);  // 500 millisecons, .5 second
@@ -94,25 +97,23 @@ class BarChart extends Axes2dChart {
             .selectAll('rect') // this 'selects' the yet to be created rects.
             .data(rows) 
             .enter()
-            .append('rect')
-            .classed('filled', true)
-            .attr("width", Math.max(barWidth, 1))
-            .attr("height", d => 0)                 // Starting cond. for height.
-            .attr("x", d => x(d[pt]))
-            .attr("y", d => this.state.height - 50)      // Starting cond. for Y
-            // tooltip calls
-            .on("mouseover", mouseover)
-            .on("mousemove", mousemove)
-            .on("mouseleave", mouseleave)
-            .attr("ry", "3")
-            .style("stroke", "black")
-            .style("stroke-width", "1px")
-            .style("opacity", 1)
-            //  Transition up!
-            .transition(t)
-                .attrTween('width', widthTween)
-                .attr("height", d => this.state.height - y(d[pt])  - 50)
-                .attr("y", d => y(d[pt]));
+              .append('rect')
+              .classed('filled', true)
+              .attr("width", Math.max(barWidth, 1))
+              .attr("height", d => 0)                 // Starting cond. for height.
+              .attr("x", d => xScale(d[pt]))
+              .attr("y", d => this.state.height - 50)      
+              // tooltip calls
+              .on("mouseover", mouseover)
+              .on("mousemove", mousemove)
+              .on("mouseleave", mouseleave)
+              .style("opacity", 1)
+              //  Transition up!
+              .transition(t)
+                  .attrTween('width', widthTween)
+                  // .delay((d, i) => { return i * 50; })
+                  .attr("height", d => this.state.height - yScale(d[pt])  - 50)
+                  .attr("y", d => yScale(d[pt]));
     }
 }
 export default BarChart;

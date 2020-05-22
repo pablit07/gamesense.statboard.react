@@ -41,7 +41,7 @@ class Axes2dChart extends Component {
         window.removeEventListener('resize', this.handleResize);
     }
 
-    addChartLayer(svg, rows, x, y, pt, color) {
+    addChartLayer(svg, rows, xScale, yScale, pt, color) {
         throw new Error("Must override addChartLayer")
     }
 
