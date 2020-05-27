@@ -1,4 +1,6 @@
-# GameSense Chart Components Documentation
+![gameSense Logo](./pics/gameSenseLogo.png) 
+# Chart Components Documentation
+* ./gamesense.statboard/src/Components/Charts/*
 ---
 ## *TeamCompareChart.js*
 *Horizontal barchart that displays the Type, Location or Total scores of each player on a team.*
