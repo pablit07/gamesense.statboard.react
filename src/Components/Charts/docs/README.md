@@ -1,7 +1,7 @@
 # gameSense Chart Components documentation
 ## TeamCompareChart.js
 
-![image](file://Users/mak/Desktop/ChartPics/TeamCompareChart.png)
+![image](./pics/TeamCompareChart_thumb.png)
 
 
 Horizontal barchart that displays the Type, Location or Total scores of each player on a team.
@@ -31,8 +31,21 @@ NOTE: You will need to use the Radio Buttons Component in a ChartHeader as follo
             </div>    
         </div>)
 
+![image](./pics/LocVsTypeChart_thumb.png)
 
+Description here ...
+
+![image](./pics/BarChart_thumb.png)
+
+Description here ...
+
+![image](./pics/HorizontalQuartileChart_thumb.png)
+
+Description here ...
+
+![image](./pics/PlayerDrills_thumb.png)
+
+Description here ...
 
 - **Mark Kauffman**
-    - [GitHub](https://github.com/fentontaylor)
-    - [LinkedIn](https://www.linkedin.com/in/fenton-taylor-006057122/)
+
