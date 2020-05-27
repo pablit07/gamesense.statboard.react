@@ -77,7 +77,7 @@ NOTE: You will need to use the RadioButtons Component in a ChartHeader as follow
 ---
 
 ## *HorizontalQuartileChart.js*
-*Horizontal bar that displays that displays which quartile a player's score falls within all the team member's scores.*
+*Horizontal bar that displays which quartile a player's score falls within all the team member's scores.*
 
 
 ![image](./pics/HorizontalQuartileChart_thumb.png)
