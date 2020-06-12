@@ -4,10 +4,11 @@ import Chart from "./Chart";
 
 
 class HorizontalQuartileChart extends Chart {
-    addChartLayer({svg, values, svg_width, svg_height, textColor}) {
+    addChartLayer({svg, values, userScore, svg_width, svg_height, textColor}) {
 
         svg_width = svg_width || 580;
-        let {q1, median, q3, max, userScore} = values;
+        let {teamMin, teamMax, q1, median, q3, max} = values;
+        // values: {teamMin: 550, teamMax: 960,  q1: 695, median: 765, q3: 845, max: 1400, userScore: 832 }
 
         // Setup svg using d3's margin convention
         var margin = {top: 25, right: 25, bottom: 5, left: 30};
@@ -31,22 +32,25 @@ class HorizontalQuartileChart extends Chart {
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+// values: {teamMin: 550, teamMax: 960,  q1: 695, median: 765, q3: 845, max: 1400, userScore: 832 }
 // data converted to use d3 stack chart.
         var data = [
             { name: "notUsed",
-                q1: q1,
+                teamMin: teamMin,
+                q1: q1-teamMin,
                 median: median-q1,
                 q3: q3-median,
-                max: max-q3 }
+                teamMax: teamMax-q3,
+                max: max-teamMax }
         ];
-        var colors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
+        var colors = ["plum","#e65640", "#d99440", "#c7d63e", "#70bf57", "plum"];
         const t = d3.transition().duration(1000);
 /////////////
 // Adopted from: https://bl.ocks.org/d3indepth/30a7091e97b03eeba2a6a3ca1067ca92
 // Below
-
+        console.log(teamMin, q1, median, q3, teamMax, max);
         var stack = d3.stack()
-            .keys(['q1', 'median', 'q3', "max"]);
+            .keys(['teamMin', 'q1', 'median', 'q3', 'teamMax', 'max']);
 
 /// THIS IS HUGE !!! this stackedSeries WORKS!
         var stackedSeries = stack(data);
