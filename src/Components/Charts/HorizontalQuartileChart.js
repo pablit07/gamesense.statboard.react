@@ -194,7 +194,7 @@ class HorizontalQuartileChart extends Chart {
           .style("font-size",  "10px")
           .attr("fill", textColor)
           .attr("opacity", 0)
-          .attr("x", scoreScale(teamMin) - 30)
+          .attr("x", scoreScale(teamMin) - 40)
           .attr("y", -30)
           .transition(t)
               .delay(300)
