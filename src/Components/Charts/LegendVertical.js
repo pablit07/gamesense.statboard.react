@@ -1,41 +1,44 @@
 import Chart from "./Chart";
 
 class LegendVertical extends Chart {
-    addChartLayer({svg, yPos, svg_height, textColor}) {
+    addChartLayer({svg, tx, ty, yPos, svg_height, textColor}) {
 
         textColor = textColor || "black";
-        var colors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
+        let colors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
 
-        var height = svg_height || 90;  // This must match the height of the Horizontal Chart it is next to.
-        var width = 90;
+        let height = svg_height || 90;  // This must match the height of the Horizontal Chart it is next to.
+        let width = 90;
+        tx= tx || 0; // x,y translate the chart's whole svg on the page
+        ty = ty || 0;
 
         yPos = yPos || 5; //This adjusts the Legend elements verticle location in their svg. 
                           //Positive numbers move them down.
 
 // Draw legend
-        var legendSvg = svg
+        let legendSvg = svg
            
             .attr("width", width)
-            .attr("height", height)       
+            .attr("height", height)    
+            .attr("transform", "translate(" + tx + "," + ty + ")")   
             .append("g")
              .attr("transform", "translate(0, " + yPos + ")");  
 
 
-        var legend = legendSvg.selectAll("legend")
+        let legend = legendSvg.selectAll("legend")
             .data(colors)
             .enter().append("g")
               .attr("class", "legend")
               // loop thru each color, each time translate and add a rect + its text
               .attr("transform", function(d, i) { return "translate(10,0" + (i * 19) + ")"; }); 
 
-        legend.append("rect")
+          legend.append("rect")
             .attr("x", 0)
             .attr("y", 0)
             .attr("width", 18)
             .attr("height", 18)
             .style("fill", function(d, i) {return colors.slice().reverse()[i];});
 
-        legend.append("text")
+          legend.append("text")
             .attr('fill', textColor)
             .attr("x", 22)
             .attr("y", 9)

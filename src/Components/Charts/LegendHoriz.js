@@ -3,13 +3,16 @@ import * as d3 from 'd3';
 import Chart from "./Chart";
 
 class LegendHoriz extends Chart {
-    addChartLayer({svg, xPos, spacing, svg_width, textColor, textLabel}) {
+    addChartLayer({svg, tx, ty, xPos, spacing, svg_width, textColor, textLabel}) {
 
         textColor = textColor || "black";
 
         var colors = ["#e65640", "#d99440", "#c7d63e", "#70bf57"];
         textLabel = [textLabel || "Quartiles:"];
         colors = colors.reverse();
+
+        tx= tx || 0; // x,y translate the chart's whole svg on the page
+        ty = ty || 0;
 
         var width = svg_width || 680,
             height = 40;
@@ -27,6 +30,7 @@ class LegendHoriz extends Chart {
         var legendSvg = svg
             .attr("width", width)
             .attr("height", height)
+            .attr("transform", "translate(" + tx + "," + ty + ")")   
             .append("g")
             .attr("transform", "translate(" + ((width * .25) +xPos) + ", 0)")
 

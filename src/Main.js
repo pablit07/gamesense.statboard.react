@@ -12,6 +12,8 @@ import TestSubmissionDetail from "./TestSubmissions/TestSubmissionDetail";
 import StreaksChartView from "./Streaks/StreaksChartsView";
 import ComparisonChartsView from "./Comparisons/ComparisonChartsView";
 import TeamTestsView from "./Comparisons/TeamTestsView";
+import AppHooksView from "./DrillDetails/AppHooksView";
+import MonthlyBugView from "./Comparisons/MonthlyBugView";
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /testsubmissions
@@ -30,11 +32,15 @@ const Main = () => {
 				<Route path='/drillusage' render={() => <PageContainer title={'Drill Usage Report'} contents={<DrillUsage socket={socket}/>}/>}/>
 				<Route path='/coachreport' render={() => <PageContainer title={'Coach Report'} contents={<CoachReport socket={socket}/>}/>}/>
 				<Route path='/drilldetails' render={() => <PageContainer title={'Drill Breakdown Report'} contents={<DrillDetailsView socket={socket}/>}/>}/>
-				<Route path='/drilldetailscharts' render={() => <PageContainer title={'Drill Breakdown Charts'} contents={<DrillDetailsChartView socket={socket}/>}/>}/>
+				<Route path='/drilldetailscharts' render={() => <PageContainer title={'DrillDetailsChartView Container'} contents={<DrillDetailsChartView socket={socket}/>}/>}/>
 				<Route path='/streaks' render={() => <PageContainer title={'Usage Streaks Charts'} contents={<StreaksChartView socket={socket}/>}/>}/>
 				<Route path='/scorecomparisoncharts' render={() => <PageContainer title={'Score Comparison Charts - Various Scales'} contents={<ComparisonChartsView socket={socket}/>}/>}/>
 
 				<Route path='/teamcomparecharts' render={() => <PageContainer title={'Team Tests/Comparison Charts'} contents={<TeamTestsView socket={socket}/>}/>}/>
+
+        <Route path='/responsivechart' render={() => <PageContainer title={'Drill Usage - Hooks Responsive Chart'} contents={<AppHooksView socket={socket}/>}/>}/>
+
+        <Route path='/monthlybugview' render={() => <PageContainer title={'Monthly Bug View'} contents={<MonthlyBugView socket={socket}/>}/>}/>
 
 				<Route path='/logout' render={() => "You have been logged out."}/>
 			</Switch>

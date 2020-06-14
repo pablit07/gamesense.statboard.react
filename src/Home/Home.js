@@ -17,7 +17,7 @@ const Home = () => (
           <Link to='/drilldetails'>Drill Breakdown (Tables)</Link>
         </li>
         <li>
-          <Link to='/drilldetailscharts'>Drill Breakdown (Charts)</Link>
+          <Link to='/drilldetailscharts'>Drill Breakdown (Charts) - DrillDetailsChartView.js</Link>
         </li>
         <li>
           <Link to='/streaks'>Usage Streaks (Charts)</Link>
@@ -26,7 +26,13 @@ const Home = () => (
           <Link to='/scorecomparisoncharts'>Score Comparisons (Charts)</Link>
         </li>
         <li>
-          <Link to='/teamcomparecharts'>Team Comparisons (Charts)</Link>
+          <Link to='/teamcomparecharts'>Team Comparisons (Charts) - TeamTestView.js</Link>
+        </li>
+        <li>
+          <Link to='/responsivechart'>Drill Usage - Hooks Responsive Chart</Link>
+        </li>
+        <li>
+          <Link to='/monthlybugview'>monthlyBugView,js</Link>
         </li>
       </ul>
   </div>

@@ -7,7 +7,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@kunukn/react-collapse": "^2.0.11",
     "classnames": "^2.2.6",
-    "d3": "^5.9.2",
+    "d3": "^5.12.0",
     "d3-svg-legend": "^2.25.6",
     "font-awesome": "^4.7.0",
     "node-sass": "^4.13.1",
@@ -22,6 +22,7 @@
     "react-scripts": "2.1.2",
     "react-table": "^6.8.6",
     "react-transition-group": "^2.5.3",
+    "resize-observer-polyfill": "^1.5.1",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
     "socketcluster-client": "^14.3.1"
