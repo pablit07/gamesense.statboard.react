@@ -4,14 +4,14 @@ import TeamTestsPrScoreContainer from "./TeamTestsPrScoreContainer";
 import TeamCompareChart from "../Components/Charts/TeamCompareChart";
 import RadioButtons from "../Buttons/RadioButtons";
 
-import HorizontalQuartileChart from "../Components/Charts/HorizontalQuartileChart";
+//import HorizontalQuartileChart from "../Components/Charts/HorizontalQuartileChart";
 import LegendHoriz from "../Components/Charts/LegendHoriz";
-import ComparisonChartContainer from "./ComparisonContainer";
+//import ComparisonChartContainer from "./ComparisonContainer";
 import PassThruContainer from "./PassThruContainer";
 import LocVsTypeChart from "../Components/Charts/LocVsTypeChart";
 import PlayerDrills from "../Components/Charts/PlayerDrills";
 import PlayerUseOverTimeContainer from "../DrillDetails/PlayerUseOverTimeContainer";
-import BarChart from "../Components/Charts/BarChartSimple";
+//import BarChart from "../Components/Charts/BarChartSimple";
 
 class TeamTestsView extends Component {
 
