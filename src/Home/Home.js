@@ -29,9 +29,6 @@ const Home = () => (
           <Link to='/teamcomparecharts'>Team Comparisons (Charts) - TeamTestView.js</Link>
         </li>
         <li>
-          <Link to='/responsivechart'>Drill Usage - Hooks Responsive Chart</Link>
-        </li>
-        <li>
           <Link to='/monthlybugview'>monthlyBugView,js</Link>
         </li>
       </ul>
