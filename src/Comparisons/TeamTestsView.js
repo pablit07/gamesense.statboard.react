@@ -11,7 +11,8 @@ import PassThruContainer from "./PassThruContainer";
 import LocVsTypeChart from "../Components/Charts/LocVsTypeChart";
 import PlayerDrills from "../Components/Charts/PlayerDrills";
 import PlayerUseOverTimeContainer from "../DrillDetails/PlayerUseOverTimeContainer";
-//import BarChart from "../Components/Charts/BarChartSimple";
+//import BarChart from "../Components/Charts/BarChart";
+//import BarChartSimplest from "../Components/Charts/BarChartSimplest";
 
 class TeamTestsView extends Component {
 

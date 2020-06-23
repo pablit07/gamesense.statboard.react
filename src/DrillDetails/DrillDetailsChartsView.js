@@ -5,6 +5,8 @@ import BarChart from "../Components/Charts/BarChart";
 import PlayerUseOverTimeContainer from "./PlayerUseOverTimeContainer";
 import TeamPitchTypeCorrectResponseContainer from "./TeamPitchTypeCorrectResponseContainer";
 import {PitchTypeSoftballLegend} from "./PitchTypeSoftballLegend";
+import BarChartSimplest from '../Components/Charts/BarChartSimplest';
+import PlayerDrills from '../Components/Charts/PlayerDrills';
 
 
 class DrillDetailsChartView extends Component {
@@ -20,6 +22,8 @@ class DrillDetailsChartView extends Component {
 
             <PlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
                 <BarChart/>
+                <PlayerDrills/>
+                <BarChartSimplest/>
             </PlayerUseOverTimeContainer>
 
             <h4 style={style}>coachkohlhoff - # Drills over Time</h4>
