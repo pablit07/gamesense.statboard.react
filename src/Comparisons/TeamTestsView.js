@@ -11,11 +11,10 @@ import PassThruContainer from "./PassThruContainer";
 import LocVsTypeChart from "../Components/Charts/LocVsTypeChart";
 import PlayerDrills from "../Components/Charts/PlayerDrills";
 import PlayerUseOverTimeContainer from "../DrillDetails/PlayerUseOverTimeContainer";
-//import BarChart from "../Components/Charts/BarChart";
-//import BarChartSimplest from "../Components/Charts/BarChartSimplest";
-
+import BarChart from "../Components/Charts/BarChart";
+import BarChartSimplest from "../Components/Charts/BarChartSimplest";
 class TeamTestsView extends Component {
-
+  
     render() {
 
         let style = {marginLeft: '3.3rem'};
@@ -39,19 +38,21 @@ class TeamTestsView extends Component {
         return (<Fragment>
           <p style={style}>-- Page rendered from: TeamTestView.js --</p>
           <h2 style={style}>Pitch Recognition Analysis</h2>
-          <div>
-          <PlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
-            </PlayerUseOverTimeContainer>               
+          <div>             
             <TeamTestsPrScoreContainer socket={this.props.socket}>
-                <LocVsTypeChart svg_height={500} svg_width={500} svg_border_opacity={0.5}/>
+                {/* <LocVsTypeChart svg_height={500} svg_width={500} svg_border_opacity={0.5}/> */}
                 <ChartHeader/>
-                  <TeamCompareChart svg_width={700} svg_height={400}/>
                 <PlayerDrills svg_width={700} svg_height={400}/>
-            </TeamTestsPrScoreContainer>
-          */}
-            <PlayerUseOverTimeContainer socket={this.props.socket} params={{rollUpType:"monthly"}} filters={null}> 
-              <PlayerDrills svg_width={700} svg_height={400}/>
-            </PlayerUseOverTimeContainer>
+                  {/* <TeamCompareChart svg_width={700} svg_height={400}/> */}
+            </TeamTestsPrScoreContainer> 
+
+          <PlayerUseOverTimeContainer socket={this.props.socket} params={{rollUpType:"monthly"}} filters={null}> 
+            <h4>PlayerDrills.js</h4>
+              {/* <PlayerDrills svg_width={700} svg_height={400}/> */}
+            <h4>BarChartSimplest.js</h4>  
+              <BarChartSimplest/>
+              {/* <BarChart/> */}
+          </PlayerUseOverTimeContainer>
 
           </div>
         </Fragment>)
