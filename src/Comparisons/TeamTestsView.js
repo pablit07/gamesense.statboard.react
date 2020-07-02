@@ -9,9 +9,6 @@ import LegendHoriz from "../Components/Charts/LegendHoriz";
 //import ComparisonChartContainer from "./ComparisonContainer";
 import PassThruContainer from "./PassThruContainer";
 import LocVsTypeChart from "../Components/Charts/LocVsTypeChart";
-import PlayerDrills from "../Components/Charts/PlayerDrills";
-import PlayerUseOverTimeContainer from "../DrillDetails/PlayerUseOverTimeContainer";
-
 
 class TeamTestsView extends Component {
 
@@ -21,9 +18,9 @@ class TeamTestsView extends Component {
 
         const ChartHeader = props =>
                 (<div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
-                     <span><h3>  Player Drills Completed   </h3></span>
 
                     <h3>Team Test Scores</h3>
+
                     <PassThruContainer>
                         <LegendHoriz svg_width={490} textLabel={' '} />
                     </PassThruContainer>
