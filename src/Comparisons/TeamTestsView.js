@@ -11,8 +11,7 @@ import PassThruContainer from "./PassThruContainer";
 import LocVsTypeChart from "../Components/Charts/LocVsTypeChart";
 import PlayerDrills from "../Components/Charts/PlayerDrills";
 import PlayerUseOverTimeContainer from "../DrillDetails/PlayerUseOverTimeContainer";
-//import BarChart from "../Components/Charts/BarChart";
-//import BarChartSimplest from "../Components/Charts/BarChartSimplest";
+
 
 class TeamTestsView extends Component {
 
@@ -40,8 +39,8 @@ class TeamTestsView extends Component {
           <p style={style}>-- Page rendered from: TeamTestView.js --</p>
           <h2 style={style}>Pitch Recognition Analysis</h2>
           <div>
-          <PlayerUseOverTimeContainer socket={this.props.socket} filters={{user_id:150/* TODO replace hardcoded */}}>
-            </PlayerUseOverTimeContainer>               
+   
+
             <TeamTestsPrScoreContainer socket={this.props.socket}>
                 <LocVsTypeChart svg_height={500} svg_width={500} svg_border_opacity={0.5}/>
                 <ChartHeader/>
