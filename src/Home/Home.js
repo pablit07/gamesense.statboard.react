@@ -29,7 +29,7 @@ const Home = () => (
           <Link to='/teamcomparecharts'>Team Comparisons (Charts) - TeamTestView.js</Link>
         </li>
         <li>
-          <Link to='/monthlybugview'>monthlyBugView,js</Link>
+          <Link to='/teamdrillsview'>Team Drills Over Time Chart - TeamDrillsView.js</Link>
         </li>
       </ul>
   </div>
