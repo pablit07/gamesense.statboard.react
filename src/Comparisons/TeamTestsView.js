@@ -27,7 +27,7 @@ class TeamTestsView extends Component {
                     <div>
                     <RadioButtons
                         handleSelect={props.handleSelect}
-                        options={ [{name:'Week',value:'type'},{name:'Month',value:'location'},{name:'Year',value:'total'}] }
+                        options={ [{name:'Type',value:'type'},{name:'Location',value:'location'},{name:'Total',value:'total'}] }
                         initSelectedOption={'total'} />
                     </div>    
                 </div>);
