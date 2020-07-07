@@ -1,9 +1,16 @@
 import Container from "../Container";
 import actions from "../actions";
 
+
+
+    // <TeamDrillsOverTimeContainer socket={this.props.socket} params={{rollUpType:"yearly"}} filters={null}>
+    //               <TeamDrillsOverTimeChart/>
 export default class TeamDrillsOverTimeContainer extends Container {
     constructor(props) {
         super(props);
+        this.state.submissions = [];
+        this.state.selectedTimePeriod = 'weekly';
+
         this.updateTimeSeries = this.updateTimeSeries.bind(this);
         this.updateTimeSeriesFromLocalStorage = this.updateTimeSeriesFromLocalStorage.bind(this);
         if (props.dispatch) {
@@ -36,16 +43,24 @@ export default class TeamDrillsOverTimeContainer extends Container {
         });
 
         if (this.state.isMounted) {
-            this.initDataSource();
+            this.initDataSource(); 
         }
     }
 
+    
     mapStateToProps(state) {
+        const timePeriod = state.selectedTimePeriod;
+        console.log("+++++++++++++++++++  timePeriod +++++++++++++++++");
+        console.log(timePeriod);
+
+        // let fullName = player_
         let defaultProps = {name: "player_last_name", values: [{value: "count", color: "#4D9360"}], yLabel: "Drills Completed"};
 
-        console.log("--- -state.submissions- ///////////");
-        console.log(state.submissions);
-
+        //console.log (state.submissions.length());
+        // Sort state.submissions alphabetically. Gets all submissions to a max of 24.
+        
+        state.submissions.sort((a,b) => (a.player_last_name > b.player_last_name) ? 1 : -1)
+        
         // Sort state.submissions chronologically. Gets all submissions to a max of 24.
         state.submissions = state.submissions.slice(Math.max(state.submissions.length - 24, 0))
             .sort((l, r) => {
@@ -57,7 +72,7 @@ export default class TeamDrillsOverTimeContainer extends Container {
                 }
             });
             
-            // Builds an array of just the 'date_format' items from state.submissions(m-yyyy), in chronological order.
+            // Builds an array of just the 'player_last_name' items from state.submissions, in chronological order.
             let dates = state.submissions.reduce((accum, next) => {
             if (!accum.find(x => x === next[defaultProps.name])) {
                 accum.push(next[defaultProps.name]);
@@ -72,7 +87,8 @@ export default class TeamDrillsOverTimeContainer extends Container {
             yMax: state.submissions.reduce((accum, next) => {
                 return (next[defaultProps.values[0].value] > accum) ? next[defaultProps.values[0].value] : accum;
             }, 0),
-            handleSelect: v => this.setState({selectedScore: v})
+            timePeriod,
+            handleSelect: v => this.setState({selectedTimePeriod: v})
         };
     }
 

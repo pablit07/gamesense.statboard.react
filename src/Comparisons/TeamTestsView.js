@@ -11,9 +11,7 @@ import PassThruContainer from "./PassThruContainer";
 import LocVsTypeChart from "../Components/Charts/LocVsTypeChart";
 
 class TeamTestsView extends Component {
-
     render() {
-
         let style = {marginLeft: '3.3rem'};
 
         const ChartHeader = props =>
@@ -22,7 +20,7 @@ class TeamTestsView extends Component {
                     <h3>Team Test Scores</h3>
 
                     <PassThruContainer>
-                        <LegendHoriz svg_width={490} textLabel={' '} />
+                        <LegendHoriz svg_width={490} textLabel={' '} />  
                     </PassThruContainer>
                     <div>
                     <RadioButtons
@@ -36,8 +34,6 @@ class TeamTestsView extends Component {
           <p style={style}>-- Page rendered from: TeamTestView.js --</p>
           <h2 style={style}>Pitch Recognition Analysis</h2>
           <div>
-   
-
             <TeamTestsPrScoreContainer socket={this.props.socket}>
                 <LocVsTypeChart svg_height={500} svg_width={500} svg_border_opacity={0.5}/>
                 <ChartHeader/>

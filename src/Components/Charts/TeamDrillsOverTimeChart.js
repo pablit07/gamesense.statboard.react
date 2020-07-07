@@ -3,12 +3,14 @@ import 'font-awesome/css/font-awesome.min.css';
 import * as d3 from 'd3';
 import Axes2dChart from "./Axes2dChart";
 
-
 class TeamDrillsOverTimeChart extends Axes2dChart {
-    addChartLayer(svg, rows, xScale, yScale, pt, color) {
+    addChartLayer(svg, rows, xScale, yScale, pt, timePeriod) {
+      console.log("^^^^^^^^^ timeperiod");
+      console.log(timePeriod);
 
-        console.log("--------------- rows ----------------");
+        console.log("--------------- TeamDrillsOverTimeChart : rows ----------------");
         console.log(rows);
+        console.log(timePeriod);
 
         const rects = svg.selectAll("rect")
         
@@ -24,11 +26,11 @@ class TeamDrillsOverTimeChart extends Axes2dChart {
         // Create the stops of the main gradient. Each stop will be assigned
         // a class to style the stop using CSS.
         mainGradient.append('stop')
-            .attr('stop-color', 'black')
+            .attr('stop-color', '#165411')
             .attr('offset', '0');
 
         mainGradient.append('stop')
-            .attr('stop-color', 'plum')
+            .attr('stop-color', '#30ad1f')
             .attr('offset', '1');
 
         const widthTween = (d) => {
