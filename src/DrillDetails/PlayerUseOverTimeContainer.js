@@ -15,9 +15,6 @@ export default class PlayerUseOverTimeContainer extends Container {
     getRoutingKey() {
         return 'calc.drill.completionSummary';  
     }
-    getRoutingKey() {
-      return 'calc.test.calcSummary';
-    }
 
     async updateTimeSeries(timeSeries) {
         await this.setState({
