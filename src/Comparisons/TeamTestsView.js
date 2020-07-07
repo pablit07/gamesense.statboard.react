@@ -48,7 +48,7 @@ class TeamTestsView extends Component {
                 <PlayerDrills svg_width={700} svg_height={400}/>
             </TeamTestsPrScoreContainer>
           */}
-            <PlayerUseOverTimeContainer socket={this.props.socket} params={{rollUpType:"monthly"}} filters={null}> 
+            <PlayerUseOverTimeContainer socket={this.props.socket} params={{rollUpType:"monthly"}} filters={null}>
               <PlayerDrills svg_width={700} svg_height={400}/>
             </PlayerUseOverTimeContainer>
 
