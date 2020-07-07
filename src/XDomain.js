@@ -86,6 +86,7 @@ const DrillBreakdown = ({username, app, token, userId}) => {
         </div>
 
         <Table/>
+        <LegendHoriz svg_width={490} textLabel={' '} />
     </DrillDetailsContainer>);
 };
 
