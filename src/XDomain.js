@@ -102,7 +102,6 @@ const TeamTestsPrScoreWelcomeChart = ({username, app, token}) => {
 
     const ChartHeader = props =>
          (<div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
-            <h3>Team Test Scores</h3>
             <PassThruContainer>
                 <LegendHoriz svg_width={490} textLabel={' '} />
             </PassThruContainer>
