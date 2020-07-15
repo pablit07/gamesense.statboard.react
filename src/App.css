@@ -232,7 +232,11 @@ button.btn.btn-green:active {
 }
 
 .rt-td .green {
-  background: #23FD5C;
+  background: #70bf57;
+}
+
+.rt-td .yellow {
+  background: #c7d63e;
 }
 
 .rt-td .blue {
@@ -240,11 +244,11 @@ button.btn.btn-green:active {
 }
 
 .rt-td .orange {
-  background: #FFA751;
+  background: #d99440;
 }
 
 .rt-td .red {
-  background: #FF6551;
+  background: #e65640;
 }
 
 

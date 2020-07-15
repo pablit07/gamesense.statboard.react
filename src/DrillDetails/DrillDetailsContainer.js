@@ -75,7 +75,7 @@ class DrillDetailsContainer extends Container {
                 Cell: props => {
                     let perc = props.original['pitchType_' + pt];
                     let className = perc > 75 ? 'green' :
-                        perc > 50 ? 'blue' :
+                        perc > 50 ? 'yellow' :
                             perc > 25 ? 'orange' :
                                 perc > 0 ? 'red' : '';
                     return (<div className={className}>{perc}</div>)
