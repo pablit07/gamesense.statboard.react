@@ -115,7 +115,7 @@ class CoachReportTest extends Component {
     componentDidMount() {
 
         let users = [
-            {username: 'peterfadde', token: '91eafccde30a265c85c2d21010411c5402ae17f8'},
+            {username: 'coachkohlhoff', token: '91eafccde30a265c85c2d21010411c5402ae17f8'},
             {username: 'coachfadde', token: 'b561b85c0c9905aaf5cbe85b3313e0c766dd72b2'},
             {username: 'reg6', token: 'fd399540e8be81e19f9b3bf33fc0dbe63b5cdbeb'},
             {username: 'reg5', token: '33a3e59737460f71df9dcdecb799cf03183f3386'},
