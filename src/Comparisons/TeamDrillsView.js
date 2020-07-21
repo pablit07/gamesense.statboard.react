@@ -1,8 +1,8 @@
 
 import React, {Component, Fragment} from 'react';
 
-import TeamDrillsOverTimeChart from "../Components/Charts/TeamDrillsOverTimeChart";
-import TeamDrillsOverTimeContainer from "../Comparisons/TeamDrillsOverTimeContainer";
+import PlayerDrillsNewChart from "../Components/Charts/PlayerDrillsNewChart";
+import PlayerDrillsNewContainer from "../Comparisons/PlayerDrillsNewContainer";
 import RadioButtons from "../Buttons/RadioButtons";
 
 class TeamDrillsView extends Component {
@@ -24,19 +24,12 @@ class TeamDrillsView extends Component {
         return (<Fragment>
           <p>-- Page rendered from: TeamDrillsView.js --</p>
           <div>
-            <TeamDrillsOverTimeContainer socket={this.props.socket} params={{rollUpType:"yearly"}} filters={null}>
-                  <TeamDrillsOverTimeChart/>
-                  <ChartHeader/>
-            </TeamDrillsOverTimeContainer>
-            {/*  
-            <TeamDrillsOverTimeContainer socket={this.props.socket} params={{rollUpType:"monthly"}} filters={null}>
-                  <TeamDrillsOverTimeChart/>  
-            </TeamDrillsOverTimeContainer>
-
-            <TeamDrillsOverTimeContainer socket={this.props.socket} params={{rollUpType:"weekly"}} filters={null}>
-                  <TeamDrillsOverTimeChart/>  
-            </TeamDrillsOverTimeContainer>
-            */}
+            <PlayerDrillsNewContainer socket={this.props.socket} params={{rollUpType:"yearly"}} filters={null}>
+                <ChartHeader/>
+                  <PlayerDrillsNewChart />
+                  
+            </PlayerDrillsNewContainer>
+            
             
           </div>
         </Fragment>)

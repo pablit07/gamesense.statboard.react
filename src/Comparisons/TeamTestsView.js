@@ -9,6 +9,7 @@ import LegendHoriz from "../Components/Charts/LegendHoriz";
 //import ComparisonChartContainer from "./ComparisonContainer";
 import PassThruContainer from "./PassThruContainer";
 import LocVsTypeChart from "../Components/Charts/LocVsTypeChart";
+import PlayerDrills from "../Components/Charts/PlayerDrills";
 
 class TeamTestsView extends Component {
     render() {
@@ -35,9 +36,12 @@ class TeamTestsView extends Component {
           <h2 style={style}>Pitch Recognition Analysis</h2>
           <div>
             <TeamTestsPrScoreContainer socket={this.props.socket}>
-                <LocVsTypeChart svg_height={500} svg_width={500} svg_border_opacity={0.5}/>
+                
+                <PlayerDrills />
                 <ChartHeader/>
                   <TeamCompareChart svg_width={700} svg_height={400}/>
+                  <LocVsTypeChart svg_height={500} svg_width={500} svg_border_opacity={0.5}/>
+                  
             </TeamTestsPrScoreContainer>
           </div>
         </Fragment>)
