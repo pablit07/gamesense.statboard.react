@@ -9,7 +9,7 @@ class PlayerDrillsNewChart extends Chart {
   svg_width = svg_width || 625;
   svg_height = svg_height || 575;
   //set up chart
-  let margin = { left: 45, right: 5, top: 30, bottom: 35, },
+  let margin = { left: 20, right: 25, top: 30, bottom: 75, },
     width = svg_width - margin.left - margin.right,
     height = svg_height - margin.top - margin.bottom,
     axisTicks = {qty: 7, outerSize: 0};
@@ -186,7 +186,15 @@ class PlayerDrillsNewChart extends Chart {
         "transform",
         `translate(${margin.left},${height})`
       )
-      .call(xAxis);
+      .call(xAxis)
+      // rotate labels (player's names)
+      .selectAll("text")
+                .style("text-anchor", "start")
+                .attr("dx", ".8em")
+                .attr("dy", ".25em")
+                .attr("transform", function (d) {
+                return "rotate(45)";
+            });
 
     // Add the Y Axis
     chart
@@ -199,7 +207,7 @@ class PlayerDrillsNewChart extends Chart {
     chart
       .append("text")
       .attr("transform", `translate(${svg_width*.4}, ${height+30})`)
-      .text( " Player")
+      // .text( " Player") // There is no room for this
       .style("font-size",  "12px")
       .style("fill", "black");
 
@@ -207,7 +215,7 @@ class PlayerDrillsNewChart extends Chart {
     chart
         .append("text")
         .attr("transform", `translate(${svg_width*.5}, ${30})`)
-        .text( "Week of April 6 - 12, 2020")
+        .text( "Year 2020")
         .style("font-size",  "18px")
         .style("fill", "black");  
     }
