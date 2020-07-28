@@ -13,23 +13,31 @@ export default class PlayerDrillsNewContainer extends Container {
     }
 
     mapStateToProps(state) {
-        const scoreType = state.selectedTimePeriod;
-        const selectedPropName = `first_glance_${scoreType}_score`;
+        let defaultProps = {name: "date_format", values: [{value: "count", color: "#4D9360"}] };
+        const timePeriod = state.selectedTimePeriod;
+
+        // Sort state.submissions chronologically. Gets all submissions to a max of 12.
+        state.submissions = state.submissions.slice(Math.max(state.submissions.length - 24, 0))
+        .sort((l, r) => {
+            // sort numerically
+            if (l.year !== r.year) {
+                return l.year - r.year; 
+            } else {
+                return l.month - r.month;
+            }
+        });
 
         let allData = state.submissions ? [...state.submissions] : [];
-    
-        // for state-controlled components, pop and store the selected Average from `allData` last element.
-        const average = allData.length ? allData.pop()[selectedPropName] : {};
      
-
         // important - dont sort beyond this point! will mix up graph
-        allData = allData.map((r, i) => Object.assign(r, {thisScore: r[selectedPropName], index: i}));
-
+        // This assigns (copies) the value of 'count' to a new variable 'count'
+        // Why is this necessary? Without it, only on bar is rendered. Why?
+        allData = allData.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
+        console.log('============ sorted allData ===============');
+        console.log (allData);
         
         return {
-            scoreType,
-            average,
-
+            timePeriod,
             values: allData,
             handleSelect: v => this.setState({selectedTimePeriod: v})
         };

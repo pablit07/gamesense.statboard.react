@@ -75,7 +75,7 @@ class PlayerDrillsNewChart extends Chart {
           .remove()
           .exit()
           .data(d => [d])
-    //now give each 'bar' a rectangle the corresponding data and color
+    //now give each 'bar' a rectangle the corresponding data 
       .enter()
       .append("rect")
         .attr("class", "bar")
@@ -105,13 +105,15 @@ class PlayerDrillsNewChart extends Chart {
       .style("stroke-dasharray", "22, 4")
       .style("stroke", "#1c94aa")
       .attr("x1", 0)
-      .attr("y1", scoreVal)
-      .attr("y2", scoreVal)
+      .attr("y1", height)
+      .attr("y2", height)
       .attr("x2", width - margin.left - margin.right)
       .attr("opacity", 0)
-      .transition(t)
-        // .delay(700)
-
+      .transition()
+        .delay(500)
+        .duration(850)
+        .attr("y1", scoreVal)
+        .attr("y2", scoreVal)
         .attr("opacity", 1);
 
     // Average Line Label
@@ -120,16 +122,17 @@ class PlayerDrillsNewChart extends Chart {
             .append("text")
             .attr("class", "averageLabel")
             .attr("text-anchor", "none")
-            .attr("y", scoreVal - 10)
+            .attr("y", height)
             .attr("x", width * .3)
             .text("Average Drills Completed: " + average + "")
             .style("font-size",  "15px")
             .style("fill", "#115a68")
-            .attr("opacity", 0)
-            .transition(t)
-               .delay(700)
-               .attr("y", scoreVal - 10)
-              .attr("opacity", 1);
+            .attr("opacity", 1)
+            .transition()
+               .delay(500)
+               .duration(850)
+              //  .attr("opacity", 1)
+               .attr("y", scoreVal - 10);
       } else {
         line
             .append("text")
@@ -168,17 +171,13 @@ class PlayerDrillsNewChart extends Chart {
           return (xScale(i) + (xScale.bandwidth() / 2)+2);
         })
         //  .attr("y",  yScale(average))
-         .attr("y", d => yScale(d.count+3))
+        .attr("y", d => yScale(d.count+.1))
         .attr("font-family" , "sans-serif")
         .attr("font-size" , "10px")
         .attr("fill" , "black")
         .attr("text-anchor", "middle")
-        .attr("opacity", 0)
-        .transition()
-         .duration(500)
-        //  .delay(500)
-          .attr("y", d => yScale(d.count+3))
-          .attr("opacity", 1);
+        .attr("opacity", 1);
+
 
     // Add the X Axis
     chart
