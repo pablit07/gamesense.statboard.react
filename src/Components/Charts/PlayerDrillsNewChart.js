@@ -3,8 +3,7 @@ import * as d3 from "d3";
 import Chart from "./Chart";
 
 class PlayerDrillsNewChart extends Chart {
-  addChartLayer({ svg, values, svg_width, svg_height, textColor, average, scoreType}) {
-  average = 147; // TODO Remove!
+  addChartLayer({ svg, values, svg_width, svg_height, textColor, scoreType}) {
 
   svg_width = svg_width || 625;
   svg_height = svg_height || 575;
@@ -44,6 +43,9 @@ class PlayerDrillsNewChart extends Chart {
     // get max and min score values for current data ...
     let scoreMax = d3.max(values, d => d.count);
     let scoreMin = d3.min(values, d => d.count);
+
+    let average = d3.mean(values, d => d.count);
+    average = d3.format(",.2f")(average);
 
     console.log("-------------------------- ScoreMax ---");
     console.log(scoreMax);
@@ -99,9 +101,9 @@ class PlayerDrillsNewChart extends Chart {
 
       line
       .append("line")
-      .style("stroke-width", 1)
+      .style("stroke-width", 6)
       .style("stroke-dasharray", "22, 4")
-      .style("stroke","black")
+      .style("stroke", "#1c94aa")
       .attr("x1", 0)
       .attr("y1", scoreVal)
       .attr("y2", scoreVal)
@@ -122,11 +124,11 @@ class PlayerDrillsNewChart extends Chart {
             .attr("x", width * .3)
             .text("Average Drills Completed: " + average + "")
             .style("font-size",  "15px")
-            .style("fill", "clack")
+            .style("fill", "#115a68")
             .attr("opacity", 0)
             .transition(t)
-              // .delay(700)
-              // .attr("y", scoreVal - 10)
+               .delay(700)
+               .attr("y", scoreVal - 10)
               .attr("opacity", 1);
       } else {
         line
