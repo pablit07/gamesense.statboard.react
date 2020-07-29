@@ -5,6 +5,9 @@ import Chart from "./Chart";
 class PlayerDrillsNewChart extends Chart {
   addChartLayer({ svg, values, svg_width, svg_height, textColor, scoreType}) {
 
+    console.log("------Yay! -------------------- values ---");
+    console.log(values);  
+
   svg_width = svg_width || 625;
   svg_height = svg_height || 575;
   //set up chart
@@ -46,9 +49,6 @@ class PlayerDrillsNewChart extends Chart {
 
     let average = d3.mean(values, d => d.count);
     average = d3.format(",.2f")(average);
-
-    console.log("-------------------------- ScoreMax ---");
-    console.log(scoreMax);
 
     //set domain for the x axis
     yScale.domain([scoreMax * 1.05, scoreMin * .95]);
