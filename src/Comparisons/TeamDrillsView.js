@@ -1,15 +1,10 @@
-
 import React, {Component, Fragment} from 'react';
 
 import PlayerDrillsNewChart from "../Components/Charts/PlayerDrillsNewChart";
 import PlayerDrillsNewContainer from "../Comparisons/PlayerDrillsNewContainer";
-import RadioButtons from "../Buttons/RadioButtons";
 import PickList from "../Buttons/PickList";
 import actions from '../actions';
-
 import dispatch from '../dispatch';
-import PlayerUseOverTime from '../DrillDetails/PlayerUseOverTimeContainer';
-import BarChart from "../Components/Charts/BarChart";
 
 class TeamDrillsView extends Component {
 
@@ -22,7 +17,6 @@ class TeamDrillsView extends Component {
         onLoad={dispatch.makePublisher(actions.TIMESERIES_PICKLIST_INIT)}
         onChange={dispatch.makePublisher(actions.TIMESERIES_PICKLIST_UPDATE)}/>);
 
-    
         const weekDate = new Date();
         const monthDate = new Date();
         const quarterDate = new Date();
@@ -41,8 +35,7 @@ class TeamDrillsView extends Component {
               <PlayerDrillsNewChart/>
             </PlayerDrillsNewContainer>
           </div>
-        </Fragment>)
-        
+        </Fragment>)   
     }
 }
 
