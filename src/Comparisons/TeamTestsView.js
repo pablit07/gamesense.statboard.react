@@ -43,6 +43,7 @@ class TeamTestsView extends Component {
                   <LocVsTypeChart svg_height={500} svg_width={500} svg_border_opacity={0.5}/>
                   
             </TeamTestsPrScoreContainer>
+
           </div>
         </Fragment>)
         

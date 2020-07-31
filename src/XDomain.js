@@ -18,8 +18,7 @@ import TeamTestsPrScoreContainer from "./Comparisons/TeamTestsPrScoreContainer";
 import RadioButtons from "./Buttons/RadioButtons";
 import LegendHoriz from "./Components/Charts/LegendHoriz";
 import TeamCompareChart from "./Components/Charts/TeamCompareChart";
-import PlayerDrillsNewChart from "./Components/Charts/PlayerDrillsNewChart";
-import PlayerDrillsNewContainer from "./Comparisons/PlayerDrillsNewContainer";
+import LocVsTypeChart from "./Components/Charts/LocVsTypeChart";
 
 
 const TimeSeriesPickList = ({dispatch}) => (<PickList
@@ -118,6 +117,13 @@ const TeamTestsPrScoreWelcomeChart = ({username, app, token}) => {
         </TeamTestsPrScoreContainer>);
 };
 
+const TeamLocVsTypeChart = ({username, app, token}) => {
+
+    return (<TeamTestsPrScoreContainer socket={createSocket(username, app, token)}>
+        <LocVsTypeChart svg_height={500} svg_width={500} svg_border_opacity={0.5}/>
+    </TeamTestsPrScoreContainer>);
+};
+
 
 const TeamPlayerDrillsChart = ({username, app, token}) => {
 
@@ -133,10 +139,10 @@ const TeamPlayerDrillsChart = ({username, app, token}) => {
             </div>
         </div>);
 
-    return (<PlayerDrillsNewContainer socket={createSocket(username, app, token)} params={{rollUpType:"yearly"}} filters={null}>
+    return (<TeamPlayerDrillsChart socket={createSocket(username, app, token)} params={{rollUpType:"yearly"}} filters={null}>
                 <ChartHeader/>
-                <PlayerDrillsNewChart/>
-            </PlayerDrillsNewContainer>);
+                <TeamPlayerDrillsChart/>
+            </TeamPlayerDrillsChart>);
 }
 
 
@@ -148,5 +154,6 @@ export {
     PlayerUseOverTimeWelcomeChart,
     HorizontalQuartileChart,
     TeamTestsPrScoreWelcomeChart,
-    TeamPlayerDrillsChart
+    TeamPlayerDrillsChart,
+    TeamLocVsTypeChart
 };
