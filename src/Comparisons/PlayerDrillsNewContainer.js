@@ -69,6 +69,8 @@ export default class PlayerDrillsNewContainer extends Container {
       if (allData.length) {
         // just need a year of data at most ...
         allData = allData ? allData.slice(allData.length - 52, allData.length) : [];
+        //  assigns the value of 'count' to variable 'count'. needed w/o only one bar draws. W hy?
+        allData = allData.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
 
         // Determine weekly, monthly or yearly ...
         let latestEntry =  allData.slice(-1)[0];
@@ -82,61 +84,32 @@ export default class PlayerDrillsNewContainer extends Container {
         }
         console.log("============== dataPeriod ---> dataPeriod");
 
-
-
-    
-
-        // get last entry in array 
-        curWeek =  allData.slice(-1)[0]
-
-        if (curWeek) {
-          console.log("================== curWeek ==============");
-          curWeekNum = curWeek.week;
+        // process weekly ...
+        if (dataPeriod === 'weekly'){
+          curWeekNum =  latestEntry.week
+          console.log("================== curWeekNum ==============");
           console.log(curWeekNum);
+
+          let lastWeekDrills = [];
+          // Now get all values for curWeek only ...
+          allData.forEach(function(entry) {
+            if (entry.week === 30) {
+              lastWeekDrills.push(entry);
+            }
+          });
+          // reassign count to count so it plots ... 
+          lastWeekDrills = lastWeekDrills.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
+          console.log("============== lastWeekDrills");
+          console.log(lastWeekDrills);
+          allData = lastWeekDrills;
         }
-      }
-      
-      // important - don't sort beyond this point! will mix up graph
-      // This assigns (copies) the value of 'count' to variable 'count'. Why?
-      allData = allData.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
-      
-      let displayNames, uniqueNames;
-      let lastWeekDrills = [];
-      if (allData.length){
-        // ToDo: Implement display_names 
-        displayNames = allData.map(entry => entry.player_last_name +", "+ entry.player_first_name);
-        // get only unique names (these are players over the last 52 weeks)...
-        uniqueNames = Array.from(new Set(displayNames));
 
-
-        // Now get all values for curWeek only ...
-         allData.forEach(function(entry) {
-             if (entry.week === 30) {
-               lastWeekDrills.push(entry);
-             }
-         });
       }
-      if (lastWeekDrills.length){
-        // reassign count to count so it plots ... 
-        lastWeekDrills = lastWeekDrills.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
-        
-        console.log("============== lastWeekDrills");
-        console.log(lastWeekDrills);
-      }
-     
-      // // good way to get last week's players
-      // if (allData.length){
-      //   for (var {week: w, player_last_name: n} of allData) {
-      //     if (w === 30){
-      //       console.log('Name: ' + n + ', Week: ' + w);
-      //     }  
-      //   };
-      // }    
 
       return {
           ...state,
           ...defaultProps,
-          values: lastWeekDrills,
+          values: allData,
           handleSelect: v => this.setState({selectedTimePeriod: v})
       };
     }
