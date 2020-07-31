@@ -5,8 +5,10 @@ import Chart from "./Chart";
 class PlayerDrillsNewChart extends Chart {
   addChartLayer({ svg, values, svg_width, svg_height, textColor, scoreType}) {
 
-    console.log("------Yay! -------------------- values ---");
-    console.log(values);  
+    if (values.length) {
+      console.log("------Yay! values in chart -------------------- values ---");
+      console.log(values);
+    }   
 
   svg_width = svg_width || 625;
   svg_height = svg_height || 575;
@@ -56,7 +58,7 @@ class PlayerDrillsNewChart extends Chart {
     //set domain for x axis
     xScale.domain(d3.range(values.length)); // X-value labels: Player's name
 
-    const t = d3.transition().duration(200);     // transition time 500 ms.
+    const t = d3.transition().duration(700);     // transition time 500 ms.
 
 
 	 //select all bars on the graph, remove them, call .exit() to clear previous data set.
@@ -89,7 +91,7 @@ class PlayerDrillsNewChart extends Chart {
             .attr("y", d => yScale(d.count))
             
       // fill color for bar prelim ... 
-      .style("fill", "70bf57" )
+       .style("fill", "#70bf57" )
       .attr("opacity", 1.0);
 
     // Average Line
@@ -110,7 +112,7 @@ class PlayerDrillsNewChart extends Chart {
       .attr("x2", width - margin.left - margin.right)
       .attr("opacity", 0)
       .transition()
-        .delay(500)
+        .delay(800)
         .duration(850)
         .attr("y1", scoreVal)
         .attr("y2", scoreVal)
@@ -129,7 +131,7 @@ class PlayerDrillsNewChart extends Chart {
             .style("fill", "#115a68")
             .attr("opacity", 1)
             .transition()
-               .delay(500)
+               .delay(800)
                .duration(850)
               //  .attr("opacity", 1)
                .attr("y", scoreVal - 10);
@@ -171,12 +173,18 @@ class PlayerDrillsNewChart extends Chart {
           return (xScale(i) + (xScale.bandwidth() / 2)+2);
         })
         //  .attr("y",  yScale(average))
-        .attr("y", d => yScale(d.count+.1))
+        // .attr("y", d => yScale(d.count+.1))
+        .attr("y", d => height)
         .attr("font-family" , "sans-serif")
         .attr("font-size" , "10px")
         .attr("fill" , "black")
         .attr("text-anchor", "middle")
-        .attr("opacity", 1);
+        .attr("opacity", 0)
+        .transition(t)
+          // .duration(850)
+          //  .delay(200)
+          .attr("opacity", 1)
+          .attr("y", d => yScale(d.count+.1));
 
 
     // Add the X Axis
