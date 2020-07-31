@@ -19,6 +19,7 @@ import RadioButtons from "./Buttons/RadioButtons";
 import LegendHoriz from "./Components/Charts/LegendHoriz";
 import TeamCompareChart from "./Components/Charts/TeamCompareChart";
 import LocVsTypeChart from "./Components/Charts/LocVsTypeChart";
+import TeamPlayerDrillsContainer from "./Comparisons/TeamPlayerDrillsContainer";
 
 
 const TimeSeriesPickList = ({dispatch}) => (<PickList
@@ -139,10 +140,10 @@ const TeamPlayerDrillsChart = ({username, app, token}) => {
             </div>
         </div>);
 
-    return (<TeamPlayerDrillsChart socket={createSocket(username, app, token)} params={{rollUpType:"yearly"}} filters={null}>
+    return (<TeamPlayerDrillsContainer socket={createSocket(username, app, token)} params={{rollUpType:"yearly"}} filters={null}>
                 <ChartHeader/>
                 <TeamPlayerDrillsChart/>
-            </TeamPlayerDrillsChart>);
+            </TeamPlayerDrillsContainer>);
 }
 
 
