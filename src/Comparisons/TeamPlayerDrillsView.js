@@ -20,7 +20,7 @@ class TeamPlayerDrillsView extends Component {
 
 
         return (<Fragment>
-          <p>-- Page rendered from: TeamDrillsView.js --</p>
+          <p>-- Page rendered from: TeamPlayerDrillsView.js --</p>
           <div style={{'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center'}}>  
             <h2> Player Drills Completed</h2>
 
