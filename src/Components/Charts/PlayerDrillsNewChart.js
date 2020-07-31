@@ -5,18 +5,24 @@ import Chart from "./Chart";
 class PlayerDrillsNewChart extends Chart {
   addChartLayer({ svg, values, svg_width, svg_height, curWeekNum, curMonthNum, curYearNum}) {
     
-    if (values.length) {
-      console.log("------ values in chart ------");
-      console.log("### curWeekNum ----> " + curWeekNum);
-      console.log("### curMonthNum ----> " + curMonthNum);
-      console.log("### curYearNum ----> " + curYearNum);
-      console.log(values);
-    }   
+  if (values.length) {
+    console.log("------ values in chart ------");
+    console.log("### curWeekNum ----> " + curWeekNum);
+    console.log("### curMonthNum ----> " + curMonthNum);
+    console.log("### curYearNum ----> " + curYearNum);
+    console.log(values);
+  }   
 
-  svg_width = svg_width || 625;
-  svg_height = svg_height || 575;
+  const monthMap = {
+    7: 'July',
+    8: 'August'
+
+  };
+
+  svg_width = svg_width || 525;
+  svg_height = svg_height || 525;
   //set up chart
-  let margin = { left: 20, right: 25, top: 30, bottom: 75, },
+  let margin = { left: 20, right: 28, top: 30, bottom: 75, },
     width = svg_width - margin.left - margin.right,
     height = svg_height - margin.top - margin.bottom,
     axisTicks = {qty: 7, outerSize: 0};
@@ -94,60 +100,77 @@ class PlayerDrillsNewChart extends Chart {
             .attr("y", d => yScale(d.count))
             
       // fill color for bar prelim ... 
-       .style("fill", "#70bf57" )
+       .style("fill", "dodgerblue" )
       .attr("opacity", 1.0);
 
-    // Average Line
-    let scaledAverage = yScale(average);
     let line = chart
       .append("g")
       .attr("transform", `translate(${margin.left}, 0)`);
 
+    if (values.length) {  
+      // Average Line
+      let scaledAverage = yScale(average);
       line
-      .append("line")
-      .style("stroke-width", 6)
-      .style("stroke-dasharray", "22, 4")
-      .style("stroke", "#1c94aa")
-      .attr("x1", 0)
-      .attr("y1", height)
-      .attr("y2", height)
-      .attr("x2", width - margin.left - margin.right)
-      .attr("opacity", 0)
-      .transition()
-        .delay(800)
-        .duration(850)
-        .attr("y1", scaledAverage)
-        .attr("y2", scaledAverage)
-        .attr("opacity", 1);
+        .append("line")
+        .style("stroke-width", 4)
+        .style("stroke-dasharray", "22, 4")
+        // .style("stroke", "#1c94aa")
+        .style("stroke", "#c91f05")
+        .attr("x1", 0)
+        .attr("y1", height)
+        .attr("y2", height)
+        .attr("x2", width - margin.left - margin.right)
+        .attr("opacity", 0)
+        .transition()
+          .delay(800)
+          .duration(850)
+          .attr("y1", scaledAverage)
+          .attr("y2", scaledAverage)
+          .attr("opacity", 1);
 
-    // Average Line Label
-    if (values.length) {
+        // average label
         line
-            .append("text")
-            .attr("class", "averageLabel")
-            .attr("text-anchor", "none")
-            .attr("y", height)
-            .attr("x", width * .3)
-            .text("Average Drills Completed: " + average + "")
-            .style("font-size",  "15px")
-            .style("fill", "#115a68")
+          .append("text")
+          .attr("class", "averageLabel")
+      
+          .attr("y", height)
+          .attr("x", width - margin.right - 23)
+          .text("Average")
+          .style("font-size",  "14px")
+          .style("fill", "#610e01")
+          .attr("opacity", 0)
+          .transition()
+            .delay(800)
+            .duration(850)
+              .attr("opacity", 1)
+            .attr("y", scaledAverage - 10);
+
+        line
+          .append("text")
+          .attr("class", "averageLabel")
+          .attr("text-anchor", "none")
+          .attr("y", height)
+          .attr("x", width - margin.right - 10)
+          .text(average)
+          .style("font-size",  "14px")
+          .style("fill", "#610e01")
+          .attr("opacity", 0)
+          .transition()
+            .delay(800)
+            .duration(850)
             .attr("opacity", 1)
-            .transition()
-               .delay(800)
-               .duration(850)
-              //  .attr("opacity", 1)
-               .attr("y", scaledAverage - 10);
-      } else {
+            .attr("y", scaledAverage +5 );  
+    } else {
         line
-            .append("text")
-            .attr("class", "rt-noData")
-            .attr("x", (svg_width / 2) - 50)
-            .attr("y", (svg_height / 2) - 100)
-            .attr("dx", "1em")
-            .attr("fill", "rgba(0,0,0,0.5)")
-            .attr("style", "text-anchor: middle")
-            .text("No Data To Display")
-      }  
+          .append("text")
+          .attr("class", "rt-noData")
+          .attr("x", (svg_width / 2) - 50)
+          .attr("y", (svg_height / 2) - 100)
+          .attr("dx", "1em")
+          .attr("fill", "rgba(0,0,0,0.5)")
+          .attr("style", "text-anchor: middle")
+          .text("No Data To Display")
+      } 
 
     //Add score labels to bars
     chart
@@ -172,7 +195,7 @@ class PlayerDrillsNewChart extends Chart {
         .style("font-size",  "14px")
         .text(d => d.count)
         .attr("x", function(d,i){
-          return (xScale(i) + (xScale.bandwidth() / 2)+2);
+          return (xScale(i) + (xScale.bandwidth() / 2));
         })
         //  .attr("y",  yScale(average))
         // .attr("y", d => yScale(d.count+.1))
@@ -183,10 +206,8 @@ class PlayerDrillsNewChart extends Chart {
         .attr("text-anchor", "middle")
         .attr("opacity", 0)
         .transition(t)
-          // .duration(850)
-          //  .delay(200)
           .attr("opacity", 1)
-          .attr("y", d => yScale(d.count+.1));
+          .attr("y", d => yScale(d.count+.25));
 
 
     // Add the X Axis
@@ -222,20 +243,33 @@ class PlayerDrillsNewChart extends Chart {
       .style("font-size",  "12px")
       .style("fill", "black");
 
-   //add Period Label
+   //add Period Labels per timeSeries
+   let message;
+   if (curWeekNum){
+      message = "Displaying all data from: Week " +curWeekNum+ " of "+curYearNum;
+   } 
+   if (curMonthNum) {
+      message = "Displaying all data from: " +monthMap[curMonthNum]+ " of "+curYearNum;
+   } 
+   if (!curWeekNum && !curMonthNum && curYearNum) {
+    message = "Displaying all data from: " + curYearNum;
+ } 
+
+
     chart
         .append("text")
-        .attr("transform", `translate(${svg_width*.5}, ${30})`)
-        .text( "Year 2020")
-        .style("font-size",  "18px")
+        .attr("transform", `translate(${40}, ${-5})`)
+        // .text( "Year " + curYearNum)
+        .text(message)
+        .style("font-size",  "15px")
+        .style("font-style", "italic")
         .style("fill", "black");  
-    
+   
    //add yAxis label 
     chart
       .append("text")
       .attr("transform", "translate(-5," +  (height+margin.bottom)/2 + ") rotate(-90)")
       .text("Drills Completed");
     }
-    
-}
+  }
 export default PlayerDrillsNewChart;
