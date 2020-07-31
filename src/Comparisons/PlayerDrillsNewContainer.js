@@ -62,9 +62,7 @@ export default class PlayerDrillsNewContainer extends Container {
           }
       });
 
-      let allData = state.submissions ? [...state.submissions] : [];
-      let curWeek = []; 
-      let curWeekNum; 
+      let allData = state.submissions ? [...state.submissions] : []; 
 
       if (allData.length) {
         // just need a year of data at most ...
@@ -82,30 +80,75 @@ export default class PlayerDrillsNewContainer extends Container {
         } else {
           dataPeriod = 'yearly'
         }
-        console.log("============== dataPeriod ---> dataPeriod");
+        console.log("============== dataPeriod ---> " + dataPeriod);
 
         // process weekly ...
         if (dataPeriod === 'weekly'){
-          curWeekNum =  latestEntry.week
+          let curWeekNum =  latestEntry.week
           console.log("================== curWeekNum ==============");
           console.log(curWeekNum);
 
-          let lastWeekDrills = [];
-          // Now get all values for curWeek only ...
+          let thisWeekDrills = [];
+          // Now get all values for thisWeek only ...
           allData.forEach(function(entry) {
-            if (entry.week === 30) {
-              lastWeekDrills.push(entry);
+            if (entry.week === curWeekNum) {
+              thisWeekDrills.push(entry);
             }
           });
           // reassign count to count so it plots ... 
-          lastWeekDrills = lastWeekDrills.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
-          console.log("============== lastWeekDrills");
-          console.log(lastWeekDrills);
-          allData = lastWeekDrills;
+          thisWeekDrills = thisWeekDrills.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
+          console.log("============== thisWeekDrills");
+          console.log(thisWeekDrills);
+          allData = thisWeekDrills;
         }
 
-      }
+        //Process monthly ...
+        if (dataPeriod === 'monthly'){
+          let curMonthNum =  latestEntry.month
+          console.log("================== curMonthNum ==============");
+          console.log(curMonthNum);
 
+          let thisMonthDrills = [];
+          // Now get all values for thisMonth only ...
+          allData.forEach(function(entry) {
+          console.log(curMonthNum);
+            if (entry.month === curMonthNum) {
+              thisMonthDrills.push(entry);
+            }
+          });
+          // reassign count to count so it plots ... 
+          thisMonthDrills = thisMonthDrills.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
+          console.log("============== thisMonthDrills");
+          console.log(thisMonthDrills);
+          allData = thisMonthDrills;
+        }
+
+        //Process yearly ...
+        if (dataPeriod === 'yearly'){
+          let curYearNum =  latestEntry.year
+          console.log("================== curYearNum ==============");
+          console.log(curYearNum);
+
+          let thisYearDrills = [];
+          // Now get all values for thisYear only ...
+          allData.forEach(function(entry) {
+          console.log(curYearNum);
+            if (entry.year === curYearNum) {
+              thisYearDrills.push(entry);
+            }
+          });
+          // reassign count to count so it plots ... 
+          thisYearDrills = thisYearDrills.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
+          console.log("============== thisYearDrills");
+          console.log(thisYearDrills);
+          allData = thisYearDrills;
+        }
+
+
+
+
+//// Don't touch below
+      }
       return {
           ...state,
           ...defaultProps,
