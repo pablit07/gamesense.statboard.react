@@ -1,20 +1,18 @@
 import React, {Component, Fragment} from 'react';
 
-import PlayerDrillsNewChart from "../Components/Charts/PlayerDrillsNewChart";
-import PlayerDrillsNewContainer from "../Comparisons/PlayerDrillsNewContainer";
+import TeamPlayerDrillsChart from "../Components/Charts/TeamPlayerDrillsChart";
+import TeamPlayerDrillsContainer from "../Comparisons/TeamPlayerDrillsContainer";
 import PickList from "../Buttons/PickList";
 import actions from '../actions';
 import dispatch from '../dispatch';
 
-import PlayerUseOverTime from '../DrillDetails/PlayerUseOverTimeContainer';
-import BarChart from "../Components/Charts/BarChart";
 
-class TeamDrillsView extends Component {
+class TeamPlayerDrillsView extends Component {
 
     render() {
 
       const TimeSeriesPickList = ({dispatch}) => (<PickList
-        name={"playerUseOverTime"}
+        name={"teamPlayerDrills"}
         options={[{key:'Weekly',value:'weekly'}, {key:'Monthly',value:'monthly'}, {key:'Yearly',value:'yearly'}]}
         selectedValue={'monthly'}
         onLoad={dispatch.makePublisher(actions.TIMESERIES_PICKLIST_INIT)}
@@ -26,15 +24,14 @@ class TeamDrillsView extends Component {
           <div style={{'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center'}}>  
             <h2> Player Drills Completed</h2>
 
-            {/* <PlayerDrillsNewContainer socket={this.props.socket} params={{rollUpType:"yearly"}} filters={null}> */}
-            <PlayerDrillsNewContainer socket={this.props.socket} dispatch={dispatch} filters={null} >  
+            <TeamPlayerDrillsContainer socket={this.props.socket} dispatch={dispatch} filters={null} >  
               <TimeSeriesPickList dispatch={dispatch}/>
-              <PlayerDrillsNewChart/>
-            </PlayerDrillsNewContainer>
+              <TeamPlayerDrillsChart/>
+            </TeamPlayerDrillsContainer>
 
           </div>
         </Fragment>)   
     }
 }
 
-export default TeamDrillsView;
+export default TeamPlayerDrillsView;

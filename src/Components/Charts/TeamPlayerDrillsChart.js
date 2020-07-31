@@ -2,7 +2,7 @@
 import * as d3 from "d3";
 import Chart from "./Chart";
 
-class PlayerDrillsNewChart extends Chart {
+class TeamPlayerDrillsChart extends Chart {
   addChartLayer({ svg, values, svg_width, svg_height, curWeekNum, curMonthNum, curYearNum}) {
     
   if (values.length) {
@@ -272,4 +272,4 @@ class PlayerDrillsNewChart extends Chart {
       .text("Drills Completed");
     }
   }
-export default PlayerDrillsNewChart;
+export default TeamPlayerDrillsChart;
