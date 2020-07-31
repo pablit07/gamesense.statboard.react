@@ -18,6 +18,8 @@ import TeamTestsPrScoreContainer from "./Comparisons/TeamTestsPrScoreContainer";
 import RadioButtons from "./Buttons/RadioButtons";
 import LegendHoriz from "./Components/Charts/LegendHoriz";
 import TeamCompareChart from "./Components/Charts/TeamCompareChart";
+import PlayerDrillsNewChart from "./Components/Charts/PlayerDrillsNewChart";
+import PlayerDrillsNewContainer from "./Comparisons/PlayerDrillsNewContainer";
 
 
 const TimeSeriesPickList = ({dispatch}) => (<PickList
@@ -117,6 +119,27 @@ const TeamTestsPrScoreWelcomeChart = ({username, app, token}) => {
 };
 
 
+const TeamPlayerDrillsChart = ({username, app, token}) => {
+
+    const ChartHeader = props =>
+        (<div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
+            <span><h3>  Player Drills Completed   </h3></span>
+
+            <div>
+                <RadioButtons
+                    handleSelect={props.handleSelect}
+                    options={ [{name:'Week',value:'weekly'},{name:'Month',value:'monthly'},{name:'Year',value:'yearly'}] }
+                    initSelectedOption={'yearly'} />
+            </div>
+        </div>);
+
+    return (<PlayerDrillsNewContainer socket={createSocket(username, app, token)} params={{rollUpType:"yearly"}} filters={null}>
+                <ChartHeader/>
+                <PlayerDrillsNewChart/>
+            </PlayerDrillsNewContainer>);
+}
+
+
 export {
     React,
     render,
@@ -124,5 +147,6 @@ export {
     DrillBreakdown,
     PlayerUseOverTimeWelcomeChart,
     HorizontalQuartileChart,
-    TeamTestsPrScoreWelcomeChart
+    TeamTestsPrScoreWelcomeChart,
+    TeamPlayerDrillsChart
 };
