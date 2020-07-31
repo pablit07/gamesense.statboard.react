@@ -24,7 +24,6 @@ export default class PlayerDrillsNewContainer extends Container {
           }
       });
       this.dataSource();
-      console.log('########### update timeSeries ----> ' + timeSeries);
     }
 
     // almost the same but need to accomodate the component trying to mount
@@ -35,7 +34,6 @@ export default class PlayerDrillsNewContainer extends Container {
           },
           hasInitBeenCalled: true
       });
-      console.log('########### init timeSeries ----> ' + timeSeries);
       if (this.state.isMounted) {
           this.initDataSource();
       }
@@ -63,6 +61,7 @@ export default class PlayerDrillsNewContainer extends Container {
       });
 
       let allData = state.submissions ? [...state.submissions] : []; 
+      let curWeekNum, curMonthNum, curYearNum;
 
       if (allData.length) {
         // just need a year of data at most ...
@@ -81,13 +80,12 @@ export default class PlayerDrillsNewContainer extends Container {
           dataPeriod = 'yearly'
         }
         console.log("============== dataPeriod ---> " + dataPeriod);
+        // all periods need to return the year.
+        curYearNum = latestEntry.year;
 
         // process weekly ...
         if (dataPeriod === 'weekly'){
-          let curWeekNum =  latestEntry.week
-          console.log("================== curWeekNum ==============");
-          console.log(curWeekNum);
-
+          curWeekNum =  latestEntry.week
           let thisWeekDrills = [];
           // Now get all values for thisWeek only ...
           allData.forEach(function(entry) {
@@ -97,63 +95,46 @@ export default class PlayerDrillsNewContainer extends Container {
           });
           // reassign count to count so it plots ... 
           thisWeekDrills = thisWeekDrills.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
-          console.log("============== thisWeekDrills");
-          console.log(thisWeekDrills);
           allData = thisWeekDrills;
         }
 
         //Process monthly ...
         if (dataPeriod === 'monthly'){
-          let curMonthNum =  latestEntry.month
-          console.log("================== curMonthNum ==============");
-          console.log(curMonthNum);
-
+          curMonthNum =  latestEntry.month
           let thisMonthDrills = [];
           // Now get all values for thisMonth only ...
           allData.forEach(function(entry) {
-          console.log(curMonthNum);
             if (entry.month === curMonthNum) {
               thisMonthDrills.push(entry);
             }
           });
           // reassign count to count so it plots ... 
           thisMonthDrills = thisMonthDrills.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
-          console.log("============== thisMonthDrills");
-          console.log(thisMonthDrills);
           allData = thisMonthDrills;
         }
 
         //Process yearly ...
         if (dataPeriod === 'yearly'){
-          let curYearNum =  latestEntry.year
-          console.log("================== curYearNum ==============");
-          console.log(curYearNum);
-
+          curYearNum =  latestEntry.year
           let thisYearDrills = [];
           // Now get all values for thisYear only ...
           allData.forEach(function(entry) {
-          console.log(curYearNum);
             if (entry.year === curYearNum) {
               thisYearDrills.push(entry);
             }
           });
           // reassign count to count so it plots ... 
           thisYearDrills = thisYearDrills.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
-          console.log("============== thisYearDrills");
-          console.log(thisYearDrills);
           allData = thisYearDrills;
         }
-
-
-
-
-//// Don't touch below
       }
       return {
           ...state,
           ...defaultProps,
           values: allData,
-          handleSelect: v => this.setState({selectedTimePeriod: v})
+          curWeekNum,
+          curMonthNum,
+          curYearNum   
       };
     }
 }

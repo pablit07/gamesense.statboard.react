@@ -3,10 +3,13 @@ import * as d3 from "d3";
 import Chart from "./Chart";
 
 class PlayerDrillsNewChart extends Chart {
-  addChartLayer({ svg, values, svg_width, svg_height, textColor, scoreType}) {
-
+  addChartLayer({ svg, values, svg_width, svg_height, curWeekNum, curMonthNum, curYearNum}) {
+    
     if (values.length) {
-      console.log("------Yay! values in chart -------------------- values ---");
+      console.log("------ values in chart ------");
+      console.log("### curWeekNum ----> " + curWeekNum);
+      console.log("### curMonthNum ----> " + curMonthNum);
+      console.log("### curYearNum ----> " + curYearNum);
       console.log(values);
     }   
 
@@ -34,7 +37,7 @@ class PlayerDrillsNewChart extends Chart {
   let xAxis = d3
     .axisBottom(xScale)
     .tickSizeOuter(axisTicks.outerSize)
-    .tickFormat((d, i) => values[i].player_last_name);
+    .tickFormat((d, i) => values[i].player_last_name );
 
   // chart group 'g'
   const chart = svg
@@ -95,8 +98,7 @@ class PlayerDrillsNewChart extends Chart {
       .attr("opacity", 1.0);
 
     // Average Line
-    let scoreVal = yScale(average);
-    console.log(scoreVal);
+    let scaledAverage = yScale(average);
     let line = chart
       .append("g")
       .attr("transform", `translate(${margin.left}, 0)`);
@@ -114,8 +116,8 @@ class PlayerDrillsNewChart extends Chart {
       .transition()
         .delay(800)
         .duration(850)
-        .attr("y1", scoreVal)
-        .attr("y2", scoreVal)
+        .attr("y1", scaledAverage)
+        .attr("y2", scaledAverage)
         .attr("opacity", 1);
 
     // Average Line Label
@@ -134,7 +136,7 @@ class PlayerDrillsNewChart extends Chart {
                .delay(800)
                .duration(850)
               //  .attr("opacity", 1)
-               .attr("y", scoreVal - 10);
+               .attr("y", scaledAverage - 10);
       } else {
         line
             .append("text")
@@ -227,6 +229,12 @@ class PlayerDrillsNewChart extends Chart {
         .text( "Year 2020")
         .style("font-size",  "18px")
         .style("fill", "black");  
+    
+   //add yAxis label 
+    chart
+      .append("text")
+      .attr("transform", "translate(-5," +  (height+margin.bottom)/2 + ") rotate(-90)")
+      .text("Drills Completed");
     }
     
 }
