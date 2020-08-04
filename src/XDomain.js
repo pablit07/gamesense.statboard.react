@@ -87,6 +87,7 @@ const DrillBreakdown = ({username, app, token, userId}) => {
         </div>
 
         <Table/>
+        <LegendHoriz svg_width={490} textLabel={' '} />
     </DrillDetailsContainer>);
 };
 
@@ -102,7 +103,6 @@ const TeamTestsPrScoreWelcomeChart = ({username, app, token}) => {
 
     const ChartHeader = props =>
          (<div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
-            <h3>Team Test Scores</h3>
             <PassThruContainer>
                 <LegendHoriz svg_width={490} textLabel={' '} />
             </PassThruContainer>
