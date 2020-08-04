@@ -3,7 +3,6 @@
    does not export 'user_id' value, yet 'tyearly' and 'monthly' do */
 import React, {Component, Fragment} from 'react';
 
-import PlayerDrills from "../Components/Charts/PlayerDrills";
 import PlayerUseOverTimeContainer from "../DrillDetails/PlayerUseOverTimeContainer";
 import BarChart from "../Components/Charts/BarChart";
 

@@ -19,6 +19,7 @@ import RadioButtons from "./Buttons/RadioButtons";
 import LegendHoriz from "./Components/Charts/LegendHoriz";
 import TeamCompareChart from "./Components/Charts/TeamCompareChart";
 import LocVsTypeChart from "./Components/Charts/LocVsTypeChart";
+import TeamPlayerDrillsContainer from "./Comparisons/TeamPlayerDrillsContainer";
 
 
 const TimeSeriesPickList = ({dispatch}) => (<PickList
@@ -125,6 +126,27 @@ const TeamLocVsTypeChart = ({username, app, token}) => {
 };
 
 
+const TeamPlayerDrillsChart = ({username, app, token}) => {
+
+    const ChartHeader = props =>
+        (<div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
+            <span><h3>  Player Drills Completed   </h3></span>
+
+            <div>
+                <RadioButtons
+                    handleSelect={props.handleSelect}
+                    options={ [{name:'Week',value:'weekly'},{name:'Month',value:'monthly'},{name:'Year',value:'yearly'}] }
+                    initSelectedOption={'yearly'} />
+            </div>
+        </div>);
+
+    return (<TeamPlayerDrillsContainer socket={createSocket(username, app, token)} params={{rollUpType:"yearly"}} filters={null}>
+                <ChartHeader/>
+                <TeamPlayerDrillsChart/>
+            </TeamPlayerDrillsContainer>);
+}
+
+
 export {
     React,
     render,
@@ -133,5 +155,6 @@ export {
     PlayerUseOverTimeWelcomeChart,
     HorizontalQuartileChart,
     TeamTestsPrScoreWelcomeChart,
+    TeamPlayerDrillsChart,
     TeamLocVsTypeChart
 };
