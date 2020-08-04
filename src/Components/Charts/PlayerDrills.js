@@ -1,3 +1,4 @@
+
 import * as d3 from "d3";
 import Chart from "./Chart";
 
@@ -14,7 +15,7 @@ class PlayerDrills extends Chart {
   let margin = { left: 45, right: 5, top: 30, bottom: 35, },
     width = svg_width - margin.left - margin.right,
     height = svg_height - margin.top - margin.bottom,
-    axisTicks = {qty: 7, outerSize: 2};
+    axisTicks = {qty: 7, outerSize: 0};
 
   let yScale = d3.scaleLinear().range([0, height]);
 
@@ -47,8 +48,8 @@ class PlayerDrills extends Chart {
 
     // Update chart with chosen data ////////////////////////////////////////////////////////
     // get max and min score values for current data ...
-    let scoreMax = d3.max(values, d => d.count);
-    let scoreMin = d3.min(values, d => d.count);
+    let scoreMax = d3.max(values, d => d.thisScore);
+    let scoreMin = d3.min(values, d => d.thisScore);
 
     console.log("-------------------------- xxx---");
     console.log(scoreMax);
@@ -90,8 +91,8 @@ class PlayerDrills extends Chart {
         .attr("y", height)
         .attr("width", xScale.bandwidth())
         .transition(t)
-            .attr("height", d => (height - yScale(d.count)))
-            .attr("y", d => yScale(d.count))
+            .attr("height", d => (height - yScale(d.thisScore)))
+            .attr("y", d => yScale(d.thisScore))
             
 
       // fill color for bar prelim ... 
@@ -168,12 +169,12 @@ class PlayerDrills extends Chart {
       .enter()
         .append("text")
         .style("font-size",  "14px")
-        .text(d => d.count)
+        .text(d => d.thisScore)
         .attr("x", function(d,i){
           return (xScale(i) + (xScale.bandwidth() / 2)+2);
         })
         //  .attr("y",  yScale(average))
-         .attr("y", d => yScale(d.count+3))
+         .attr("y", d => yScale(d.thisScore+3))
         .attr("font-family" , "sans-serif")
         .attr("font-size" , "10px")
         .attr("fill" , "black")
@@ -182,7 +183,7 @@ class PlayerDrills extends Chart {
         .transition()
          .duration(500)
         //  .delay(500)
-          .attr("y", d => yScale(d.count+3))
+          .attr("y", d => yScale(d.thisScore+3))
           .attr("opacity", 1);
 
     // Add the X Axis

@@ -12,7 +12,7 @@ import TestSubmissionDetail from "./TestSubmissions/TestSubmissionDetail";
 import StreaksChartView from "./Streaks/StreaksChartsView";
 import ComparisonChartsView from "./Comparisons/ComparisonChartsView";
 import TeamTestsView from "./Comparisons/TeamTestsView";
-import MonthlyBugView from "./Comparisons/MonthlyBugView";
+import TeamPlayerDrillsView from "./Comparisons/TeamPlayerDrillsView";
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /testsubmissions
@@ -37,7 +37,7 @@ const Main = () => {
 
 				<Route path='/teamcomparecharts' render={() => <PageContainer title={'Team Tests/Comparison Charts'} contents={<TeamTestsView socket={socket}/>}/>}/>
 
-        <Route path='/monthlybugview' render={() => <PageContainer title={'Monthly Bug View'} contents={<MonthlyBugView socket={socket}/>}/>}/>
+        <Route path='/teamplayerdrillsview' render={() => <PageContainer title={'Team Drills View'} contents={<TeamPlayerDrillsView socket={socket}/>}/>}/>
 
 				<Route path='/logout' render={() => "You have been logged out."}/>
 			</Switch>
