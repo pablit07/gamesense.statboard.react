@@ -129,7 +129,7 @@ const TeamLocVsTypeChart = ({username, app, token}) => {
 const TeamPlayerDrillsChart = ({username, app, token, userId}) => {
 
     return (<TeamPlayerDrillsContainer socket={createSocket(username, app, token)} dispatch={dispatch} filters={(userId?{user_id:userId}:null)}>
-                <TimeSeriesPickList/>
+                <TimeSeriesPickList dispatch={dispatch}/>
                 <TeamPlayerDrillsChart/>
             </TeamPlayerDrillsContainer>);
 }
