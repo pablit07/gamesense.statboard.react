@@ -126,22 +126,10 @@ const TeamLocVsTypeChart = ({username, app, token}) => {
 };
 
 
-const TeamPlayerDrillsChart = ({username, app, token}) => {
+const TeamPlayerDrillsChart = ({username, app, token, userId}) => {
 
-    const ChartHeader = props =>
-        (<div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
-            <span><h3>  Player Drills Completed   </h3></span>
-
-            <div>
-                <RadioButtons
-                    handleSelect={props.handleSelect}
-                    options={ [{name:'Week',value:'weekly'},{name:'Month',value:'monthly'},{name:'Year',value:'yearly'}] }
-                    initSelectedOption={'yearly'} />
-            </div>
-        </div>);
-
-    return (<TeamPlayerDrillsContainer socket={createSocket(username, app, token)} params={{rollUpType:"yearly"}} filters={null}>
-                <ChartHeader/>
+    return (<TeamPlayerDrillsContainer socket={createSocket(username, app, token)} dispatch={dispatch} filters={(userId?{user_id:userId}:null)}>
+                <TimeSeriesPickList/>
                 <TeamPlayerDrillsChart/>
             </TeamPlayerDrillsContainer>);
 }
