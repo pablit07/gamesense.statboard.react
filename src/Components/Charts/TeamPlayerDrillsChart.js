@@ -1,18 +1,16 @@
-
 import * as d3 from "d3";
 import Chart from "./Chart";
 
 class TeamPlayerDrillsChart extends Chart {
   addChartLayer({ svg, values, svg_width, svg_height, curWeekNum, curMonthNum, curYearNum}) {
-    
+
   if (values.length) {
     console.log("------ values in chart ------");
     console.log("### curWeekNum ----> " + curWeekNum);
     console.log("### curMonthNum ----> " + curMonthNum);
     console.log("### curYearNum ----> " + curYearNum);
     console.log(values);
-  }   
-
+  }
   const monthMap = {
     7: 'July',
     8: 'August'
