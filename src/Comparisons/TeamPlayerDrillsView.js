@@ -21,16 +21,16 @@ class TeamPlayerDrillsView extends Component {
 
         return (<Fragment>
           <p>-- Page rendered from: TeamPlayerDrillsView.js --</p>
-          <div style={{'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center'}}>  
+          <div style={{'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center'}}>
             <h2> Player Drills Completed</h2>
 
-            <TeamPlayerDrillsContainer socket={this.props.socket} dispatch={dispatch} filters={null} >  
+            <TeamPlayerDrillsContainer socket={this.props.socket} dispatch={dispatch} filters={null} >
               <TimeSeriesPickList dispatch={dispatch}/>
               <TeamPlayerDrillsChart/>
             </TeamPlayerDrillsContainer>
 
           </div>
-        </Fragment>)   
+        </Fragment>)
     }
 }
 

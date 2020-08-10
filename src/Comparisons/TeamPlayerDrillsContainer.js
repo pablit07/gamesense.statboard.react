@@ -1,6 +1,6 @@
 import Container from "../Container";
 import actions from "../actions";
-export default class PlayerDrillsNewContainer extends Container {
+export default class TeamPlayerDrillsContainer extends Container {
 
     constructor(props) {
       super(props);
@@ -40,27 +40,27 @@ export default class PlayerDrillsNewContainer extends Container {
     }
 
     getRoutingKey() {
-      return 'calc.drill.completionSummary'; 
+      return 'calc.drill.completionSummary';
   }
 
     mapStateToProps(state) {
       let defaultProps = { values: [{value: "count", color: "#4D9360"}] };
       let dataPeriod;
-    
-      // Sort state.submissions chronologically. Gets all submissions to a max of 12.   
+
+      // Sort state.submissions chronologically. Gets all submissions to a max of 12.
       state.submissions =  state.submissions ? [...state.submissions] : [];
 
       state.submissions
       .sort((l, r) => {
           // sort numerically
           if (l.year !== r.year) {
-              return l.year - r.year; 
+              return l.year - r.year;
           } else {
               return l.month - r.month;
           }
       });
 
-      let allData = state.submissions ? [...state.submissions] : []; 
+      let allData = state.submissions ? [...state.submissions] : [];
       let curWeekNum, curMonthNum, curYearNum;
 
       if (allData.length) {
@@ -85,7 +85,7 @@ export default class PlayerDrillsNewContainer extends Container {
 
         // process weekly ...
         if (dataPeriod === 'weekly'){
-          curWeekNum =  latestEntry.week
+          curWeekNum = latestEntry.week
           let thisWeekDrills = [];
           // Now get all values for thisWeek only ...
           allData.forEach(function(entry) {
@@ -93,14 +93,14 @@ export default class PlayerDrillsNewContainer extends Container {
               thisWeekDrills.push(entry);
             }
           });
-          // reassign count to count so it plots ... 
+          // reassign count to count so it plots ...
           thisWeekDrills = thisWeekDrills.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
           allData = thisWeekDrills;
         }
 
         //Process monthly ...
         if (dataPeriod === 'monthly'){
-          curMonthNum =  latestEntry.month
+          curMonthNum = latestEntry.month
           let thisMonthDrills = [];
           // Now get all values for thisMonth only ...
           allData.forEach(function(entry) {
@@ -108,14 +108,14 @@ export default class PlayerDrillsNewContainer extends Container {
               thisMonthDrills.push(entry);
             }
           });
-          // reassign count to count so it plots ... 
+          // reassign count to count so it plots ...
           thisMonthDrills = thisMonthDrills.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
           allData = thisMonthDrills;
         }
 
         //Process yearly ...
         if (dataPeriod === 'yearly'){
-          curYearNum =  latestEntry.year
+          curYearNum = latestEntry.year
           let thisYearDrills = [];
           // Now get all values for thisYear only ...
           allData.forEach(function(entry) {
@@ -123,7 +123,7 @@ export default class PlayerDrillsNewContainer extends Container {
               thisYearDrills.push(entry);
             }
           });
-          // reassign count to count so it plots ... 
+          // reassign count to count so it plots ...
           thisYearDrills = thisYearDrills.map((r, i) => Object.assign(r, {count: r['count'], index: i}));
           allData = thisYearDrills;
         }
@@ -134,7 +134,7 @@ export default class PlayerDrillsNewContainer extends Container {
           values: allData,
           curWeekNum,
           curMonthNum,
-          curYearNum   
+          curYearNum
       };
     }
 }
