@@ -30,7 +30,7 @@ const TimeSeriesPickList = ({dispatch}) => (<PickList
     onLoad={dispatch.makePublisher(actions.TIMESERIES_PICKLIST_INIT)}
     onChange={dispatch.makePublisher(actions.TIMESERIES_PICKLIST_UPDATE)}/>);
 
-const TimeSeriesPickList2 = ({dispatch}) => (<PickList
+const TimeSeriesPickListTPD = ({dispatch}) => (<PickList
     name={"teamPlayerDrills"}
     options={[{key:'Weekly',value:'weekly'}, {key:'Monthly',value:'monthly'}, {key:'Yearly',value:'yearly'}]}
     selectedValue={'monthly'}
@@ -141,7 +141,7 @@ const TeamLocVsTypeChart = ({username, app, token}) => {
 const TeamPlayerDrills = ({username, app, token, userId}) => {
     return (<div style={{'display': 'flex', 'flex-direction': 'column', 'align-items': 'center'}}>
             <TeamPlayerDrillsContainer socket={createSocket(username, app, token)} dispatch={dispatch} filters={null}>
-                    <TimeSeriesPickList2 dispatch={dispatch}/>
+                    <TimeSeriesPickListTPD dispatch={dispatch}/>
                 <TeamPlayerDrillsChart username={username} app={app} token={token}/>
             </TeamPlayerDrillsContainer>
             </div>);
