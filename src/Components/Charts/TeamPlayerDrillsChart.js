@@ -60,7 +60,6 @@ class TeamPlayerDrillsChart extends Chart {
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
 
-    // Update chart with chosen data ////////////////////////////////////////////////////////
     // get max and min score values for current data ...
     let scoreMax = d3.max(values, d => d.count);
     let scoreMin = d3.min(values, d => d.count);
@@ -76,9 +75,6 @@ class TeamPlayerDrillsChart extends Chart {
 
     const t = d3.transition().duration(700);     // transition time 500 ms.
 
-
-	 //select all bars on the graph, remove them, call .exit() to clear previous data set.
-	 //then add/enter the new data set
     let bars = chart
       .selectAll("player_last_name")
       .data(values)
@@ -121,7 +117,6 @@ class TeamPlayerDrillsChart extends Chart {
         .append("line")
         .style("stroke-width", 4)
         .style("stroke-dasharray", "22, 4")
-        // .style("stroke", "#1c94aa")
         .style("stroke", "#c91f05")
         .attr("x1", 0)
         .attr("y1", height)
@@ -204,8 +199,6 @@ class TeamPlayerDrillsChart extends Chart {
         .attr("x", function(d,i){
           return (xScale(i) + (xScale.bandwidth() / 2));
         })
-        //  .attr("y",  yScale(average))
-        // .attr("y", d => yScale(d.count+.1))
         .attr("y", d => height)
         .attr("font-family" , "sans-serif")
         .attr("font-size" , "10px")
@@ -215,7 +208,6 @@ class TeamPlayerDrillsChart extends Chart {
         .transition(t)
           .attr("opacity", 1)
           .attr("y", d => yScale(d.count+.25));
-
 
     // Add the X Axis
     chart
@@ -242,15 +234,13 @@ class TeamPlayerDrillsChart extends Chart {
       .attr("transform", `translate(${margin.left}, 0)`)
       .call(yAxis);
 
-    //add xAxis label for Score Type
+    //add "Displaying data from ..." label
     chart
       .append("text")
       .attr("transform", `translate(${svg_width*.4}, ${height+30})`)
-      // .text( " Player") // There is no room for this
       .style("font-size",  "12px")
       .style("fill", "black");
 
-   //add Period Labels per timeSeries
    let message;
    if (curWeekNum){
       message = "Displaying all data from: Week " +curWeekNum+ " of "+curYearNum;
@@ -261,7 +251,6 @@ class TeamPlayerDrillsChart extends Chart {
    if (!curWeekNum && !curMonthNum && curYearNum) {
     message = "Displaying all data from: " + curYearNum;
  } 
-
 
     chart
         .append("text")
