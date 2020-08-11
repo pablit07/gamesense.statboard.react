@@ -20,6 +20,7 @@ import LegendHoriz from "./Components/Charts/LegendHoriz";
 import TeamCompareChart from "./Components/Charts/TeamCompareChart";
 import LocVsTypeChart from "./Components/Charts/LocVsTypeChart";
 import TeamPlayerDrillsContainer from "./Comparisons/TeamPlayerDrillsContainer";
+import TeamPlayerDrillsChart from "./Components/Charts/TeamPlayerDrillsChart";
 
 
 const TimeSeriesPickList = ({dispatch}) => (<PickList
@@ -28,8 +29,6 @@ const TimeSeriesPickList = ({dispatch}) => (<PickList
     selectedValue={'monthly'}
     onLoad={dispatch.makePublisher(actions.TIMESERIES_PICKLIST_INIT)}
     onChange={dispatch.makePublisher(actions.TIMESERIES_PICKLIST_UPDATE)}/>);
-
-
 
 const PlayerUseOverTimeWelcomeChart = ({username, app, token, userId}) => (
     <PlayerUseOverTime socket={createSocket(username, app, token)} dispatch={dispatch} filters={(userId?{user_id:userId}:null)}>
@@ -87,6 +86,7 @@ const DrillBreakdown = ({username, app, token, userId}) => {
         </div>
 
         <Table/>
+        <LegendHoriz svg_width={490} textLabel={' '} />
     </DrillDetailsContainer>);
 };
 
@@ -102,7 +102,6 @@ const TeamTestsPrScoreWelcomeChart = ({username, app, token}) => {
 
     const ChartHeader = props =>
          (<div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
-            <h3>Team Test Scores</h3>
             <PassThruContainer>
                 <LegendHoriz svg_width={490} textLabel={' '} />
             </PassThruContainer>
@@ -112,38 +111,31 @@ const TeamTestsPrScoreWelcomeChart = ({username, app, token}) => {
                 initSelectedOption={'total'} />
         </div>);
 
-    return (<TeamTestsPrScoreContainer socket={createSocket(username, app, token)}>
+    return (<div style={{'display': 'flex', 'flex-direction': 'column', 'align-items': 'center'}}>
+                <TeamTestsPrScoreContainer socket={createSocket(username, app, token)}>
                 <ChartHeader/>
-            <TeamCompareChart svg_width={785} svg_height={450}/>
-        </TeamTestsPrScoreContainer>);
+                <TeamCompareChart svg_width={785} svg_height={450}/>
+                </TeamTestsPrScoreContainer>
+            </div>);
 };
 
 const TeamLocVsTypeChart = ({username, app, token}) => {
 
-    return (<TeamTestsPrScoreContainer socket={createSocket(username, app, token)}>
-        <LocVsTypeChart svg_height={500} svg_width={500} svg_border_opacity={0.5}/>
-    </TeamTestsPrScoreContainer>);
+    return (<div style={{'display': 'flex', 'flex-direction': 'column', 'align-items': 'center'}}>
+                <TeamTestsPrScoreContainer socket={createSocket(username, app, token)}>
+                    <LocVsTypeChart svg_height={500} svg_width={500} svg_border_opacity={0.5}/>
+                </TeamTestsPrScoreContainer>
+            </div>);
 };
 
 
-const TeamPlayerDrillsChart = ({username, app, token}) => {
-
-    const ChartHeader = props =>
-        (<div style={{'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}}>
-            <span><h3>  Player Drills Completed   </h3></span>
-
-            <div>
-                <RadioButtons
-                    handleSelect={props.handleSelect}
-                    options={ [{name:'Week',value:'weekly'},{name:'Month',value:'monthly'},{name:'Year',value:'yearly'}] }
-                    initSelectedOption={'yearly'} />
-            </div>
-        </div>);
-
-    return (<TeamPlayerDrillsContainer socket={createSocket(username, app, token)} params={{rollUpType:"yearly"}} filters={null}>
-                <ChartHeader/>
-                <TeamPlayerDrillsChart/>
-            </TeamPlayerDrillsContainer>);
+const TeamPlayerDrills = ({username, app, token, userId}) => {
+    return (<div style={{'display': 'flex', 'flex-direction': 'column', 'align-items': 'center'}}>
+            <TeamPlayerDrillsContainer socket={createSocket(username, app, token)} dispatch={dispatch} filters={null}>
+                    <TimeSeriesPickList dispatch={dispatch}/>
+                <TeamPlayerDrillsChart username={username} app={app} token={token}/>
+            </TeamPlayerDrillsContainer>
+            </div>);
 }
 
 
@@ -155,6 +147,6 @@ export {
     PlayerUseOverTimeWelcomeChart,
     HorizontalQuartileChart,
     TeamTestsPrScoreWelcomeChart,
-    TeamPlayerDrillsChart,
+    TeamPlayerDrills,
     TeamLocVsTypeChart
 };
